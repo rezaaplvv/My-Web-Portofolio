@@ -4,7 +4,7 @@ import { Github, Linkedin, Mail, Globe, Code2, Terminal, Smartphone, Database } 
 export const PERSONAL_INFO = {
   name: "Reza Pahlepi",
   role: "Full-Stack Developer",
-  bio: "Mahasiswa D3 Teknik Informatika USU (Semester 3). Membangun solusi web & mobile yang scalable, modern, dan berorientasi bisnis.",
+  bio: "Mahasiswa D3 Teknik Informatika USU (Semester 4). Membangun solusi web & mobile yang scalable, modern, dan berorientasi bisnis.",
   email: "rezapahlepi77654@gmail.com",
   github: "https://github.com/rezaaplvv",
   availableForFreelance: true,

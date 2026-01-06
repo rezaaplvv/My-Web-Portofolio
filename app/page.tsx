@@ -592,7 +592,6 @@ export default function Home() {
                 LIHAT KARYA
               </Link>
               <div className={`flex items-center gap-2 font-mono text-sm font-bold bg-white border-2 ${isDarkMode ? 'border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] text-black' : 'border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'} px-3 py-1`}>
-                <Zap size={14} className="fill-yellow-400 text-black"/> 
                 DOWNLOAD CV
               </div>
             </motion.div>
@@ -655,7 +654,7 @@ export default function Home() {
                 />
                 <StatCard 
                     label="Semester" 
-                    value={3} 
+                    value={4} 
                     icon={<BookOpen size={24}/>} 
                     color="bg-yellow-300"
                     isDarkMode={isDarkMode}
