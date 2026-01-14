@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local personal assets (DO NOT COMMIT)
+public/Desktop/
+public/KontentYT2/
