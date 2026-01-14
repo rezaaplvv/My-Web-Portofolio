@@ -56,7 +56,7 @@ const PROJECTS = [
     desc: "Aplikasi Flutter streaming musik/video online & offline player.",
     tech: ["Flutter", "Dart", "Rest API"],
     size: "col-span-1",
-    image: "/ppgithub.jpg",
+    image: "/viauo.png",
     link: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
   },
   {
@@ -300,9 +300,9 @@ const Marquee = () => {
       >
         {[...Array(10)].map((_, i) => (
           <div key={i} className="flex items-center gap-8 mx-4">
-            <span className="text-2xl font-black uppercase text-black">OPEN FOR FREELANCE</span>
-            <span className="text-2xl font-black uppercase text-transparent text-stroke-2">FIX BUGS</span>
-            <span className="text-2xl font-black uppercase text-black">WEB DEVELOPMENT</span>
+            <span className="text-2xl font-black uppercase text-black">PROBLEM SOLVER</span>
+            <span className="text-2xl font-black uppercase text-transparent text-stroke-2">INNOVATIVE OR DIE</span>
+            <span className="text-2xl font-black uppercase text-black">FULL-STACK CAPABILITIES</span>
             <Zap className="fill-black w-6 h-6" />
           </div>
         ))}
@@ -523,7 +523,7 @@ export default function Home() {
               </Link>
               <div className="flex items-center gap-2 font-mono text-sm font-bold bg-white border-2 border-black px-3 py-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                 <Zap size={14} className="fill-yellow-400 text-black"/> 
-                SCROLL DOWN
+                DOWNLOAD CV
               </div>
             </motion.div>
           </div>
