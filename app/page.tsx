@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, animate } from "framer-motion";
+import { motion, animate, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { 
   Github, 
@@ -29,7 +29,11 @@ import {
   Terminal,
   Server,
   Code,
-  Coffee
+  Coffee,
+  ChevronDown,
+  Linkedin,
+  Mail,
+  Instagram
 } from "lucide-react";
 import Link from "next/link";
 
@@ -126,29 +130,49 @@ const TECH_ROW_2 = [
 // --- DATA SERVICES ---
 const SERVICES = [
     {
-      title: "Bug Fixing",
-      price: "Start 50K",
-      desc: "Memperbaiki error logic, CSS berantakan, atau API yang gagal connect.",
-      icon: <Bug size={28} />,
-      color: "bg-red-400"
-    },
-    {
-      title: "Full App Build",
-      price: "Custom",
-      desc: "Pembuatan aplikasi Web/Mobile dari nol sampai deploy siap pakai.",
-      icon: <Package size={28} />,
-      color: "bg-yellow-400"
-    },
-    {
-      title: "UI Slicing",
-      price: "Per Page",
-      desc: "Konversi desain Figma/XD ke kode React/Flutter yang pixel-perfect.",
+      title: "Web Engineering",
+      price: "Full-Stack",
+      desc: "Developing scalable web applications using Next.js and modern JavaScript ecosystems.",
       icon: <Layout size={28} />,
       color: "bg-blue-400"
+    },
+    {
+      title: "Mobile Development",
+      price: "Cross-Platform",
+      desc: "Creating high-performance mobile apps for Android and iOS using Flutter and Dart.",
+      icon: <Smartphone size={28} />,
+      color: "bg-green-400"
+    },
+    {
+      title: "Technical Consulting",
+      price: "Solutions",
+      desc: "Providing architectural advice, code reviews, and strategic technical planning for projects.",
+      icon: <Package size={28} />,
+      color: "bg-yellow-400"
     }
 ];
 
-// --- CUSTOM HOOKS (UPDATED FIX) ---
+// --- DATA FAQ ---
+const FAQS = [
+  {
+    question: "Apa tech stack utama yang Anda gunakan?",
+    answer: "Saya fokus pada pengembangan Full-Stack menggunakan Next.js dan Tailwind CSS untuk Frontend, serta Node.js atau Laravel untuk Backend."
+  },
+  {
+    question: "Apakah Anda terbuka untuk kolaborasi proyek?",
+    answer: "Tentu saja! Saya selalu terbuka untuk berkolaborasi dalam proyek inovatif, baik itu riset teknologi terbaru maupun proyek open-source."
+  },
+  {
+    question: "Bagaimana cara Anda memastikan kualitas kode?",
+    answer: "Saya mengutamakan prinsip clean code dan arsitektur yang terstruktur agar aplikasi mudah dipelihara dalam jangka panjang."
+  },
+  {
+    question: "Apa fokus utama Anda saat membangun sistem?",
+    answer: "Fungsionalitas dan User Experience. Saya memastikan setiap baris kode yang saya tulis memberikan solusi nyata bagi pengguna."
+  }
+];
+
+// --- CUSTOM HOOKS ---
 const useTypingEffect = (text: string, typingSpeed: number = 150, deletingSpeed: number = 80, pauseTime: number = 2000) => {
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
@@ -157,28 +181,22 @@ const useTypingEffect = (text: string, typingSpeed: number = 150, deletingSpeed:
   useEffect(() => {
     const handleTyping = () => {
       if (!isDeleting) {
-        // Typing Phase
         if (index.current < text.length) {
-          // FIX: Gunakan slice untuk menjamin karakter index 0 (R) selalu terambil
           setDisplayedText(text.slice(0, index.current + 1));
           index.current++;
         } else {
-          // Pause before deleting
           setTimeout(() => setIsDeleting(true), pauseTime);
         }
       } else {
-        // Deleting Phase
         if (index.current > 0) {
           setDisplayedText(text.slice(0, index.current - 1));
           index.current--;
         } else {
-          // Restart Loop
           setIsDeleting(false);
-          index.current = 0; // Pastikan reset ke 0
+          index.current = 0; 
         }
       }
     };
-    
     const timeoutId = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
     return () => clearTimeout(timeoutId);
   }, [displayedText, isDeleting, text, typingSpeed, deletingSpeed, pauseTime]);
@@ -188,7 +206,6 @@ const useTypingEffect = (text: string, typingSpeed: number = 150, deletingSpeed:
 
 const useGithubStats = () => {
   const [repos, setRepos] = useState<number | null>(null);
-
   useEffect(() => {
     fetch('https://api.github.com/users/rezaaplvv')
       .then(res => res.json())
@@ -199,27 +216,21 @@ const useGithubStats = () => {
       })
       .catch(err => console.error("GitHub fetch error:", err));
   }, []);
-
   return { repos };
 };
 
 // --- COMPONENTS ---
 
-// FIX: Komponen Typing ini sekarang pintar memisahkan baris
 const LoopedTypingText = ({ text, secondLineStyle }: { text: string, secondLineStyle?: string }) => {
     const typedText = useTypingEffect(text);
-    
-    // Logika split: Jika ada spasi, berarti sudah masuk kata kedua
     const hasSpace = typedText.includes(" ");
     const parts = typedText.split(" ");
     const firstWord = parts[0];
-    const restWords = parts.slice(1).join(" "); // Menggabungkan sisa kata jika ada
+    const restWords = parts.slice(1).join(" "); 
     
     return (
       <span className="inline-block leading-tight">
         {firstWord}
-        
-        {/* Render baris baru HANYA jika spasi sudah terketik */}
         {hasSpace && (
             <>
                 <br />
@@ -228,7 +239,6 @@ const LoopedTypingText = ({ text, secondLineStyle }: { text: string, secondLineS
                 </span>
             </>
         )}
-        
         <motion.span
           animate={{ opacity: [1, 0] }}
           transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
@@ -303,18 +313,15 @@ const Marquee = () => {
 
 const StatCard = ({ label, value, icon, color, isRealtime = false }: { label: string, value: number, icon: React.ReactNode, color: string, isRealtime?: boolean }) => {
     const nodeRef = useRef<HTMLSpanElement>(null);
-
     useEffect(() => {
         const node = nodeRef.current;
         if (!node) return;
-
         const controls = animate(0, value, {
             duration: 2,
             onUpdate: (latest) => {
                 node.textContent = Math.floor(latest).toString();
             }
         });
-
         return () => controls.stop();
     }, [value]);
 
@@ -340,11 +347,7 @@ const TechStickerMarquee = ({ items, direction = "left", speed = 30 }: { items: 
         <motion.div 
           className="flex gap-6 whitespace-nowrap"
           animate={{ x: direction === "left" ? ["0%", "-50%"] : ["-50%", "0%"] }}
-          transition={{ 
-            repeat: Infinity, 
-            ease: "linear", 
-            duration: speed 
-          }}
+          transition={{ repeat: Infinity, ease: "linear", duration: speed }}
         >
           {[...items, ...items, ...items].map((item, i) => (
             <div 
@@ -358,6 +361,38 @@ const TechStickerMarquee = ({ items, direction = "left", speed = 30 }: { items: 
         </motion.div>
       </div>
     );
+};
+
+// --- FAQ ITEM COMPONENT ---
+const FaqItem = ({ question, answer }: { question: string, answer: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <div className="bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden transition-all">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full p-4 flex items-center justify-between text-left font-bold text-lg hover:bg-yellow-100 transition-colors"
+      >
+        <span className="uppercase">{question}</span>
+        <ChevronDown className={`w-6 h-6 transform transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`} />
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="border-t-4 border-black"
+          >
+            <div className="p-4 bg-gray-50 font-medium text-gray-800">
+              {answer}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 };
 
 
@@ -378,13 +413,14 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 h-20 bg-[#FFFDF5] border-b-4 border-black z-50 px-6 md:px-12 flex items-center justify-between">
         <Link href="#hero" className="flex items-center gap-2 group">
             <div className="bg-black text-white font-black text-xl px-2 py-1 border-2 border-black group-hover:bg-[#FDE047] group-hover:text-black transition-colors">
-                PortFolio.
+                PORTFOLIO.
             </div>
         </Link>
         <div className="hidden md:flex items-center gap-6">
             <NavLink href="#hero">Tentang</NavLink>
             <NavLink href="#projects">Proyek</NavLink>
             <NavLink href="#services">Jasa</NavLink>
+            <NavLink href="#faq">FAQ</NavLink>
         </div>
         <div className="hidden md:block">
             <Link 
@@ -413,6 +449,7 @@ export default function Home() {
               <NavLink href="#hero" onClick={() => setIsMobileMenuOpen(false)}>Tentang</NavLink>
               <NavLink href="#projects" onClick={() => setIsMobileMenuOpen(false)}>Proyek</NavLink>
               <NavLink href="#services" onClick={() => setIsMobileMenuOpen(false)}>Jasa</NavLink>
+              <NavLink href="#faq" onClick={() => setIsMobileMenuOpen(false)}>FAQ</NavLink>
               <div className="h-[2px] bg-gray-100 my-2"></div>
               <Link 
                   href="https://wa.me/6283133387676"
@@ -444,7 +481,6 @@ export default function Home() {
             <div className="space-y-2 min-h-[160px] md:min-h-[220px] w-full"> 
               <h1 className="text-6xl md:text-8xl font-black uppercase leading-[1.1] tracking-normal block overflow-visible">
                 <div className="whitespace-nowrap flex flex-col items-center md:items-start">
-                    {/* FIX: Nama dipanggil sekali agar sinkron & tidak glitch */}
                     <LoopedTypingText 
                         text="Reza Pahlepi" 
                         secondLineStyle="text-white text-stroke-3 md:text-stroke-4"
@@ -461,16 +497,16 @@ export default function Home() {
                 Full-Stack Developer.
               </motion.div>
 
-<motion.p 
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 0.7 }}
-  className="text-lg font-medium border-l-4 border-black pl-4 py-2 mt-4"
->
-  Informatics Engineering Student at USU & Freelance Developer. 
-  <br />
-  Skilled in full-stack development, delivering pixel-perfect frontends and robust server-side logic.
-</motion.p>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+                className="text-lg font-medium border-l-4 border-black pl-4 py-2 mt-4"
+              >
+                Informatics Engineering Student at USU & Freelance Developer. 
+                <br />
+                Skilled in full-stack development, delivering pixel-perfect frontends and robust server-side logic.
+              </motion.p>
             </div>
 
             <motion.div 
@@ -499,9 +535,8 @@ export default function Home() {
               whileHover={{ rotate: 0 }}
               className="w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-white border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] relative z-10"
             >
-              {/* Image FIXED: Grayscale removed */}
               <Image 
-                src="/myprofile.jpg" 
+                src="/ppgithub.jpg" 
                 alt="Reza Pahlepi"
                 fill
                 className="object-cover transition-all duration-300"
@@ -562,7 +597,6 @@ export default function Home() {
                    My <span className="text-stroke-2 text-transparent">Arsenal</span>
                 </h2>
             </div>
-            {/* Double Marquee: Kiri dan Kanan */}
             <TechStickerMarquee items={TECH_ROW_1} direction="left" speed={30} />
             <TechStickerMarquee items={TECH_ROW_2} direction="right" speed={30} />
         </section>
@@ -625,7 +659,6 @@ export default function Home() {
                        {project.desc}
                      </p>
                    </div>
-                   
                    <div className="flex flex-wrap gap-2 mt-auto">
                      {project.tech.map((t, i) => (
                        <BrutalTag key={i} text={t} />
@@ -638,13 +671,13 @@ export default function Home() {
         </section>
 
         {/* ================= SERVICES ================= */}
-        <section id="services" className="pt-32 pb-20 max-w-7xl mx-auto px-6 md:px-12">
+        <section id="services" className="pt-32 pb-20 max-w-7xl mx-auto px-6 md:px-12 border-b-4 border-black">
             <div className="mb-12 border-b-4 border-black pb-4 text-right">
-                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">
-                My <span className="text-stroke-2 text-transparent">Services</span>
-                </h2>
+ <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">
+  Core <span className="text-stroke-2 text-transparent">Expertise</span>
+</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
                 {SERVICES.map((service, index) => (
                     <div key={index} className="bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
                         <div className={`w-16 h-16 ${service.color} border-2 border-black flex items-center justify-center mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}>
@@ -661,6 +694,91 @@ export default function Home() {
                 ))}
             </div>
         </section>
+
+        {/* ================= FAQ SECTION ================= */}
+        <section id="faq" className="py-20 bg-[#F3F4F6] border-b-4 border-black">
+          <div className="max-w-4xl mx-auto px-6 md:px-12">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
+                Common <span className="bg-black text-white px-2">Questions</span>
+              </h2>
+            </div>
+            <div className="flex flex-col gap-4">
+              {FAQS.map((faq, index) => (
+                <FaqItem key={index} question={faq.question} answer={faq.answer} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ================= CONNECT / SOCIAL WALL ================= */}
+        <section className="py-20 bg-[#FFFDF5] border-b-4 border-black overflow-hidden relative">
+           <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-16">
+                 Let's <span className="text-stroke-2 text-transparent">Connect</span>
+              </h2>
+              
+              <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+                 <Link href="https://github.com/rezaaplvv" target="_blank" className="group">
+                    <div className="w-32 h-32 md:w-40 md:h-40 bg-gray-900 border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform -rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+                       <Github size={48} className="text-white mb-2"/>
+                       <span className="font-bold text-white uppercase">GitHub</span>
+                    </div>
+                 </Link>
+                 
+<Link href="https://wa.me/6283133387676" target="_blank" className="group">
+  <div className="w-32 h-32 md:w-40 md:h-40 bg-[#25D366] border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+    <MessageCircle size={48} className="text-white mb-2"/>
+    <span className="font-bold text-white uppercase">WhatsApp</span>
+  </div>
+</Link>
+
+                 <Link href="https://instagram.com" target="_blank" className="group">
+                    <div className="w-32 h-32 md:w-40 md:h-40 bg-pink-500 border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform -rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+                       <Instagram size={48} className="text-white mb-2"/>
+                       <span className="font-bold text-white uppercase">Instagram</span>
+                    </div>
+                 </Link>
+                 
+                 <Link href="mailto:rezapahlepi77654@gmail.com" className="group">
+                    <div className="w-32 h-32 md:w-40 md:h-40 bg-red-500 border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+                       <Mail size={48} className="text-white mb-2"/>
+                       <span className="font-bold text-white uppercase">Email</span>
+                    </div>
+                 </Link>
+              </div>
+           </div>
+        </section>
+
+        {/* ================= FOOTER ================= */}
+        <footer className="bg-black text-white py-12 md:py-20 border-t-8 border-[#FDE047]">
+            <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+                <div>
+                   <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4">
+                      Reza <br/><span className="text-[#FDE047]">Pahlepi.</span>
+                   </h2>
+                   <p className="text-gray-400 font-medium text-lg max-w-md">
+                      Let's build something crazy and useful. <br/>
+                      Based in Medan, Indonesia.
+                   </p>
+                </div>
+                
+                <div className="flex flex-col items-center md:items-end gap-4">
+                   <div className="text-xl font-bold uppercase tracking-widest text-[#FDE047]">
+                      Ready to start?
+                   </div>
+                   <Link 
+                      href="https://wa.me/6283133387676"
+                      className="bg-white text-black border-4 border-[#FDE047] px-8 py-4 font-black text-xl hover:bg-[#FDE047] hover:scale-105 transition-all"
+                   >
+                      START PROJECT
+                   </Link>
+                   <div className="mt-8 text-sm text-gray-500 font-mono">
+                      © {new Date().getFullYear()} Reza Pahlepi. All Rights Reserved.
+                   </div>
+                </div>
+            </div>
+        </footer>
 
       </main>
 
