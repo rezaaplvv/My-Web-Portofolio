@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, animate, AnimatePresence } from "framer-motion";
+import { motion, animate, AnimatePresence, useSpring, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
 import { 
   Github, 
@@ -31,9 +31,10 @@ import {
   Code,
   Coffee,
   ChevronDown,
-  Linkedin,
   Mail,
-  Instagram
+  Instagram,
+  Lightbulb,
+  Moon
 } from "lucide-react";
 import Link from "next/link";
 
@@ -45,7 +46,6 @@ const PROJECTS = [
     subtitle: "Streaming Platform",
     desc: "Platform streaming film performa tinggi. Arsitektur scalable Next.js 15.",
     tech: ["Next.js 15", "Tailwind", "Node.js"],
-    size: "col-span-1",
     image: "/inidrama.png",
     link: "https://drama-tix.vercel.app/"
   },
@@ -55,7 +55,6 @@ const PROJECTS = [
     subtitle: "Multimedia App",
     desc: "Aplikasi Flutter streaming musik/video online & offline player.",
     tech: ["Flutter", "Dart", "Rest API"],
-    size: "col-span-1",
     image: "/viauo.png",
     link: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
   },
@@ -65,7 +64,6 @@ const PROJECTS = [
     subtitle: "Restaurant System",
     desc: "Sistem kasir lengkap: Real-time P&L, QRIS, Thermal Printing.",
     tech: ["Laravel", "MySQL", "Bootstrap"],
-    size: "col-span-1",
     image: "/mesinkasirutama.png",
     link: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
@@ -75,7 +73,6 @@ const PROJECTS = [
     subtitle: "AI Detection",
     desc: "Mendeteksi ekspresi wajah user dan mengubah UI sesuai emosi secara real-time.",
     tech: ["React", "TensorFlow", "AI"],
-    size: "col-span-1",
     image: "/emo.png",
     link: "https://emotion-face.vercel.app/"
   },
@@ -85,7 +82,6 @@ const PROJECTS = [
     subtitle: "Digital Library",
     desc: "Sistem perpustakaan digital dengan fitur gamifikasi level & ranking.",
     tech: ["Flutter", "Firebase", "Gamification"],
-    size: "col-span-1",
     image: "/library.png",
     link: "https://github.com/rezaaplvv/smart-perpus-app"
   },
@@ -95,7 +91,6 @@ const PROJECTS = [
     subtitle: "Tools Web App",
     desc: "Download media kualitas tinggi dari seluruh social media tanpa watermark.",
     tech: ["React", "Vite", "Node.js"],
-    size: "col-span-1",
     image: "/zeronout.png",
     link: "https://zero-nout-downloader.vercel.app/"
   },
@@ -221,6 +216,55 @@ const useGithubStats = () => {
 
 // --- COMPONENTS ---
 
+// 1. COMPONENT: THEME PULL SWITCH (Tali Lampu)
+const ThemePullSwitch = ({ isDarkMode, toggleTheme }: { isDarkMode: boolean, toggleTheme: () => void }) => {
+    const y = useMotionValue(0);
+    // FIX: Menaikkan stiffness agar pantulan lebih kuat dan damping agar lebih stabil
+    const ySpring = useSpring(y, { stiffness: 800, damping: 35 });
+    
+    // FIX: Menggunakan ySpring secara langsung untuk tinggi agar tidak ada celah/putus
+    const height = useTransform(ySpring, (latest) => 80 + latest); 
+
+    const handleDragEnd = (_: any, info: any) => {
+        // Trigger jika ditarik cukup jauh
+        if (info.offset.y > 80) {
+            toggleTheme();
+        }
+        // FIX: Kembalikan paksa ke 0 agar tali memantul ke atas
+        y.set(0);
+    };
+
+    return (
+        <div className="absolute top-0 right-[45%] z-50 flex flex-col items-center">
+            {/* Base */}
+            <div className={`w-6 h-6 rounded-full border-2 ${isDarkMode ? 'bg-gray-800 border-white' : 'bg-gray-200 border-black'} absolute -top-3 z-20`}></div>
+            
+            {/* Tali: Sekarang tingginya otomatis mengikuti posisi bandul */}
+            <motion.div 
+                style={{ height }}
+                className={`w-1 ${isDarkMode ? 'bg-white' : 'bg-black'} relative z-10 origin-top`}
+            />
+
+            {/* Handle/Bandul */}
+            <motion.div
+                drag="y"
+                dragConstraints={{ top: 0, bottom: 200 }}
+                dragElastic={0.1} 
+                dragSnapToOrigin={true} // FIX: Memaksa bandul kembali ke titik awal saat dilepas
+                onDrag={(_, info) => y.set(info.offset.y)}
+                onDragEnd={handleDragEnd}
+                style={{ y: ySpring }}
+                className="cursor-grab active:cursor-grabbing relative z-20 -mt-1" // -mt-1 untuk memastikan nempel
+            >
+                <div className={`w-10 h-10 rounded-full border-4 ${isDarkMode ? 'bg-yellow-400 border-white shadow-[0_0_20px_rgba(250,204,21,0.8)]' : 'bg-black border-black'} flex items-center justify-center transition-transform active:scale-90`}>
+                    {isDarkMode ? <Lightbulb size={20} className="text-black"/> : <Moon size={20} className="text-white"/>}
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
+
 const LoopedTypingText = ({ text, secondLineStyle }: { text: string, secondLineStyle?: string }) => {
     const typedText = useTypingEffect(text);
     const hasSpace = typedText.includes(" ");
@@ -242,7 +286,7 @@ const LoopedTypingText = ({ text, secondLineStyle }: { text: string, secondLineS
         <motion.span
           animate={{ opacity: [1, 0] }}
           transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-          className="inline-block w-[4px] h-[0.8em] bg-black ml-1 align-middle"
+          className="inline-block w-[4px] h-[0.8em] bg-current ml-1 align-middle"
         ></motion.span>
       </span>
     );
@@ -270,25 +314,25 @@ const DraggableTech = ({ icon, label, className, delay, color }: { icon: React.R
   );
 };
 
-const BrutalTag = ({ text }: { text: string }) => (
-  <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+const BrutalTag = ({ text, isDarkMode }: { text: string, isDarkMode: boolean }) => (
+  <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider border-2 ${isDarkMode ? 'border-white bg-black text-white shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]' : 'border-black bg-white text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'}`}>
     {text}
   </span>
 );
 
-const NavLink = ({ href, children, onClick }: { href: string, children: React.ReactNode, onClick?: () => void }) => (
+const NavLink = ({ href, children, onClick, isDarkMode }: { href: string, children: React.ReactNode, onClick?: () => void, isDarkMode?: boolean }) => (
     <Link 
         href={href} 
         onClick={onClick}
-        className="font-bold text-sm uppercase tracking-wider hover:bg-black hover:text-white px-3 py-1 transition-all border-2 border-transparent hover:border-black"
+        className={`font-bold text-sm uppercase tracking-wider px-3 py-1 transition-all border-2 border-transparent ${isDarkMode ? 'hover:bg-white hover:text-black hover:border-white' : 'hover:bg-black hover:text-white hover:border-black'}`}
     >
         {children}
     </Link>
 );
 
-const Marquee = () => {
+const Marquee = ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
-    <div className="w-full bg-[#FDE047] border-y-4 border-black py-3 overflow-hidden flex relative z-20">
+    <div className={`w-full ${isDarkMode ? 'bg-[#FDE047] border-white' : 'bg-[#FDE047] border-black'} border-y-4 py-3 overflow-hidden flex relative z-20`}>
       <motion.div 
         className="flex whitespace-nowrap"
         animate={{ x: ["0%", "-50%"] }}
@@ -301,9 +345,9 @@ const Marquee = () => {
         {[...Array(10)].map((_, i) => (
           <div key={i} className="flex items-center gap-8 mx-4">
             <span className="text-2xl font-black uppercase text-black">PROBLEM SOLVER</span>
-            <span className="text-2xl font-black uppercase text-transparent text-stroke-2">INNOVATIVE OR DIE</span>
+            <span className={`text-2xl font-black uppercase text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>INNOVATE OR DIE</span>
             <span className="text-2xl font-black uppercase text-black">FULL-STACK CAPABILITIES</span>
-            <Zap className="fill-black w-6 h-6" />
+            <Zap className="fill-black text-black w-6 h-6" />
           </div>
         ))}
       </motion.div>
@@ -311,7 +355,7 @@ const Marquee = () => {
   );
 };
 
-const StatCard = ({ label, value, icon, color, isRealtime = false }: { label: string, value: number, icon: React.ReactNode, color: string, isRealtime?: boolean }) => {
+const StatCard = ({ label, value, icon, color, isRealtime = false, isDarkMode }: { label: string, value: number, icon: React.ReactNode, color: string, isRealtime?: boolean, isDarkMode: boolean }) => {
     const nodeRef = useRef<HTMLSpanElement>(null);
     useEffect(() => {
         const node = nodeRef.current;
@@ -326,22 +370,22 @@ const StatCard = ({ label, value, icon, color, isRealtime = false }: { label: st
     }, [value]);
 
     return (
-        <div className={`bg-white border-4 border-black p-4 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all flex flex-col items-center justify-center gap-2 group`}>
-            <div className={`p-3 rounded-full border-2 border-black ${color} mb-1 group-hover:scale-110 transition-transform`}>
+        <div className={`${isDarkMode ? 'bg-[#1a1a1a] border-white shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] text-white' : 'bg-white border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-black'} border-4 p-4 hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex flex-col items-center justify-center gap-2 group`}>
+            <div className={`p-3 rounded-full border-2 ${isDarkMode ? 'border-white text-black' : 'border-black'} ${color} mb-1 group-hover:scale-110 transition-transform`}>
                 {icon}
             </div>
             <div className="text-4xl font-black flex items-start">
                 <span ref={nodeRef}>0</span>
                 <span className="text-lg mt-1">+</span>
             </div>
-            <div className="text-xs font-bold uppercase tracking-widest text-gray-500">
+            <div className={`text-xs font-bold uppercase tracking-widest ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
                 {label} {isRealtime && <span className="text-green-500 animate-pulse ml-1">●</span>}
             </div>
         </div>
     );
 };
 
-const TechStickerMarquee = ({ items, direction = "left", speed = 30 }: { items: any[], direction?: "left" | "right", speed?: number }) => {
+const TechStickerMarquee = ({ items, direction = "left", speed = 30, isDarkMode }: { items: any[], direction?: "left" | "right", speed?: number, isDarkMode: boolean }) => {
     return (
       <div className="w-full overflow-hidden flex py-4">
         <motion.div 
@@ -352,7 +396,7 @@ const TechStickerMarquee = ({ items, direction = "left", speed = 30 }: { items: 
           {[...items, ...items, ...items].map((item, i) => (
             <div 
                 key={i} 
-                className={`flex items-center gap-2 px-4 py-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${item.color} transform hover:-translate-y-1 transition-transform`}
+                className={`flex items-center gap-2 px-4 py-2 border-4 ${isDarkMode ? 'border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'} ${item.color} transform hover:-translate-y-1 transition-transform`}
             >
                 <div className="text-black">{item.icon}</div>
                 <span className="font-black text-sm uppercase text-black">{item.name}</span>
@@ -364,14 +408,14 @@ const TechStickerMarquee = ({ items, direction = "left", speed = 30 }: { items: 
 };
 
 // --- FAQ ITEM COMPONENT ---
-const FaqItem = ({ question, answer }: { question: string, answer: string }) => {
+const FaqItem = ({ question, answer, isDarkMode }: { question: string, answer: string, isDarkMode: boolean }) => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (
-    <div className="bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] overflow-hidden transition-all">
+    <div className={`${isDarkMode ? 'bg-[#1a1a1a] border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]' : 'bg-white border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'} border-4 overflow-hidden transition-all`}>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-4 flex items-center justify-between text-left font-bold text-lg hover:bg-yellow-100 transition-colors"
+        className={`w-full p-4 flex items-center justify-between text-left font-bold text-lg ${isDarkMode ? 'text-white hover:bg-gray-800' : 'text-black hover:bg-yellow-100'} transition-colors`}
       >
         <span className="uppercase">{question}</span>
         <ChevronDown className={`w-6 h-6 transform transition-transform duration-300 ${isOpen ? "rotate-180" : "rotate-0"}`} />
@@ -383,9 +427,9 @@ const FaqItem = ({ question, answer }: { question: string, answer: string }) => 
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="border-t-4 border-black"
+            className={`border-t-4 ${isDarkMode ? 'border-white' : 'border-black'}`}
           >
-            <div className="p-4 bg-gray-50 font-medium text-gray-800">
+            <div className={`p-4 font-medium ${isDarkMode ? 'bg-gray-900 text-gray-300' : 'bg-gray-50 text-gray-800'}`}>
               {answer}
             </div>
           </motion.div>
@@ -400,39 +444,49 @@ export default function Home() {
   const containerRef = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { repos } = useGithubStats();
+  
+  // STATE DARK MODE
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-[#FFFDF5] text-black font-sans selection:bg-black selection:text-white relative overflow-x-hidden pt-20">
+    <div ref={containerRef} className={`min-h-screen ${isDarkMode ? 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black' : 'bg-[#FFFDF5] text-black selection:bg-black selection:text-white'} font-sans relative overflow-x-hidden transition-colors duration-500 pt-20`}>
       
-      {/* --- BACKGROUND GRID --- */}
+      {/* --- BACKGROUND GRID (Dynamic Color) --- */}
       <div className="fixed inset-0 z-0 opacity-10 pointer-events-none"
-        style={{ backgroundImage: "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)", backgroundSize: "40px 40px" }}
+        style={{ 
+            backgroundImage: `linear-gradient(${isDarkMode ? '#ffffff' : '#000000'} 1px, transparent 1px), linear-gradient(90deg, ${isDarkMode ? '#ffffff' : '#000000'} 1px, transparent 1px)`, 
+            backgroundSize: "40px 40px" 
+        }}
       ></div>
 
       {/* ================= NAVBAR ================= */}
-      <nav className="fixed top-0 left-0 right-0 h-20 bg-[#FFFDF5] border-b-4 border-black z-50 px-6 md:px-12 flex items-center justify-between">
+      <nav className={`fixed top-0 left-0 right-0 h-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 z-50 px-6 md:px-12 flex items-center justify-between transition-colors duration-500`}>
         <Link href="#hero" className="flex items-center gap-2 group">
-            <div className="bg-black text-white font-black text-xl px-2 py-1 border-2 border-black group-hover:bg-[#FDE047] group-hover:text-black transition-colors">
+            <div className={`font-black text-xl px-2 py-1 border-2 transition-colors ${isDarkMode ? 'bg-white text-black border-white group-hover:bg-[#FDE047] group-hover:text-black' : 'bg-black text-white border-black group-hover:bg-[#FDE047] group-hover:text-black'}`}>
                 PORTFOLIO.
             </div>
         </Link>
         <div className="hidden md:flex items-center gap-6">
-            <NavLink href="#hero">Tentang</NavLink>
-            <NavLink href="#projects">Proyek</NavLink>
-            <NavLink href="#services">Jasa</NavLink>
-            <NavLink href="#faq">FAQ</NavLink>
+            <NavLink href="#hero" isDarkMode={isDarkMode}>About</NavLink>
+            <NavLink href="#projects" isDarkMode={isDarkMode}>Project</NavLink>
+            <NavLink href="#services" isDarkMode={isDarkMode}>Skill</NavLink>
+            <NavLink href="#faq" isDarkMode={isDarkMode}>FAQ</NavLink>
         </div>
         <div className="hidden md:block">
             <Link 
                 href="https://wa.me/6283133387676"
-                className="bg-[#34D399] border-2 border-black px-4 py-2 font-bold text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all flex items-center gap-2"
+                className={`bg-[#34D399] border-2 ${isDarkMode ? 'border-white text-black shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]' : 'border-black text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'} px-4 py-2 font-bold text-sm hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex items-center gap-2`}
             >
                 <MessageCircle size={16} />
-                KONTAK SAYA
+                CONTACT ME
             </Link>
         </div>
         <button 
-            className="md:hidden p-2 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[3px]"
+            className={`md:hidden p-2 border-2 ${isDarkMode ? 'border-white text-white shadow-[3px_3px_0px_0px_rgba(255,255,255,1)]' : 'border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]'} active:shadow-none active:translate-y-[3px]`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
             {isMobileMenuOpen ? <X size={24}/> : <Menu size={24}/>}
@@ -444,16 +498,16 @@ export default function Home() {
           <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="fixed top-20 left-0 right-0 bg-white border-b-4 border-black z-40 p-6 flex flex-col gap-4 shadow-xl md:hidden"
+              className={`fixed top-20 left-0 right-0 ${isDarkMode ? 'bg-[#0a0a0a] border-white text-white' : 'bg-white border-black text-black'} border-b-4 z-40 p-6 flex flex-col gap-4 shadow-xl md:hidden`}
           >
-              <NavLink href="#hero" onClick={() => setIsMobileMenuOpen(false)}>Tentang</NavLink>
-              <NavLink href="#projects" onClick={() => setIsMobileMenuOpen(false)}>Proyek</NavLink>
-              <NavLink href="#services" onClick={() => setIsMobileMenuOpen(false)}>Jasa</NavLink>
-              <NavLink href="#faq" onClick={() => setIsMobileMenuOpen(false)}>FAQ</NavLink>
-              <div className="h-[2px] bg-gray-100 my-2"></div>
+              <NavLink href="#hero" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Tentang</NavLink>
+              <NavLink href="#projects" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Proyek</NavLink>
+              <NavLink href="#services" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Jasa</NavLink>
+              <NavLink href="#faq" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>FAQ</NavLink>
+              <div className={`h-[2px] ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'} my-2`}></div>
               <Link 
                   href="https://wa.me/6283133387676"
-                  className="bg-[#34D399] text-center border-2 border-black px-4 py-3 font-bold text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                  className={`bg-[#34D399] text-center border-2 ${isDarkMode ? 'border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] text-black' : 'border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'} px-4 py-3 font-bold text-sm`}
               >
                   CHAT WHATSAPP
               </Link>
@@ -463,17 +517,21 @@ export default function Home() {
       <main className="relative z-10">
         
         {/* ================= HERO SECTION ================= */}
-        <section id="hero" className="min-h-[calc(100vh-80px)] max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-center gap-12 pt-10 md:pt-0 mb-20">
+        <section id="hero" className="min-h-[calc(100vh-80px)] max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-center gap-12 pt-10 md:pt-0 mb-20 relative">
           
+          {/* --- TALI LAMPU (PULL SWITCH) --- */}
+          {/* Posisinya Absolute dalam Hero, jadi ikut scroll */}
+          <ThemePullSwitch isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+
           {/* LEFT: TEXT */}
           <div className="flex-[1.5] text-center md:text-left space-y-6 order-2 md:order-1 min-w-0">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="inline-block px-4 py-2 bg-[#FDE047] border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              className={`inline-block px-4 py-2 bg-[#FDE047] border-2 ${isDarkMode ? 'border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'}`}
             >
-              <span className="font-bold text-sm tracking-widest uppercase flex items-center gap-2">
-                <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse border border-black"></span>
+              <span className="font-bold text-sm tracking-widest uppercase flex items-center gap-2 text-black">
+                <span className={`w-2 h-2 bg-red-500 rounded-full animate-pulse border ${isDarkMode ? 'border-white' : 'border-black'}`}></span>
                 Open for Work
               </span>
             </motion.div>
@@ -483,7 +541,7 @@ export default function Home() {
                 <div className="whitespace-nowrap flex flex-col items-center md:items-start">
                     <LoopedTypingText 
                         text="Reza Pahlepi" 
-                        secondLineStyle="text-white text-stroke-3 md:text-stroke-4"
+                        secondLineStyle={`text-transparent ${isDarkMode ? 'text-stroke-3-dark md:text-stroke-4-dark' : 'text-stroke-3 md:text-stroke-4'}`}
                     />
                 </div>
               </h1>
@@ -492,7 +550,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }} 
-                className="text-2xl md:text-3xl font-bold bg-black text-white inline-block px-2 py-1 rotate-1 mt-2"
+                className={`text-2xl md:text-3xl font-bold ${isDarkMode ? 'bg-white text-black' : 'bg-black text-white'} inline-block px-2 py-1 rotate-1 mt-2`}
               >
                 Full-Stack Developer.
               </motion.div>
@@ -501,7 +559,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7 }}
-                className="text-lg font-medium border-l-4 border-black pl-4 py-2 mt-4"
+                className={`text-lg font-medium border-l-4 ${isDarkMode ? 'border-white text-gray-300' : 'border-black'} pl-4 py-2 mt-4`}
               >
                 Informatics Engineering Student at USU & Freelance Developer. 
                 <br />
@@ -517,11 +575,11 @@ export default function Home() {
             >
               <Link 
                 href="#projects"
-                className="group relative px-8 py-4 bg-[#60A5FA] border-2 border-black font-bold text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all"
+                className={`group relative px-8 py-4 bg-[#60A5FA] border-2 ${isDarkMode ? 'border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'} font-bold text-black hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all`}
               >
                 LIHAT KARYA
               </Link>
-              <div className="flex items-center gap-2 font-mono text-sm font-bold bg-white border-2 border-black px-3 py-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <div className={`flex items-center gap-2 font-mono text-sm font-bold bg-white border-2 ${isDarkMode ? 'border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] text-black' : 'border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'} px-3 py-1`}>
                 <Zap size={14} className="fill-yellow-400 text-black"/> 
                 DOWNLOAD CV
               </div>
@@ -533,7 +591,7 @@ export default function Home() {
             <motion.div
               initial={{ rotate: 3 }}
               whileHover={{ rotate: 0 }}
-              className="w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-white border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] relative z-10"
+              className={`w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-white border-4 ${isDarkMode ? 'border-white shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} relative z-10`}
             >
               <Image 
                 src="/ppgithub.jpg" 
@@ -542,11 +600,11 @@ export default function Home() {
                 className="object-cover transition-all duration-300"
                 priority
               />
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-8 bg-[#FDE047]/90 border-2 border-black rotate-[-2deg] z-20"></div>
+              <div className={`absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-8 bg-[#FDE047]/90 border-2 ${isDarkMode ? 'border-white' : 'border-black'} rotate-[-2deg] z-20`}></div>
             </motion.div>
 
-            <div className="absolute top-[10%] right-[15%] w-20 h-20 bg-[#F472B6] border-2 border-black rounded-full z-0"></div>
-            <div className="absolute bottom-[15%] left-[10%] w-16 h-16 bg-[#34D399] border-2 border-black z-0 rotate-45"></div>
+            <div className={`absolute top-[5%] right-[15%] w-20 h-20 bg-[#F472B6] border-2 ${isDarkMode ? 'border-white' : 'border-black'} rounded-full z-0`}></div>
+            <div className={`absolute bottom-[5%] left-[10%] w-16 h-16 bg-[#34D399] border-2 ${isDarkMode ? 'border-white' : 'border-black'} z-0 rotate-45`}></div>
 
             <DraggableTech delay={1.2} color="bg-blue-300" className="top-[10%] right-[5%]" label="Mobile" icon={<Smartphone size={24}/>} />
             <DraggableTech delay={1.3} color="bg-yellow-300" className="top-[40%] left-[0%]" label="Frontend" icon={<Code2 size={24}/>} />
@@ -555,10 +613,10 @@ export default function Home() {
         </section>
 
         {/* ================= MARQUEE SEPARATOR ================= */}
-        <Marquee />
+        <Marquee isDarkMode={isDarkMode} />
 
         {/* ================= LIVE STATS ================= */}
-        <section className="py-20 bg-white border-b-4 border-black">
+        <section className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-white border-black'} border-b-4`}>
           <div className="max-w-7xl mx-auto px-6 md:px-12">
              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <StatCard 
@@ -567,48 +625,55 @@ export default function Home() {
                     isRealtime={true}
                     icon={<Github size={24}/>} 
                     color="bg-gray-200"
+                    isDarkMode={isDarkMode}
                 />
                 <StatCard 
                     label="Commits (Est)" 
                     value={540} 
                     icon={<GitCommit size={24}/>} 
                     color="bg-green-300"
+                    isDarkMode={isDarkMode}
                 />
                 <StatCard 
                     label="Happy Clients" 
                     value={12} 
                     icon={<Users size={24}/>} 
                     color="bg-blue-300"
+                    isDarkMode={isDarkMode}
                 />
                 <StatCard 
                     label="Semester" 
                     value={3} 
                     icon={<BookOpen size={24}/>} 
                     color="bg-yellow-300"
+                    isDarkMode={isDarkMode}
                 />
              </div>
           </div>
         </section>
 
         {/* ================= TECH STACK ORBIT ================= */}
-        <section className="py-12 bg-[#FFFDF5] border-b-4 border-black overflow-hidden">
+        <section className={`py-12 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden`}>
             <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8 text-center">
                 <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
-                   My <span className="text-stroke-2 text-transparent">Arsenal</span>
+                   My <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Arsenal</span>
                 </h2>
             </div>
-            <TechStickerMarquee items={TECH_ROW_1} direction="left" speed={30} />
-            <TechStickerMarquee items={TECH_ROW_2} direction="right" speed={30} />
+            <TechStickerMarquee items={TECH_ROW_1} direction="left" speed={30} isDarkMode={isDarkMode} />
+            <TechStickerMarquee items={TECH_ROW_2} direction="right" speed={30} isDarkMode={isDarkMode} />
         </section>
 
         {/* ================= PROJECT VAULT ================= */}
         <section id="projects" className="pt-20 max-w-7xl mx-auto px-6 md:px-12">
-          <div className="mb-12 border-b-4 border-black pb-4 flex justify-between items-end">
+          <div className={`mb-12 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} pb-4 flex justify-between items-end`}>
             <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">
-              Selected <span className="text-stroke-2 text-transparent">Works</span>
+              Selected <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Works</span>
             </h2>
-            <div className="hidden md:block text-xs font-mono font-bold border-2 border-black px-2 py-1 bg-white">
-                SCROLL FOR MORE
+            <div className={`hidden md:block text-xs font-mono font-bold border-2 ${isDarkMode ? 'border-white bg-black text-white' : 'border-black bg-white'} px-2 py-1`}>
+                See All Projects(My GitHub)
+                <a href="https://github.com/rezaaplvv" target="_blank" className="ml-2 underline decoration-4 decoration-current underline-offset-4 font-normal">
+                  here
+                </a>
             </div>
           </div>
 
@@ -620,34 +685,34 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col"
+                className={`group relative h-full bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col`}
               >
-                <div className="h-10 border-b-4 border-black bg-white flex items-center justify-between px-4">
+                <div className={`h-10 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} bg-white flex items-center justify-between px-4`}>
                   <div className="flex gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
                     <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
                     <div className="w-3 h-3 rounded-full bg-green-500 border border-black"></div>
                   </div>
-                  <div className="text-xs font-bold font-mono uppercase tracking-widest">
+                  <div className="text-xs font-bold font-mono uppercase tracking-widest text-black">
                     {project.title}.exe
                   </div>
                 </div>
 
-                <Link href={project.link} target="_blank" className="block relative h-[50%] border-b-4 border-black overflow-hidden bg-gray-100 cursor-pointer">
+                <Link href={project.link} target="_blank" className={`block relative h-[50%] border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} overflow-hidden bg-gray-100 cursor-pointer`}>
                   <Image 
-                     src={project.image} 
-                     alt={project.title}
-                     fill
-                     className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      src={project.image} 
+                      alt={project.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
-                     <div className="bg-white border-2 border-black px-4 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                       VIEW PROJECT
-                     </div>
+                      <div className={`bg-white border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-4 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black`}>
+                        VIEW PROJECT
+                      </div>
                   </div>
                 </Link>
 
-                <div className="p-6 flex-1 flex flex-col justify-between bg-white">
+                <div className="p-6 flex-1 flex flex-col justify-between bg-white text-black">
                    <div>
                      <Link href={project.link} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
                        <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
@@ -661,7 +726,7 @@ export default function Home() {
                    </div>
                    <div className="flex flex-wrap gap-2 mt-auto">
                      {project.tech.map((t, i) => (
-                       <BrutalTag key={i} text={t} />
+                       <BrutalTag key={i} text={t} isDarkMode={false} /> // Card stays white, so tags are normal
                      ))}
                    </div>
                 </div>
@@ -671,19 +736,19 @@ export default function Home() {
         </section>
 
         {/* ================= SERVICES ================= */}
-        <section id="services" className="pt-32 pb-20 max-w-7xl mx-auto px-6 md:px-12 border-b-4 border-black">
-            <div className="mb-12 border-b-4 border-black pb-4 text-right">
- <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">
-  Core <span className="text-stroke-2 text-transparent">Expertise</span>
-</h2>
+        <section id="services" className={`pt-32 pb-20 max-w-7xl mx-auto px-6 md:px-12 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'}`}>
+            <div className={`mb-12 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} pb-4 text-right`}>
+                <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">
+                 Core <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Expertise</span>
+                </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
                 {SERVICES.map((service, index) => (
-                    <div key={index} className="bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
+                    <div key={index} className={`bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} p-6 hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all`}>
                         <div className={`w-16 h-16 ${service.color} border-2 border-black flex items-center justify-center mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}>
                             {service.icon}
                         </div>
-                        <h3 className="text-2xl font-black uppercase mb-2">{service.title}</h3>
+                        <h3 className="text-2xl font-black uppercase mb-2 text-black">{service.title}</h3>
                         <div className="text-sm font-bold bg-black text-white inline-block px-2 py-1 mb-3">
                             {service.price}
                         </div>
@@ -696,52 +761,52 @@ export default function Home() {
         </section>
 
         {/* ================= FAQ SECTION ================= */}
-        <section id="faq" className="py-20 bg-[#F3F4F6] border-b-4 border-black">
+        <section id="faq" className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#F3F4F6] border-black'} border-b-4`}>
           <div className="max-w-4xl mx-auto px-6 md:px-12">
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
-                Common <span className="bg-black text-white px-2">Questions</span>
+                Common <span className={`px-2 ${isDarkMode ? 'bg-white text-black' : 'bg-black text-white'}`}>Questions</span>
               </h2>
             </div>
             <div className="flex flex-col gap-4">
               {FAQS.map((faq, index) => (
-                <FaqItem key={index} question={faq.question} answer={faq.answer} />
+                <FaqItem key={index} question={faq.question} answer={faq.answer} isDarkMode={isDarkMode} />
               ))}
             </div>
           </div>
         </section>
 
         {/* ================= CONNECT / SOCIAL WALL ================= */}
-        <section className="py-20 bg-[#FFFDF5] border-b-4 border-black overflow-hidden relative">
+        <section className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden relative`}>
            <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
               <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-16">
-                 Let's <span className="text-stroke-2 text-transparent">Connect</span>
+                 Let's <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Connect</span>
               </h2>
               
               <div className="flex flex-wrap justify-center gap-8 md:gap-12">
                  <Link href="https://github.com/rezaaplvv" target="_blank" className="group">
-                    <div className="w-32 h-32 md:w-40 md:h-40 bg-gray-900 border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform -rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+                    <div className={`w-32 h-32 md:w-40 md:h-40 bg-gray-900 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform -rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
                        <Github size={48} className="text-white mb-2"/>
                        <span className="font-bold text-white uppercase">GitHub</span>
                     </div>
                  </Link>
                  
-<Link href="https://wa.me/6283133387676" target="_blank" className="group">
-  <div className="w-32 h-32 md:w-40 md:h-40 bg-[#25D366] border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
-    <MessageCircle size={48} className="text-white mb-2"/>
-    <span className="font-bold text-white uppercase">WhatsApp</span>
-  </div>
-</Link>
+                 <Link href="https://wa.me/6283133387676" target="_blank" className="group">
+                    <div className={`w-32 h-32 md:w-40 md:h-40 bg-[#25D366] border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
+                       <MessageCircle size={48} className="text-white mb-2"/>
+                       <span className="font-bold text-white uppercase">WhatsApp</span>
+                    </div>
+                 </Link>
 
                  <Link href="https://instagram.com" target="_blank" className="group">
-                    <div className="w-32 h-32 md:w-40 md:h-40 bg-pink-500 border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform -rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+                    <div className={`w-32 h-32 md:w-40 md:h-40 bg-pink-500 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform -rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
                        <Instagram size={48} className="text-white mb-2"/>
                        <span className="font-bold text-white uppercase">Instagram</span>
                     </div>
                  </Link>
                  
                  <Link href="mailto:rezapahlepi77654@gmail.com" className="group">
-                    <div className="w-32 h-32 md:w-40 md:h-40 bg-red-500 border-4 border-black flex flex-col items-center justify-center shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+                    <div className={`w-32 h-32 md:w-40 md:h-40 bg-red-500 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
                        <Mail size={48} className="text-white mb-2"/>
                        <span className="font-bold text-white uppercase">Email</span>
                     </div>
@@ -788,6 +853,12 @@ export default function Home() {
         }
         .text-stroke-2 {
           -webkit-text-stroke: 2px black;
+        }
+        .text-stroke-3-dark {
+          -webkit-text-stroke: 3px white;
+        }
+        .text-stroke-2-dark {
+          -webkit-text-stroke: 2px white;
         }
         html {
             scroll-behavior: smooth;
