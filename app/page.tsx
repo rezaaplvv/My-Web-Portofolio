@@ -44,7 +44,7 @@ const PROJECTS = [
     id: 1,
     title: "Dramatix",
     subtitle: "Streaming Platform",
-    desc: "Platform streaming film performa tinggi. Arsitektur scalable Next.js 15.",
+    desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
     tech: ["Next.js 15", "Tailwind", "Node.js"],
     image: "/inidrama.png",
     link: "https://drama-tix.vercel.app/"
@@ -53,7 +53,7 @@ const PROJECTS = [
     id: 2,
     title: "Viauo",
     subtitle: "Multimedia App",
-    desc: "Aplikasi Flutter streaming musik/video online & offline player.",
+    desc: "Flutter streaming music/video online & offline player.",
     tech: ["Flutter", "Dart", "Rest API"],
     image: "/viauo.png",
     link: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
@@ -62,7 +62,7 @@ const PROJECTS = [
     id: 3,
     title: "Laravel POS Pro",
     subtitle: "Restaurant System",
-    desc: "Sistem kasir lengkap: Real-time P&L, QRIS, Thermal Printing.",
+    desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
     tech: ["Laravel", "MySQL", "Bootstrap"],
     image: "/mesinkasirutama.png",
     link: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
@@ -71,7 +71,7 @@ const PROJECTS = [
     id: 4,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
-    desc: "Mendeteksi ekspresi wajah user dan mengubah UI sesuai emosi secara real-time.",
+    desc: "Detects user facial expressions and changes UI accordingly in real-time.",
     tech: ["React", "TensorFlow", "AI"],
     image: "/emo.png",
     link: "https://emotion-face.vercel.app/"
@@ -80,7 +80,7 @@ const PROJECTS = [
     id: 5,
     title: "Smart Perpus",
     subtitle: "Digital Library",
-    desc: "Sistem perpustakaan digital dengan fitur gamifikasi level & ranking.",
+    desc: "Digital library system with gamification features for levels and rankings.",
     tech: ["Flutter", "Firebase", "Gamification"],
     image: "/library.png",
     link: "https://github.com/rezaaplvv/smart-perpus-app"
@@ -89,7 +89,7 @@ const PROJECTS = [
     id: 6,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
-    desc: "Download media kualitas tinggi dari seluruh social media tanpa watermark.",
+    desc: "Download high quality media from all social media without watermark.",
     tech: ["React", "Vite", "Node.js"],
     image: "/zeronout.png",
     link: "https://zero-nout-downloader.vercel.app/"
