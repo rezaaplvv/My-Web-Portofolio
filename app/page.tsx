@@ -40,26 +40,8 @@ import Link from "next/link";
 
 // --- DATA PROJECTS ---
 const PROJECTS = [
-  {
+    {
     id: 1,
-    title: "Dramatix",
-    subtitle: "Streaming Platform",
-    desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
-    tech: ["Next.js 15", "Tailwind", "Node.js"],
-    image: "/inidrama.png",
-    link: "https://drama-tix.vercel.app/"
-  },
-  {
-    id: 2,
-    title: "Viauo",
-    subtitle: "Multimedia App",
-    desc: "Flutter streaming music/video online & offline player.",
-    tech: ["Flutter", "Dart", "Rest API"],
-    image: "/viauo.png",
-    link: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
-  },
-  {
-    id: 3,
     title: "Laravel POS Pro",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
@@ -68,25 +50,16 @@ const PROJECTS = [
     link: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
   {
-    id: 4,
-    title: "EmotionFace AI",
-    subtitle: "AI Detection",
-    desc: "Detects user facial expressions and changes UI accordingly in real-time.",
-    tech: ["React", "TensorFlow", "AI"],
-    image: "/emo.png",
-    link: "https://emotion-face.vercel.app/"
+    id: 2,
+    title: "Dramatix",
+    subtitle: "Streaming Platform",
+    desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
+    tech: ["Next.js 15", "Tailwind", "Node.js"],
+    image: "/inidrama.png",
+    link: "https://drama-tix.vercel.app/"
   },
   {
-    id: 5,
-    title: "Smart Perpus",
-    subtitle: "Digital Library",
-    desc: "Digital library system with gamification features for levels and rankings.",
-    tech: ["Flutter", "Firebase", "Gamification"],
-    image: "/library.png",
-    link: "https://github.com/rezaaplvv/smart-perpus-app"
-  },
-  {
-    id: 6,
+    id: 3,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
     desc: "Download high quality media from all social media without watermark.",
@@ -94,6 +67,36 @@ const PROJECTS = [
     image: "/zeronout.png",
     link: "https://zero-nout-downloader.vercel.app/"
   },
+
+
+  {
+    id: 4,
+    title: "Smart Perpus",
+    subtitle: "Digital Library",
+    desc: "Digital library system with gamification features for levels and rankings.",
+    tech: ["Flutter", "Firebase", "Gamification"],
+    image: "/library.png",
+    link: "https://github.com/rezaaplvv/smart-perpus-app"
+  },
+    {
+    id: 5,
+    title: "Viauo",
+    subtitle: "Multimedia App",
+    desc: "Flutter streaming music/video online & offline player.",
+    tech: ["Flutter", "Dart", "Rest API"],
+    image: "/viauo.png",
+    link: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
+  },
+    {
+    id: 6,
+    title: "EmotionFace AI",
+    subtitle: "AI Detection",
+    desc: "Detects user facial expressions and changes UI accordingly in real-time.",
+    tech: ["React", "TensorFlow", "AI"],
+    image: "/emo.png",
+    link: "https://emotion-face.vercel.app/"
+  },
+
 ];
 
 // --- DATA TECH STACK ---
@@ -594,7 +597,7 @@ export default function Home() {
               className={`w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-white border-4 ${isDarkMode ? 'border-white shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} relative z-10`}
             >
               <Image 
-                src="/ppgithub.jpg" 
+                src="/IMG_2869.jpg" 
                 alt="Reza Pahlepi"
                 fill
                 className="object-cover transition-all duration-300"
@@ -732,6 +735,17 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+          </div>
+          
+          {/* --- NEW BUTTON: SEE MORE PROJECTS --- */}
+          <div className="mt-12 flex justify-center">
+            <Link
+                href="/projects"
+                className={`group relative px-8 py-4 bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} font-black text-xl uppercase tracking-widest hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all flex items-center gap-3 text-black`}
+            >
+                See More Projects
+                <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform"/>
+            </Link>
           </div>
         </section>
 
