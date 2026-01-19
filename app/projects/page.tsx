@@ -20,12 +20,12 @@ const ALL_PROJECTS = [
   },
   {
     id: 2,
-    title: "Viauo",
-    subtitle: "Multimedia App",
-    desc: "Flutter streaming music/video online & offline player.",
-    tech: ["Flutter", "Dart", "Rest API"],
-    image: "/viauo.png",
-    link: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
+    title: "Social Media Downloader",
+    subtitle: "Tools Web App",
+    desc: "Download high quality media from all social media without watermark.",
+    tech: ["React", "Vite", "Node.js"],
+    image: "/zeronout.png",
+    link: "https://zero-nout-downloader.vercel.app/"
   },
   {
     id: 3,
@@ -54,15 +54,16 @@ const ALL_PROJECTS = [
     image: "/library.png",
     link: "https://github.com/rezaaplvv/smart-perpus-app"
   },
-  {
+    {
     id: 6,
-    title: "Social Media Downloader",
-    subtitle: "Tools Web App",
-    desc: "Download high quality media from all social media without watermark.",
-    tech: ["React", "Vite", "Node.js"],
-    image: "/zeronout.png",
-    link: "https://zero-nout-downloader.vercel.app/"
+    title: "Viauo",
+    subtitle: "Multimedia App",
+    desc: "Flutter streaming music/video online & offline player.",
+    tech: ["Flutter", "Dart", "Rest API"],
+    image: "/viauo.png",
+    link: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
   },
+
   {
     id: 7,
     title: "Fragrance Distribution Management",

@@ -455,6 +455,14 @@ export default function Home() {
     setIsDarkMode(!isDarkMode);
   };
 
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div ref={containerRef} className={`min-h-screen ${isDarkMode ? 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black' : 'bg-[#FFFDF5] text-black selection:bg-black selection:text-white'} font-sans relative overflow-x-hidden transition-colors duration-500 pt-20`}>
       
@@ -578,6 +586,7 @@ export default function Home() {
             >
               <Link 
                 href="#projects"
+                onClick={(e) => handleScroll(e, "projects")}
                 className={`group relative px-8 py-4 bg-[#60A5FA] border-2 ${isDarkMode ? 'border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'} font-bold text-black hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all`}
               >
                 LIHAT KARYA
@@ -670,10 +679,10 @@ export default function Home() {
         <section id="projects" className="pt-20 max-w-7xl mx-auto px-6 md:px-12">
           <div className={`mb-12 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} pb-4 flex justify-between items-end`}>
             <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">
-              Selected <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Works</span>
+              My <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Projects</span>
             </h2>
             <div className={`hidden md:block text-xs font-mono font-bold border-2 ${isDarkMode ? 'border-white bg-black text-white' : 'border-black bg-white'} px-2 py-1`}>
-                See All Projects(My GitHub)
+                See All Projects (GitHub)
                 <a href="https://github.com/rezaaplvv" target="_blank" className="ml-2 underline decoration-4 decoration-current underline-offset-4 font-normal">
                   here
                 </a>
@@ -743,7 +752,7 @@ export default function Home() {
                 href="/projects"
                 className={`group relative px-8 py-4 bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} font-black text-xl uppercase tracking-widest hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all flex items-center gap-3 text-black`}
             >
-                See More Projects
+                See All Projects
                 <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform"/>
             </Link>
           </div>
