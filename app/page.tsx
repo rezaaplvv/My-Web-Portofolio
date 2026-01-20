@@ -478,7 +478,7 @@ export default function Home() {
       <nav className={`fixed top-0 left-0 right-0 h-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 z-50 px-6 md:px-12 flex items-center justify-between transition-colors duration-500`}>
         <Link href="#hero" className="flex items-center gap-2 group">
             <div className={`font-black text-xl px-2 py-1 border-2 transition-colors ${isDarkMode ? 'bg-white text-black border-white group-hover:bg-[#FDE047] group-hover:text-black' : 'bg-black text-white border-black group-hover:bg-[#FDE047] group-hover:text-black'}`}>
-                PORTFOLIO.
+                PORTFOLIO
             </div>
         </Link>
         <div className="hidden md:flex items-center gap-6">
@@ -664,7 +664,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ================= TECH STACK ORBIT ================= */}
+
         <section className={`py-12 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden`}>
             <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8 text-center">
                 <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
