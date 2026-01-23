@@ -38,7 +38,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-// --- DATA PROJECTS ---
 const PROJECTS = [
     {
     id: 1,
