@@ -98,7 +98,6 @@ const PROJECTS = [
 
 ];
 
-// --- DATA TECH STACK ---
 const TECH_ROW_1 = [
     { name: "HTML", icon: <FileType size={20}/>, color: "bg-orange-300" },
     { name: "CSS", icon: <Palette size={20}/>, color: "bg-blue-300" },
