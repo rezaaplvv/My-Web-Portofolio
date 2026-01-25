@@ -54,8 +54,17 @@ const ALL_PROJECTS = [
     image: "/library.png",
     link: "https://github.com/rezaaplvv/smart-perpus-app"
   },
-    {
+      {
     id: 6,
+    title: "Kost Management App",
+    subtitle: "Kost Management App",
+    desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
+    tech: ["Laravel", "MySQL", "Bootstrap"],
+    image: "/dashboardowner.png",
+    link: "https://github.com/rezaaplvv/Laravel-Kost-Management"
+  },
+    {
+    id: 7,
     title: "Viauo",
     subtitle: "Multimedia App",
     desc: "Flutter streaming music/video online & offline player.",
@@ -65,7 +74,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 7,
+    id: 8,
     title: "Fragrance Distribution Management",
     subtitle: "Fragrance Distribution Management",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
