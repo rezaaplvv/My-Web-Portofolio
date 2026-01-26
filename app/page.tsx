@@ -88,12 +88,12 @@ const PROJECTS = [
   },
     {
     id: 6,
-    title: "EmotionFace AI",
-    subtitle: "AI Detection",
-    desc: "Detects user facial expressions and changes UI accordingly in real-time.",
-    tech: ["React", "TensorFlow", "AI"],
-    image: "/emo.png",
-    link: "https://emotion-face.vercel.app/"
+    title: "Kost Management App",
+    subtitle: "Kost Management App",
+    desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
+    tech: ["Laravel", "MySQL", "Bootstrap"],
+    image: "/dashboardowner.png",
+    link: "https://github.com/rezaaplvv/Laravel-Kost-Management"
   },
 
 ];
