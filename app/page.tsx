@@ -77,14 +77,14 @@ const PROJECTS = [
     image: "/library.png",
     link: "https://github.com/rezaaplvv/smart-perpus-app"
   },
-    {
+  {
     id: 5,
-    title: "Viauo",
-    subtitle: "Multimedia App",
-    desc: "Flutter streaming music/video online & offline player.",
-    tech: ["Flutter", "Dart", "Rest API"],
-    image: "/viauo.png",
-    link: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
+    title: "Fragrance Distribution Management",
+    subtitle: "Fragrance Distribution Management",
+    desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
+    tech: ["Laravel 11", "MySQL", "Blade", "Tailwind", "Vite"],
+    image: "/sfa.png",
+    link: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
   },
     {
     id: 6,
