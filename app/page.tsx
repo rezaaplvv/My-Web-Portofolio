@@ -91,7 +91,7 @@ const PROJECTS = [
     title: "Kost Management App",
     subtitle: "Kost Management App",
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
-    tech: ["Laravel", "MySQL", "Bootstrap"],
+    tech: ["Laravel", "MySQL", "Bootstrap5"],
     image: "/dashboardowner.png",
     link: "https://github.com/rezaaplvv/Laravel-Kost-Management"
   },
