@@ -61,7 +61,7 @@ const ALL_PROJECTS = [
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
     tech: ["Laravel", "MySQL", "Bootstrap"],
     image: "/dashboardowner.png",
-    link: "https://github.com/rezaaplvv/Laravel-Kost-Management"
+    link: "https://sewakamar.mitrabayarapp.com/"
   },
     {
     id: 7,

@@ -41,7 +41,7 @@ import Link from "next/link";
 const PROJECTS = [
     {
     id: 1,
-    title: "Laravel POS Pro",
+    title: "Cashier System POS",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
     tech: ["Laravel", "MySQL", "Bootstrap"],
@@ -93,7 +93,7 @@ const PROJECTS = [
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
     tech: ["Laravel", "MySQL", "Bootstrap5"],
     image: "/dashboardowner.png",
-    link: "https://github.com/rezaaplvv/Laravel-Kost-Management"
+    link: "https://sewakamar.mitrabayarapp.com/"
   },
 
 ];
@@ -226,9 +226,17 @@ const ThemePullSwitch = ({ isDarkMode, toggleTheme }: { isDarkMode: boolean, tog
     // FIX: Menggunakan ySpring secara langsung untuk tinggi agar tidak ada celah/putus
     const height = useTransform(ySpring, (latest) => 80 + latest); 
 
+    // Fungsi untuk memutar suara klik
+    const playClickSound = () => {
+        const audio = new Audio('/click.mp3'); 
+        audio.volume = 0.5; 
+        audio.play().catch(err => console.log("Audio play error:", err));
+    };
+
     const handleDragEnd = (_: any, info: any) => {
         // Trigger jika ditarik cukup jauh
         if (info.offset.y > 80) {
+            playClickSound(); // Memutar suara tepat saat saklar terpicu
             toggleTheme();
         }
         // FIX: Kembalikan paksa ke 0 agar tali memantul ke atas
