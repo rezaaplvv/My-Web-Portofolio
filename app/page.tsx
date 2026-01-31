@@ -39,61 +39,65 @@ import {
 import Link from "next/link";
 
 const PROJECTS = [
-    {
-    id: 1,
-    title: "Cashier System POS",
-    subtitle: "Restaurant System",
-    desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
-    tech: ["Laravel", "MySQL", "Bootstrap"],
-    image: "/mesinkasirutama.png",
-    link: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
-  },
   {
-    id: 2,
+    id: 1,
     title: "Dramatix",
     subtitle: "Streaming Platform",
     desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
     tech: ["Next.js 15", "Tailwind", "Node.js"],
-    image: "/inidrama.png",
-    link: "https://drama-tix.vercel.app/"
+    image: "/dramaku.png",
+    demoLink: "https://drama-tix.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/Dramatix"
   },
   {
-    id: 3,
+    id: 2,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
     desc: "Download high quality media from all social media without watermark.",
     tech: ["React", "Vite", "Node.js"],
     image: "/zeronout.png",
-    link: "https://zero-nout-downloader.vercel.app/"
+    demoLink: "https://zero-nout-downloader.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
-
-
+  {
+    id: 3,
+    title: "Kost Management App",
+    subtitle: "Kost Management App",
+    desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
+    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
+    image: "/dashboardowner.png",
+    demoLink: "https://sewakamar.mitrabayarapp.com/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Kost-Management"
+  },
   {
     id: 4,
+    title: "Cashier System POS",
+    subtitle: "Restaurant System",
+    desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
+    tech: ["Laravel 12", "MySQL", "Bootstrap"],
+    image: "/mesinkasirutama.png",
+    demoLink: "http://tipus.digitalku.co.id/login",
+    docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
+  },
+    {
+    id: 5,
+    title: "Fragrance Distribution",
+    subtitle: "Fragrance Distribution Management",
+    desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
+    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
+    image: "/Dashboardadminparfum.png",
+    demoLink: "https://parfum.digitalku.co.id/",
+    docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
+  },
+  {
+    id: 6,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
     tech: ["Flutter", "Firebase", "Gamification"],
     image: "/library.png",
-    link: "https://github.com/rezaaplvv/smart-perpus-app"
-  },
-  {
-    id: 5,
-    title: "Fragrance Distribution Management",
-    subtitle: "Fragrance Distribution Management",
-    desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
-    tech: ["Laravel 11", "MySQL", "Blade", "Tailwind", "Vite"],
-    image: "/sfa.png",
-    link: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
-  },
-    {
-    id: 6,
-    title: "Kost Management App",
-    subtitle: "Kost Management App",
-    desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
-    tech: ["Laravel", "MySQL", "Bootstrap5"],
-    image: "/dashboardowner.png",
-    link: "https://sewakamar.mitrabayarapp.com/"
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/smart-perpus-app"
   },
 
 ];
@@ -244,7 +248,7 @@ const ThemePullSwitch = ({ isDarkMode, toggleTheme }: { isDarkMode: boolean, tog
     };
 
     return (
-        <div className="absolute top-0 right-[45%] z-50 flex flex-col items-center">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
             {/* Base */}
             <div className={`w-6 h-6 rounded-full border-2 ${isDarkMode ? 'bg-gray-800 border-white' : 'bg-gray-200 border-black'} absolute -top-3 z-20`}></div>
             
@@ -534,7 +538,7 @@ export default function Home() {
       <main className="relative z-10">
         
         {/* ================= HERO SECTION ================= */}
-        <section id="hero" className="min-h-[calc(100vh-80px)] max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-center gap-12 pt-10 md:pt-0 mb-20 relative">
+        <section id="hero" className="min-h-[calc(100vh-80px)] max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-center gap-12 pt-40 md:pt-0 mb-20 relative">
           
           {/* --- TALI LAMPU (PULL SWITCH) --- */}
           {/* Posisinya Absolute dalam Hero, jadi ikut scroll */}
@@ -604,7 +608,8 @@ export default function Home() {
           </div>
 
           {/* RIGHT: PHOTO FRAME */}
-          <div className="flex-1 w-full h-[500px] relative flex items-center justify-center order-1 md:order-2">
+          {/* RIGHT: PHOTO FRAME */}
+<div className="flex-1 w-full h-[400px] md:h-[500px] relative flex items-center justify-center order-1 md:order-2 mt-10 md:mt-0">
             <motion.div
               initial={{ rotate: 3 }}
               whileHover={{ rotate: 0 }}
@@ -694,7 +699,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-[380px]">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-[380px]">
             {PROJECTS.map((project, index) => (
               <motion.div
                 key={index}
@@ -704,6 +709,7 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className={`group relative h-full bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col`}
               >
+                {/* Header Card */}
                 <div className={`h-10 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} bg-white flex items-center justify-between px-4`}>
                   <div className="flex gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
@@ -715,23 +721,35 @@ export default function Home() {
                   </div>
                 </div>
 
-                <Link href={project.link} target="_blank" className={`block relative h-[50%] border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} overflow-hidden bg-gray-100 cursor-pointer`}>
+                {/* Image & Overlay (UPDATED) */}
+                <div className={`block relative h-[50%] border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} overflow-hidden bg-gray-100`}>
                   <Image 
                       src={project.image} 
                       alt={project.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
-                      <div className={`bg-white border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-4 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black`}>
-                        VIEW PROJECT
-                      </div>
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-black/40 backdrop-blur-[2px]">
+                      {/* Tombol View Demo (Hanya jika ada link) */}
+                      {project.demoLink && (
+                        <Link href={project.demoLink} target="_blank" className={`bg-white border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2`}>
+                            <Zap size={16} className="fill-black"/> VIEW DEMO
+                        </Link>
+                      )}
+                      
+                      {/* Tombol Full Showcase (Selalu ada) */}
+                      <Link href={project.docLink} target="_blank" className={`bg-[#FDE047] border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2`}>
+                        <Github size={16}/> FULL SHOWCASE
+                      </Link>
                   </div>
-                </Link>
+                </div>
 
+                {/* Content */}
                 <div className="p-6 flex-1 flex flex-col justify-between bg-white text-black">
                    <div>
-                     <Link href={project.link} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
+                     {/* Link Judul mengarah ke Showcase jika demo tidak ada, atau demo jika ada */}
+                     <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
                        <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
                          {project.title}
                          <ArrowUpRight className="w-6 h-6 transform group-hover:rotate-45 transition-transform"/>
@@ -743,7 +761,7 @@ export default function Home() {
                    </div>
                    <div className="flex flex-wrap gap-2 mt-auto">
                      {project.tech.map((t, i) => (
-                       <BrutalTag key={i} text={t} isDarkMode={false} /> // Card stays white, so tags are normal
+                       <BrutalTag key={i} text={t} isDarkMode={false} />
                      ))}
                    </div>
                 </div>

@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Github, Zap } from "lucide-react";
 
-// --- DATA PROJECTS ---
-// Kamu bisa menambahkan project ke-7, 8, dst di sini
+// --- DATA PROJECTS (UPDATED STRUCTURE) ---
+// Pastikan kamu mengupdate docLink di sini sesuai repo asli kamu
 const ALL_PROJECTS = [
   {
     id: 1,
@@ -15,8 +15,9 @@ const ALL_PROJECTS = [
     subtitle: "Streaming Platform",
     desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
     tech: ["Next.js 15", "Tailwind", "Node.js"],
-    image: "/inidrama.png",
-    link: "https://drama-tix.vercel.app/"
+    image: "/dramaku.png",
+    demoLink: "https://drama-tix.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/Dramatix" // <-- Pastikan link repo ini benar
   },
   {
     id: 2,
@@ -25,64 +26,72 @@ const ALL_PROJECTS = [
     desc: "Download high quality media from all social media without watermark.",
     tech: ["React", "Vite", "Node.js"],
     image: "/zeronout.png",
-    link: "https://zero-nout-downloader.vercel.app/"
+    demoLink: "https://zero-nout-downloader.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/Social-Media-Downloader" // <-- Pastikan link repo ini benar
   },
   {
     id: 3,
-    title: "Laravel POS Pro",
+    title: "Cashier System POS",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
-    tech: ["Laravel", "MySQL", "Bootstrap"],
+    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
     image: "/mesinkasirutama.png",
-    link: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
+    demoLink: "http://tipus.digitalku.co.id/login",
+    docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
+  },
+    {
+    id: 4,
+    title: "Kost Management App",
+    subtitle: "Kost Management App",
+    desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
+    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
+    image: "/dashboardowner.png",
+    demoLink: "https://sewakamar.mitrabayarapp.com/",
+    docLink: "https://github.com/rezaaplvv/Kost-Management-App"
+  },
+    {
+    id: 5,
+    title: "Fragrance Distribution",
+    subtitle: "SFA System",
+    desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
+    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
+    image: "/Dashboardadminparfum.png",
+    demoLink: "http://tipus.digitalku.co.id",
+    docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
   },
   {
-    id: 4,
+    id: 6,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
     tech: ["React", "TensorFlow", "AI"],
     image: "/emo.png",
-    link: "https://emotion-face.vercel.app/"
+    demoLink: "https://emotion-face.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
   },
   {
-    id: 5,
+    id: 7,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
     tech: ["Flutter", "Firebase", "Gamification"],
     image: "/library.png",
-    link: "https://github.com/rezaaplvv/smart-perpus-app"
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/smart-perpus-app"
   },
-      {
-    id: 6,
-    title: "Kost Management App",
-    subtitle: "Kost Management App",
-    desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
-    tech: ["Laravel", "MySQL", "Bootstrap"],
-    image: "/dashboardowner.png",
-    link: "https://sewakamar.mitrabayarapp.com/"
-  },
-    {
-    id: 7,
+
+  {
+    id: 8,
     title: "Viauo",
     subtitle: "Multimedia App",
     desc: "Flutter streaming music/video online & offline player.",
     tech: ["Flutter", "Dart", "Rest API"],
     image: "/viauo.png",
-    link: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
   },
 
-  {
-    id: 8,
-    title: "Fragrance Distribution Management",
-    subtitle: "Fragrance Distribution Management",
-    desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
-    tech: ["Laravel 11", "MySQL", "Blade", "Tailwind", "Vite"],
-    image: "/sfa.png",
-    link: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
-  },
-];
+];  
 
 const BrutalTag = ({ text }: { text: string }) => (
   <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
@@ -91,6 +100,12 @@ const BrutalTag = ({ text }: { text: string }) => (
 );
 
 export default function ProjectsPage() {
+  const [activeId, setActiveId] = useState<number | null>(null);
+
+  const toggleActiveProject = (id: number) => {
+    setActiveId(prev => prev === id ? null : id);
+  };
+
   return (
     <div className="min-h-screen bg-[#FFFDF5] text-black font-sans selection:bg-black selection:text-white relative">
       
@@ -134,7 +149,8 @@ export default function ProjectsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col"
+                onClick={() => toggleActiveProject(project.id)}
+                className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col cursor-pointer"
               >
                 {/* Header Card */}
                 <div className="h-10 border-b-4 border-black bg-white flex items-center justify-between px-4">
@@ -147,25 +163,61 @@ export default function ProjectsPage() {
                   </div>
                 </div>
 
-                {/* Image */}
-                <Link href={project.link} target="_blank" className="block relative h-[50%] border-b-4 border-black overflow-hidden bg-gray-100 cursor-pointer">
+                {/* Image & Overlay */}
+                <div className="block relative h-[50%] border-b-4 border-black overflow-hidden bg-gray-100">
                   <Image 
                       src={project.image} 
                       alt={project.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
-                      <div className="bg-white border-2 border-black px-4 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                        VIEW DEMO
-                      </div>
+{/* Overlay Tombol */}
+<div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 z-10 bg-black/40 backdrop-blur-[2px] ${
+  activeId === project.id 
+    ? 'opacity-100 pointer-events-auto' 
+    : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
+}`}>
+                    
+{/* Tombol View Demo */}
+{project.demoLink && (
+  <Link 
+    href={project.demoLink} 
+    target="_blank" 
+    onClick={(e) => {
+      e.stopPropagation();
+      // JIKA di mobile DAN overlay belum aktif, JANGAN buka link
+      if (window.innerWidth < 768 && activeId !== project.id) {
+        e.preventDefault();
+      }
+    }}
+    className="bg-white border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
+  >
+    <Zap size={16} className="fill-black"/> VIEW DEMO
+  </Link>
+)}
+
+{/* Tombol Full Showcase */}
+<Link 
+  href={project.docLink} 
+  target="_blank" 
+  onClick={(e) => {
+    e.stopPropagation();
+    // Proteksi yang sama
+    if (window.innerWidth < 768 && activeId !== project.id) {
+      e.preventDefault();
+    }
+  }}
+  className="bg-[#FDE047] border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
+>
+  <Github size={16}/> FULL SHOWCASE
+</Link>
                   </div>
-                </Link>
+                </div>
 
                 {/* Content */}
                 <div className="p-6 flex-1 flex flex-col justify-between bg-white">
                    <div>
-                     <Link href={project.link} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
+                     <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
                        <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
                          {project.title}
                          <ArrowUpRight className="w-5 h-5"/>
