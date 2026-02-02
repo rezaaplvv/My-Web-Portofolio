@@ -5,9 +5,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Github, Zap } from "lucide-react";
-
-// --- DATA PROJECTS (UPDATED STRUCTURE) ---
-// Pastikan kamu mengupdate docLink di sini sesuai repo asli kamu
 const ALL_PROJECTS = [
   {
     id: 1,
@@ -17,7 +14,7 @@ const ALL_PROJECTS = [
     tech: ["Next.js 15", "Tailwind", "Node.js"],
     image: "/dramaku.png",
     demoLink: "https://drama-tix.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/Dramatix" // <-- Pastikan link repo ini benar
+    docLink: "https://github.com/rezaaplvv/Dramatix"
   },
   {
     id: 2,
@@ -27,7 +24,7 @@ const ALL_PROJECTS = [
     tech: ["React", "Vite", "Node.js"],
     image: "/zeronout.png",
     demoLink: "https://zero-nout-downloader.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/Social-Media-Downloader" // <-- Pastikan link repo ini benar
+    docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
   {
     id: 3,
@@ -109,7 +106,6 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-[#FFFDF5] text-black font-sans selection:bg-black selection:text-white relative">
       
-      {/* BACKGROUND GRID */}
       <div className="fixed inset-0 z-0 opacity-10 pointer-events-none"
         style={{ backgroundImage: "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)", backgroundSize: "40px 40px" }}
       ></div>
