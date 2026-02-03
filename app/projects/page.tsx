@@ -123,7 +123,6 @@ export default function ProjectsPage() {
         </div>
       </nav>
 
-      {/* MAIN CONTENT */}
       <main className="relative z-10 pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
         
         {/* HEADER */}
