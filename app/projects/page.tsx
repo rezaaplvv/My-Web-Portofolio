@@ -125,7 +125,6 @@ export default function ProjectsPage() {
 
       <main className="relative z-10 pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
         
-        {/* HEADER */}
         <div className="mb-16 text-center">
             <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-6">
                 All <span className="text-stroke-2 text-transparent">Projects</span>
