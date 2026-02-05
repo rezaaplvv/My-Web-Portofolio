@@ -145,7 +145,7 @@ export default function ProjectsPage() {
                 onClick={() => toggleActiveProject(project.id)}
                 className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col cursor-pointer"
               >
-                {/* Header Card */}
+
                 <div className="h-10 border-b-4 border-black bg-white flex items-center justify-between px-4">
                   <div className="flex gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
