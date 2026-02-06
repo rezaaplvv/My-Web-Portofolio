@@ -156,7 +156,6 @@ export default function ProjectsPage() {
                   </div>
                 </div>
 
-                {/* Image & Overlay */}
                 <div className="block relative h-[50%] border-b-4 border-black overflow-hidden bg-gray-100">
                   <Image 
                       src={project.image} 
