@@ -163,7 +163,6 @@ export default function ProjectsPage() {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-{/* Overlay Tombol */}
 <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 z-10 bg-black/40 backdrop-blur-[2px] ${
   activeId === project.id 
     ? 'opacity-100 pointer-events-auto' 
