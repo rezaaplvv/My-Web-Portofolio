@@ -169,7 +169,6 @@ export default function ProjectsPage() {
     : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
 }`}>
                     
-{/* Tombol View Demo */}
 {project.demoLink && (
   <Link 
     href={project.demoLink} 
