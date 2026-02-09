@@ -175,7 +175,6 @@ export default function ProjectsPage() {
     target="_blank" 
     onClick={(e) => {
       e.stopPropagation();
-      // JIKA di mobile DAN overlay belum aktif, JANGAN buka link
       if (window.innerWidth < 768 && activeId !== project.id) {
         e.preventDefault();
       }
