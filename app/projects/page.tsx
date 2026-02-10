@@ -185,7 +185,6 @@ export default function ProjectsPage() {
   </Link>
 )}
 
-{/* Tombol Full Showcase */}
 <Link 
   href={project.docLink} 
   target="_blank" 
