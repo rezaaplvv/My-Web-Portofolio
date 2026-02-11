@@ -190,7 +190,7 @@ export default function ProjectsPage() {
   target="_blank" 
   onClick={(e) => {
     e.stopPropagation();
-    // Proteksi yang sama
+
     if (window.innerWidth < 768 && activeId !== project.id) {
       e.preventDefault();
     }
@@ -202,7 +202,6 @@ export default function ProjectsPage() {
                   </div>
                 </div>
 
-                {/* Content */}
                 <div className="p-6 flex-1 flex flex-col justify-between bg-white">
                    <div>
                      <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
@@ -225,7 +224,7 @@ export default function ProjectsPage() {
             ))}
         </div>
 
-        {/* GITHUB LINK BOTTOM */}
+
         <div className="mt-24 text-center">
             <div className="inline-block bg-[#FDE047] border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
                 <h3 className="text-2xl font-black uppercase mb-4">Want to see more code?</h3>
