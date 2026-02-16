@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
+import { useState } from "react";
 import { motion, animate, AnimatePresence, useSpring, useMotionValue, useTransform } from "framer-motion";
 import Image from "next/image";
 import { 
@@ -34,7 +35,9 @@ import {
   Mail,
   Instagram,
   Lightbulb,
-  Moon
+  Moon,
+  MapPin,
+  Send,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -473,6 +476,24 @@ export default function Home() {
     }
   };
 
+  const [formData, setFormData] = useState({
+    identity: "",
+    coordinates: "",
+    transmission: ""
+  });
+
+  const handleTransmit = () => {
+    const phoneNumber = "6283133387676"; // Ganti dengan nomor WA asli
+    const message = `*NEW PROJECT TRANSMISSION*%0A` +
+                    `---------------------------------%0A` +
+                    `*// IDENTITY:* ${formData.identity || 'Unknown'}%0A` +
+                    `*// COORDINATES:* ${formData.coordinates || 'No Email'}%0A` +
+                    `*// TRANSMISSION:*%0A${formData.transmission || 'No Details'}%0A` +
+                    `---------------------------------`;
+    
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank");
+  };
+
   return (
     <div ref={containerRef} className={`min-h-screen ${isDarkMode ? 'bg-[#0a0a0a] text-white selection:bg-white selection:text-black' : 'bg-[#FFFDF5] text-black selection:bg-black selection:text-white'} font-sans relative overflow-x-hidden transition-colors duration-500 pt-20`}>
       
@@ -499,7 +520,7 @@ export default function Home() {
         </div>
         <div className="hidden md:block">
             <Link 
-                href="https://wa.me/6283133387676"
+                href="#contact"
                 className={`bg-[#34D399] border-2 ${isDarkMode ? 'border-white text-black shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)]' : 'border-black text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'} px-4 py-2 font-bold text-sm hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex items-center gap-2`}
             >
                 <MessageCircle size={16} />
@@ -861,6 +882,108 @@ export default function Home() {
            </div>
         </section>
 
+        {/* --- CONTACT SECTION (White Paper Style with Adaptive Shadow) --- */}
+        <section id="contact" className="relative py-24 px-6 md:px-12 max-w-7xl mx-auto mb-20">
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="relative bg-white text-black border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)] p-8 md:p-12 overflow-hidden transition-shadow duration-300"
+          >
+            {/* BADGE: START A PROJECT */}
+            <div className="absolute -top-2 -left-2 md:top-0 md:left-8 bg-[#FDE047] border-4 border-black px-6 py-2 rotate-[-3deg] z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <span className="font-black text-black font-mono tracking-widest text-sm md:text-base uppercase">
+                Start A Project
+              </span>
+            </div>
+
+            {/* DEKORASI GRID */}
+            <div className="absolute inset-0 opacity-5 pointer-events-none" 
+                 style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-12 md:gap-20 mt-10 md:mt-8 relative z-0">
+              
+              {/* KIRI: INFORMASI */}
+              <div className="flex-1 space-y-8">
+                <div>
+                  <h2 className="text-6xl md:text-8xl font-black uppercase leading-[0.9] text-black mb-6">
+                    LET'S <br/>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">TALK</span> <br/>
+                    CODE.
+                  </h2>
+                  <div className="text-lg font-medium font-mono text-gray-800 border-l-4 border-black pl-6 py-2 bg-gray-50/50">
+                    <p>I am currently available for freelance work and open to full-time opportunities.</p>
+                  </div>
+                </div>
+
+                <div className="space-y-6 pt-4">
+                  <div className="flex items-center gap-4 group">
+                  </div>
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 bg-black text-white flex items-center justify-center border-2 border-transparent group-hover:scale-110 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
+                      <MapPin size={24} />
+                    </div>
+                    <div>
+                      <p className="font-mono text-xs text-gray-500 uppercase font-bold tracking-widest">Base Station</p>
+                      <p className="font-bold text-xl text-black px-1">
+                        Medan, Indonesia
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* KANAN: FORM INPUT */}
+              <div className="flex-1 bg-gray-50 border-2 border-black p-6 md:p-8 relative mt-4 md:mt-0 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">
+                <form className="space-y-5">
+                  <div className="space-y-1">
+                    <label className="text-xs font-black font-mono uppercase tracking-widest text-gray-500">// 01. IDENTITY</label>
+                    <input 
+                      type="text" 
+                      placeholder="Your Name..."
+                      value={formData.identity}
+                      onChange={(e) => setFormData({...formData, identity: e.target.value})}
+                      className="w-full bg-white border-2 border-black p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-black font-mono uppercase tracking-widest text-gray-500">// 02. COORDINATES</label>
+                    <input 
+                      type="email" 
+                      placeholder="Your Email..."
+                      value={formData.coordinates}
+                      onChange={(e) => setFormData({...formData, coordinates: e.target.value})}
+                      className="w-full bg-white border-2 border-black p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs font-black font-mono uppercase tracking-widest text-gray-500">// 03. MESSAGE</label>
+                    <textarea 
+                      rows={4}
+                      placeholder="Project Details..."
+                      value={formData.transmission}
+                      onChange={(e) => setFormData({...formData, transmission: e.target.value})}
+                      className="w-full bg-white border-2 border-black p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 resize-none"
+                    ></textarea>
+                  </div>
+                  <button 
+                    type="button"
+                    onClick={handleTransmit}
+                    className="w-full bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-black uppercase tracking-widest py-4 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex items-center justify-center gap-3 mt-4"
+                  >
+                    <Send size={18} />
+                    TRANSMIT DATA
+                  </button>
+                </form>
+              </div>
+            </div>
+          </motion.div>
+        </section>
+
+        
+
         {/* ================= FOOTER ================= */}
         <footer className="bg-black text-white py-12 md:py-20 border-t-8 border-[#FDE047]">
             <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
@@ -875,15 +998,6 @@ export default function Home() {
                 </div>
                 
                 <div className="flex flex-col items-center md:items-end gap-4">
-                   <div className="text-xl font-bold uppercase tracking-widest text-[#FDE047]">
-                      Ready to start?
-                   </div>
-                   <Link 
-                      href="https://wa.me/6283133387676"
-                      className="bg-white text-black border-4 border-[#FDE047] px-8 py-4 font-black text-xl hover:bg-[#FDE047] hover:scale-105 transition-all"
-                   >
-                      START PROJECT
-                   </Link>
                    <div className="mt-8 text-sm text-gray-500 font-mono">
                       © {new Date().getFullYear()} Reza Pahlepi. All Rights Reserved.
                    </div>
