@@ -46,8 +46,19 @@ const ALL_PROJECTS = [
     demoLink: "https://sewakamar.mitrabayarapp.com/",
     docLink: "https://github.com/rezaaplvv/Kost-Management-App"
   },
+
     {
     id: 5,
+    title: "Website Desa",
+    subtitle: "Village Profile Website",
+    desc: "A comprehensive website for village profile management with interactive features.",
+    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
+    image: "/desaku.png",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv"
+  },
+    {
+    id: 6,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
@@ -57,7 +68,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
   },
   {
-    id: 6,
+    id: 7,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
@@ -67,7 +78,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
   },
   {
-    id: 7,
+    id: 8,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
@@ -78,7 +89,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 8,
+    id: 9,
     title: "Viauo",
     subtitle: "Multimedia App",
     desc: "Flutter streaming music/video online & offline player.",
