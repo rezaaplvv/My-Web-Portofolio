@@ -637,7 +637,7 @@ export default function Home() {
               className={`w-[300px] h-[300px] md:w-[400px] md:h-[400px] bg-white border-4 ${isDarkMode ? 'border-white shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} relative z-10`}
             >
               <Image 
-                src="/IMG_2869.jpg" 
+                src="/PROFIL.PNG" 
                 alt="Reza Pahlepi"
                 fill
                 className="object-cover transition-all duration-300"
