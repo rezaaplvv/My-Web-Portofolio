@@ -84,23 +84,23 @@ const PROJECTS = [
   },
     {
     id: 5,
-    title: "Fragrance Distribution",
-    subtitle: "Fragrance Distribution Management",
-    desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
-    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
-    image: "/Dashboardadminparfum.png",
-    demoLink: "https://parfum.digitalku.co.id/",
-    docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
+    title: "Elementary School Website",
+    subtitle: "Elementary School Website",
+    desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
+    tech: ["Laravel 12", "MySQL", "Tailwind"],
+    image: "/sd.png",
+    demoLink: "https://sdncigowong01.sch.id/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Elementary-School"
   },
   {
     id: 6,
-    title: "Smart Perpus",
-    subtitle: "Digital Library",
-    desc: "Digital library system with gamification features for levels and rankings.",
-    tech: ["Flutter", "Firebase", "Gamification"],
-    image: "/library.png",
-    demoLink: null,
-    docLink: "https://github.com/rezaaplvv/smart-perpus-app"
+    title: "Japanese travel website",
+    subtitle: "Japanese travel website",
+    desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
+    tech: ["Laravel 12", "Tailwind CSS", "MySQL"],
+    image: "/japanese.png",
+    demoLink: "https://helmitour.com/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
   },
 
 ];
@@ -594,7 +594,7 @@ export default function Home() {
                 transition={{ delay: 0.5 }} 
                 className={`text-2xl md:text-3xl font-bold ${isDarkMode ? 'bg-white text-black' : 'bg-black text-white'} inline-block px-2 py-1 rotate-1 mt-2`}
               >
-                Full-Stack Developer.
+                Full-Stack Web Developer.
               </motion.div>
 
               <motion.p 
@@ -620,7 +620,7 @@ export default function Home() {
                 onClick={(e) => handleScroll(e, "projects")}
                 className={`group relative px-8 py-4 bg-[#60A5FA] border-2 ${isDarkMode ? 'border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'} font-bold text-black hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all`}
               >
-                LIHAT KARYA
+                VIEW PROJECTS
               </Link>
               <div className={`flex items-center gap-2 font-mono text-sm font-bold bg-white border-2 ${isDarkMode ? 'border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] text-black' : 'border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'} px-3 py-1`}>
                 DOWNLOAD CV
@@ -679,7 +679,7 @@ export default function Home() {
                 />
                 <StatCard 
                     label="Happy Clients" 
-                    value={12} 
+                    value={30} 
                     icon={<Users size={24}/>} 
                     color="bg-blue-300"
                     isDarkMode={isDarkMode}
@@ -992,7 +992,6 @@ export default function Home() {
                       Reza <br/><span className="text-[#FDE047]">Pahlepi.</span>
                    </h2>
                    <p className="text-gray-400 font-medium text-lg max-w-md">
-                      Let's build something crazy and useful. <br/>
                       Based in Medan, Indonesia.
                    </p>
                 </div>

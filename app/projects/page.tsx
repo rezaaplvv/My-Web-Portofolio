@@ -57,8 +57,28 @@ const ALL_PROJECTS = [
     demoLink: null,
     docLink: "https://github.com/rezaaplvv"
   },
-    {
+      {
     id: 6,
+    title: "Elementary School Website",
+    subtitle: "Elementary School Website",
+    desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
+    tech: ["Laravel 12", "MySQL", "Tailwind"],
+    image: "/sd.png",
+    demoLink: "https://sdncigowong01.sch.id/",
+    docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
+  },
+  {
+    id: 7,
+    title: "Japanese travel website",
+    subtitle: "Japanese travel website",
+    desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
+    tech: ["Laravel 12", "Tailwind CSS", "MySQL"],
+    image: "/japanese.png",
+    demoLink: "https://helmitour.com/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
+  },
+    {
+    id: 8,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
@@ -68,7 +88,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
   },
   {
-    id: 7,
+    id: 9,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
@@ -78,7 +98,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
   },
   {
-    id: 8,
+    id: 10,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
@@ -89,7 +109,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 9,
+    id: 11,
     title: "Viauo",
     subtitle: "Multimedia App",
     desc: "Flutter streaming music/video online & offline player.",
