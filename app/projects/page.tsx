@@ -55,10 +55,30 @@ const ALL_PROJECTS = [
     tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
     image: "/desaku.png",
     demoLink: null,
-    docLink: "https://github.com/rezaaplvv"
+    docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
   },
       {
     id: 6,
+    title: "Elementary School Website",
+    subtitle: "Elementary School Website",
+    desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
+    tech: ["Laravel 12", "MySQL", "Tailwind"],
+    image: "/sd.png",
+    demoLink: "https://sdncigowong01.sch.id/",
+    docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
+  },
+      {
+    id: 7,
+    title: "ZeroNime",
+    subtitle: "Anime Streaming Platform",
+    desc: "A modern anime streaming platform with a focus on user experience and content variety.",
+    tech: ["Next.js", "Tailwind CSS", "Node.js"],
+    image: "/zeronime.png",
+    demoLink: "https://zeronime.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/ZeroNime"
+  },
+      {
+    id: 8,
     title: "Elementary School Website",
     subtitle: "Elementary School Website",
     desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
@@ -87,18 +107,9 @@ const ALL_PROJECTS = [
     demoLink: "http://tipus.digitalku.co.id",
     docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
   },
+
   {
     id: 9,
-    title: "EmotionFace AI",
-    subtitle: "AI Detection",
-    desc: "Detects user facial expressions and changes UI accordingly in real-time.",
-    tech: ["React", "TensorFlow", "AI"],
-    image: "/emo.png",
-    demoLink: "https://emotion-face.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
-  },
-  {
-    id: 10,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
@@ -107,7 +118,16 @@ const ALL_PROJECTS = [
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/smart-perpus-app"
   },
-
+  {
+    id: 10,
+    title: "EmotionFace AI",
+    subtitle: "AI Detection",
+    desc: "Detects user facial expressions and changes UI accordingly in real-time.",
+    tech: ["React", "TensorFlow", "AI"],
+    image: "/emo.png",
+    demoLink: "https://emotion-face.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
+  },
   {
     id: 11,
     title: "Viauo",

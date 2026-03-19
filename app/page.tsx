@@ -54,13 +54,13 @@ const PROJECTS = [
   },
   {
     id: 2,
-    title: "Social Media Downloader",
-    subtitle: "Tools Web App",
-    desc: "Download high quality media from all social media without watermark.",
-    tech: ["React", "Vite", "Node.js"],
-    image: "/zeronout.png",
-    demoLink: "https://zero-nout-downloader.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
+    title: "Japanese travel website",
+    subtitle: "Japanese travel website",
+    desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
+    tech: ["Laravel 12", "Tailwind CSS", "MySQL"],
+    image: "/japanese.png",
+    demoLink: "https://helmitour.com/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
   },
   {
     id: 3,
@@ -92,16 +92,17 @@ const PROJECTS = [
     demoLink: "https://sdncigowong01.sch.id/",
     docLink: "https://github.com/rezaaplvv/Laravel-Elementary-School"
   },
-  {
+    {
     id: 6,
-    title: "Japanese travel website",
-    subtitle: "Japanese travel website",
-    desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
-    tech: ["Laravel 12", "Tailwind CSS", "MySQL"],
-    image: "/japanese.png",
-    demoLink: "https://helmitour.com/",
-    docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
+    title: "Social Media Downloader",
+    subtitle: "Tools Web App",
+    desc: "Download high quality media from all social media without watermark.",
+    tech: ["React", "Vite", "Node.js"],
+    image: "/zeronout.png",
+    demoLink: "https://zero-nout-downloader.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
+
 
 ];
 
