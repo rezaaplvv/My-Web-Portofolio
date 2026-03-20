@@ -49,7 +49,7 @@ const ALL_PROJECTS = [
 
     {
     id: 5,
-    title: "Website Desa",
+    title: "Village Profile Website",
     subtitle: "Village Profile Website",
     desc: "A comprehensive website for village profile management with interactive features.",
     tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
@@ -74,7 +74,7 @@ const ALL_PROJECTS = [
     desc: "A modern anime streaming platform with a focus on user experience and content variety.",
     tech: ["Next.js", "Tailwind CSS", "Node.js"],
     image: "/zeronime.png",
-    demoLink: "https://zeronime.vercel.app/",
+    demoLink: "https://zeronime-anime-stream.vercel.app/",
     docLink: "https://github.com/rezaaplvv/ZeroNime"
   },
       {
