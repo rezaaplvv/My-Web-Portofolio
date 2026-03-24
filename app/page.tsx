@@ -42,15 +42,15 @@ import {
 import Link from "next/link";
 
 const PROJECTS = [
-  {
+      {
     id: 1,
-    title: "Dramatix",
-    subtitle: "Streaming Platform",
-    desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
-    tech: ["Next.js 15", "Tailwind", "Node.js"],
-    image: "/dramaku.png",
-    demoLink: "https://drama-tix.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/Dramatix"
+    title: "4 in 1 Streaming Website",
+    subtitle: "4 in 1 Streaming Website",
+    desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
+    tech: ["Next.js", "Tailwind CSS", "Node.js"],
+    image: "/zeronime.png",
+    demoLink: "https://zeronime-anime-stream.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/ZeroNime"
   },
   {
     id: 2,

@@ -57,8 +57,18 @@ const ALL_PROJECTS = [
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
   },
-      {
+    {
     id: 6,
+    title: "Hajj & Umrah Travel Website",
+    subtitle: "Hajj & Umrah Travel Website",
+    desc: "A professional travel agency landing page, specializing in curated Hajj and Umrah tour packages with a modern, high-converting design.",
+    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
+    image: "/hajj.png",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
+  },
+      {
+    id: 7,
     title: "Elementary School Website",
     subtitle: "Elementary School Website",
     desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
@@ -68,27 +78,18 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
   },
       {
-    id: 7,
-    title: "ZeroNime",
-    subtitle: "Anime Streaming Platform",
-    desc: "A modern anime streaming platform with a focus on user experience and content variety.",
+    id: 8,
+    title: "4 in 1 Streaming Website",
+    subtitle: "4 in 1 Streaming Website",
+    desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
     tech: ["Next.js", "Tailwind CSS", "Node.js"],
     image: "/zeronime.png",
     demoLink: "https://zeronime-anime-stream.vercel.app/",
     docLink: "https://github.com/rezaaplvv/ZeroNime"
   },
-      {
-    id: 8,
-    title: "Elementary School Website",
-    subtitle: "Elementary School Website",
-    desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
-    tech: ["Laravel 12", "MySQL", "Tailwind"],
-    image: "/sd.png",
-    demoLink: "https://sdncigowong01.sch.id/",
-    docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
-  },
+  
   {
-    id: 7,
+    id: 9,
     title: "Japanese travel website",
     subtitle: "Japanese travel website",
     desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
@@ -98,7 +99,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
   },
     {
-    id: 8,
+    id: 10,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
@@ -109,7 +110,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 9,
+    id: 11,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
@@ -119,7 +120,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/smart-perpus-app"
   },
   {
-    id: 10,
+    id: 12,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
@@ -129,7 +130,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
   },
   {
-    id: 11,
+    id: 13,
     title: "Viauo",
     subtitle: "Multimedia App",
     desc: "Flutter streaming music/video online & offline player.",
