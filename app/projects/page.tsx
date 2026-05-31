@@ -6,8 +6,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Github, Zap } from "lucide-react";
 const ALL_PROJECTS = [
+{
+  id: 1,
+  title: "PPT CREATE",
+  subtitle: "SaaS Digital Marketplace & Creator Platform",
+  desc: "A premium, high-performance marketplace platform for Canva presentation templates, featuring automated payment gateway integration, real-time sales metrics, and an advanced creator onboarding workflow with multi-tiered pricing mechanics.",
+  tech: ["Laravel 11", "Tailwind CSS", "MySQL", "Duitku API", "JavaScript"],
+  image: "/pptcreate.png", // Sesuaikan dengan nama file mockup/screenshot kamu
+  demoLink: "https://pptcreate.com/",
+  docLink: "https://github.com/rezaaplvv/ppt-create" // Sesuaikan dengan nama repositori GitHub aslimu
+},
+  
   {
-    id: 1,
+    id: 2,
     title: "Dramatix",
     subtitle: "Streaming Platform",
     desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
@@ -17,7 +28,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Dramatix"
   },
   {
-    id: 2,
+    id: 3,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
     desc: "Download high quality media from all social media without watermark.",
@@ -27,7 +38,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
   {
-    id: 3,
+    id: 4,
     title: "Cashier System POS",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
@@ -37,7 +48,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
     {
-    id: 4,
+    id: 5,
     title: "Kost Management App",
     subtitle: "Kost Management App",
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
@@ -48,7 +59,7 @@ const ALL_PROJECTS = [
   },
 
     {
-    id: 5,
+    id: 6,
     title: "Village Profile Website",
     subtitle: "Village Profile Website",
     desc: "A comprehensive website for village profile management with interactive features.",
@@ -58,7 +69,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
   },
     {
-    id: 6,
+    id: 7,
     title: "Hajj & Umrah Travel Website",
     subtitle: "Hajj & Umrah Travel Website",
     desc: "A professional travel agency landing page, specializing in curated Hajj and Umrah tour packages with a modern, high-converting design.",
@@ -68,7 +79,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
   },
       {
-    id: 7,
+    id: 8,
     title: "Elementary School Website",
     subtitle: "Elementary School Website",
     desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
@@ -78,7 +89,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
   },
       {
-    id: 8,
+    id: 9,
     title: "4 in 1 Streaming Website",
     subtitle: "4 in 1 Streaming Website",
     desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
@@ -89,7 +100,7 @@ const ALL_PROJECTS = [
   },
   
   {
-    id: 9,
+    id: 10,
     title: "Japanese travel website",
     subtitle: "Japanese travel website",
     desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
@@ -99,7 +110,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
   },
     {
-    id: 10,
+    id: 11,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
@@ -110,7 +121,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 11,
+    id: 12,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
@@ -120,7 +131,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/smart-perpus-app"
   },
   {
-    id: 12,
+    id: 13,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
@@ -130,7 +141,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
   },
   {
-    id: 13,
+    id: 14,
     title: "Viauo",
     subtitle: "Multimedia App",
     desc: "Flutter streaming music/video online & offline player.",
@@ -186,7 +197,7 @@ export default function ProjectsPage() {
             </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-[450px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {ALL_PROJECTS.map((project, index) => (
               <motion.div
                 key={index}
@@ -208,12 +219,12 @@ export default function ProjectsPage() {
                   </div>
                 </div>
 
-                <div className="block relative h-[50%] border-b-4 border-black overflow-hidden bg-gray-100">
+                <div className="relative w-full aspect-[16/9] shrink-0 border-b-4 border-black overflow-hidden bg-gray-100">
                   <Image 
                       src={project.image} 
                       alt={project.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   />
 <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 z-10 bg-black/40 backdrop-blur-[2px] ${
   activeId === project.id 

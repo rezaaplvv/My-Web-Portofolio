@@ -42,16 +42,17 @@ import {
 import Link from "next/link";
 
 const PROJECTS = [
-      {
-    id: 1,
-    title: "4 in 1 Streaming Website",
-    subtitle: "4 in 1 Streaming Website",
-    desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
-    tech: ["Next.js", "Tailwind CSS", "Node.js"],
-    image: "/zeronime.png",
-    demoLink: "https://zeronime-anime-stream.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/ZeroNime"
-  },
+  {
+  id: 1,
+  title: "PPT CREATE",
+  subtitle: "SaaS Digital Marketplace & Creator Platform",
+  desc: "A premium, high-performance marketplace platform for Canva presentation templates, featuring automated payment gateway integration, real-time sales metrics, and an advanced creator onboarding workflow with multi-tiered pricing mechanics.",
+  tech: ["Laravel 11", "Tailwind CSS", "MySQL", "Duitku API", "JavaScript"],
+  image: "/pptcreate.png", // Sesuaikan dengan nama file mockup/screenshot kamu
+  demoLink: "https://pptcreate.com/",
+  docLink: "https://github.com/rezaaplvv/ppt-create" // Sesuaikan dengan nama repositori GitHub aslimu
+},
+
   {
     id: 2,
     title: "Japanese travel website",
@@ -62,8 +63,32 @@ const PROJECTS = [
     demoLink: "https://helmitour.com/",
     docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
   },
-  {
+
+      {
     id: 3,
+    title: "4 in 1 Streaming Website",
+    subtitle: "4 in 1 Streaming Website",
+    desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
+    tech: ["Next.js", "Tailwind CSS", "Node.js"],
+    image: "/zeronime.png",
+    demoLink: "https://zeronime-anime-stream.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/ZeroNime"
+  },
+
+
+    {
+    id: 4,
+    title: "Elementary School Website",
+    subtitle: "Elementary School Website",
+    desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
+    tech: ["Laravel 12", "MySQL", "Tailwind"],
+    image: "/sd.png",
+    demoLink: "https://sdncigowong01.sch.id/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Elementary-School"
+  },
+
+  {
+    id: 5,
     title: "Kost Management App",
     subtitle: "Kost Management App",
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
@@ -73,7 +98,7 @@ const PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Kost-Management"
   },
   {
-    id: 4,
+    id: 6,
     title: "Cashier System POS",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
@@ -82,26 +107,8 @@ const PROJECTS = [
     demoLink: "http://tipus.digitalku.co.id/login",
     docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
-    {
-    id: 5,
-    title: "Elementary School Website",
-    subtitle: "Elementary School Website",
-    desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
-    tech: ["Laravel 12", "MySQL", "Tailwind"],
-    image: "/sd.png",
-    demoLink: "https://sdncigowong01.sch.id/",
-    docLink: "https://github.com/rezaaplvv/Laravel-Elementary-School"
-  },
-    {
-    id: 6,
-    title: "Social Media Downloader",
-    subtitle: "Tools Web App",
-    desc: "Download high quality media from all social media without watermark.",
-    tech: ["React", "Vite", "Node.js"],
-    image: "/zeronout.png",
-    demoLink: "https://zero-nout-downloader.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
-  },
+
+  
 
 
 ];
@@ -721,7 +728,7 @@ export default function Home() {
             </div>
           </div>
 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-8 auto-rows-[380px]">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
             {PROJECTS.map((project, index) => (
               <motion.div
                 key={index}
@@ -744,12 +751,12 @@ export default function Home() {
                 </div>
 
                 {/* Image & Overlay (UPDATED) */}
-                <div className={`block relative h-[50%] border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} overflow-hidden bg-gray-100`}>
+                <div className={`relative w-full aspect-[16/9] shrink-0 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} overflow-hidden bg-gray-100`}>
                   <Image 
                       src={project.image} 
                       alt={project.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-black/40 backdrop-blur-[2px]">
