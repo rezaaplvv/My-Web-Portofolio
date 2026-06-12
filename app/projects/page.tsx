@@ -27,8 +27,21 @@ const ALL_PROJECTS = [
     demoLink: "https://drama-tix.vercel.app/",
     docLink: "https://github.com/rezaaplvv/Dramatix"
   },
+
+{
+    "id": 3,
+    "title": "Kiddoz",
+    "subtitle": "Interactive Quiz Platform",
+    "desc": "Gamified academic quiz application for K-12 students. Features real-time synchronization, dynamic badge unlocking, and analytics dashboard based on Flutter and Firebase.",
+    "tech": ["Flutter", "Firebase", "Provider"],
+    "image": "/kiddoz.jpg",
+    "demoLink": "null",
+    "docLink": "https://github.com/rezaaplvv/Kiddoz"
+  },
+
+
   {
-    id: 3,
+    id: 4,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
     desc: "Download high quality media from all social media without watermark.",
@@ -38,7 +51,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
   {
-    id: 4,
+    id: 5,
     title: "Cashier System POS",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
@@ -48,7 +61,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
     {
-    id: 5,
+    id: 6,
     title: "Kost Management App",
     subtitle: "Kost Management App",
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
@@ -59,7 +72,7 @@ const ALL_PROJECTS = [
   },
 
     {
-    id: 6,
+    id: 7,
     title: "Village Profile Website",
     subtitle: "Village Profile Website",
     desc: "A comprehensive website for village profile management with interactive features.",
@@ -69,7 +82,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
   },
     {
-    id: 7,
+    id: 8,
     title: "Hajj & Umrah Travel Website",
     subtitle: "Hajj & Umrah Travel Website",
     desc: "A professional travel agency landing page, specializing in curated Hajj and Umrah tour packages with a modern, high-converting design.",
@@ -79,7 +92,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
   },
       {
-    id: 8,
+    id: 9,
     title: "Elementary School Website",
     subtitle: "Elementary School Website",
     desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
@@ -89,7 +102,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
   },
       {
-    id: 9,
+    id: 10,
     title: "4 in 1 Streaming Website",
     subtitle: "4 in 1 Streaming Website",
     desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
@@ -100,7 +113,7 @@ const ALL_PROJECTS = [
   },
   
   {
-    id: 10,
+    id: 11,
     title: "Japanese travel website",
     subtitle: "Japanese travel website",
     desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
@@ -109,8 +122,19 @@ const ALL_PROJECTS = [
     demoLink: "https://helmitour.com/",
     docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
   },
+
+  {
+    id: 12, 
+    title: "Waskita Angkasa Satya Security System",
+    subtitle: "Enterprise Security Management System",
+    desc: "A Next-Gen Integrated Security System featuring real-time attendance with GPS & photo verification, multi-level dashboards, broadcast command controls, and formal executive reporting.",
+    tech: ["Laravel 11", "MySQL", "Blade", "Tailwind CSS"],
+    image: "/Dashboardadminsecurity.png", // Sesuaikan dengan nama file screenshot kamu nanti
+    demoLink: "null", // Bisa kamu ganti jadi domain production jika nanti sudah di-deploy permanen
+    docLink: "https://github.com/rezaaplvv/si-security-waskita" // Sesuaikan dengan nama repository github kamu jika berbeda
+  },
     {
-    id: 11,
+    id: 13,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
@@ -121,17 +145,17 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 12,
+    id: 14,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
     tech: ["Flutter", "Firebase", "Gamification"],
-    image: "/library.png",
+    image: "/library.jpg",
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/smart-perpus-app"
   },
   {
-    id: 13,
+    id: 15,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
@@ -141,12 +165,12 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
   },
   {
-    id: 14,
+    id: 16,
     title: "Viauo",
     subtitle: "Multimedia App",
     desc: "Flutter streaming music/video online & offline player.",
     tech: ["Flutter", "Dart", "Rest API"],
-    image: "/viauo.png",
+    image: "/viaou.jpg",
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
   },
