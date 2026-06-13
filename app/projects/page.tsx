@@ -12,36 +12,92 @@ const ALL_PROJECTS = [
   subtitle: "SaaS Digital Marketplace & Creator Platform",
   desc: "A premium, high-performance marketplace platform for Canva presentation templates, featuring automated payment gateway integration, real-time sales metrics, and an advanced creator onboarding workflow with multi-tiered pricing mechanics.",
   tech: ["Laravel 11", "Tailwind CSS", "MySQL", "Duitku API", "JavaScript"],
-  image: "/pptcreate.png", // Sesuaikan dengan nama file mockup/screenshot kamu
+  image: "/pptcreate1.png", // Sesuaikan dengan nama file mockup/screenshot kamu
   demoLink: "https://pptcreate.com/",
   docLink: "https://github.com/rezaaplvv/ppt-create" // Sesuaikan dengan nama repositori GitHub aslimu
 },
-  
-  {
-    id: 2,
-    title: "Dramatix",
-    subtitle: "Streaming Platform",
-    desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
-    tech: ["Next.js 15", "Tailwind", "Node.js"],
-    image: "/dramaku.png",
-    demoLink: "https://drama-tix.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/Dramatix"
+    {
+    id: 2, 
+    title: "Security System",
+    subtitle: "Enterprise Security Management System",
+    desc: "A Next-Gen Integrated Security System featuring real-time attendance with GPS & photo verification, multi-level dashboards, broadcast command controls, and formal executive reporting.",
+    tech: ["Laravel 11", "MySQL", "Blade", "Tailwind CSS"],
+    image: "/waskita.png",
+    demoLink: "https://web-production-00ffc.up.railway.app/",
+    docLink: "https://github.com/rezaaplvv/si-security-waskita"
   },
-
-{
-    "id": 3,
-    "title": "Kiddoz",
-    "subtitle": "Interactive Quiz Platform",
-    "desc": "Gamified academic quiz application for K-12 students. Features real-time synchronization, dynamic badge unlocking, and analytics dashboard based on Flutter and Firebase.",
-    "tech": ["Flutter", "Firebase", "Provider"],
-    "image": "/kiddoz.jpg",
-    "demoLink": "null",
-    "docLink": "https://github.com/rezaaplvv/Kiddoz"
+    {
+    id: 3,
+    title: "Hajj & Umrah Travel Website",
+    subtitle: "Hajj & Umrah Travel Website",
+    desc: "A professional travel agency landing page, specializing in curated Hajj and Umrah tour packages with a modern, high-converting design.",
+    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
+    image: "/hajj1.png",
+    demoLink: "https://hajjumrah.freedev.app/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Hajj-Umrah"
   },
-
-
-  {
+      {
     id: 4,
+    title: "Elementary School Website",
+    subtitle: "Elementary School Website",
+    desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
+    tech: ["Laravel 12", "MySQL", "Tailwind"],
+    image: "/sd1.png",
+    demoLink: "https://sdncigowong01.sch.id/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Elementary-School"
+  },
+    {
+    id: 5,
+    title: "Japanese travel website",
+    subtitle: "Japanese travel website",
+    desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
+    tech: ["Laravel 12", "Tailwind CSS", "MySQL"],
+    image: "/japanese1.png",
+    demoLink: "https://helmitour.com/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
+  },
+        {
+    id: 6,
+    title: "4 in 1 Streaming Website",
+    subtitle: "4 in 1 Streaming Website",
+    desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
+    tech: ["Next.js", "Tailwind CSS", "Node.js"],
+    image: "/desuwanime.png",
+    demoLink: "https://zeronime-anime-stream.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/ZeroNime"
+  },
+    {
+    id: 7,
+    title: "Smart Perpus",
+    subtitle: "Digital Library",
+    desc: "Digital library system with gamification features for levels and rankings.",
+    tech: ["Flutter", "Firebase", "Gamification"],
+    image: "/library.jpg",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/smart-perpus-app"
+  },
+  {
+    id: 8,
+    title: "Kiddoz",
+    subtitle: "Interactive Quiz Platform",
+    desc: "Gamified academic quiz application for K-12 students. Features real-time synchronization, dynamic badge unlocking, and analytics dashboard based on Flutter and Firebase.",
+    tech: ["Flutter", "Firebase", "Provider"],
+    image: "/kiddoz.jpg",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/Kiddoz"
+  },
+    {
+    id: 9,
+    title: "Viauo",
+    subtitle: "Multimedia App",
+    desc: "Flutter streaming music/video online & offline player.",
+    tech: ["Flutter", "Dart", "Rest API"],
+    image: "/viaou.jpg",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
+  },
+  {
+    id: 10,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
     desc: "Download high quality media from all social media without watermark.",
@@ -51,7 +107,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
   {
-    id: 5,
+    id: 11,
     title: "Cashier System POS",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
@@ -61,7 +117,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
     {
-    id: 6,
+    id: 12,
     title: "Kost Management App",
     subtitle: "Kost Management App",
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
@@ -70,9 +126,8 @@ const ALL_PROJECTS = [
     demoLink: "https://sewakamar.mitrabayarapp.com/",
     docLink: "https://github.com/rezaaplvv/Kost-Management-App"
   },
-
-    {
-    id: 7,
+  {
+    id: 13,
     title: "Village Profile Website",
     subtitle: "Village Profile Website",
     desc: "A comprehensive website for village profile management with interactive features.",
@@ -81,60 +136,18 @@ const ALL_PROJECTS = [
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
   },
-    {
-    id: 8,
-    title: "Hajj & Umrah Travel Website",
-    subtitle: "Hajj & Umrah Travel Website",
-    desc: "A professional travel agency landing page, specializing in curated Hajj and Umrah tour packages with a modern, high-converting design.",
-    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
-    image: "/hajj.png",
-    demoLink: null,
-    docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
-  },
-      {
-    id: 9,
-    title: "Elementary School Website",
-    subtitle: "Elementary School Website",
-    desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
-    tech: ["Laravel 12", "MySQL", "Tailwind"],
-    image: "/sd.png",
-    demoLink: "https://sdncigowong01.sch.id/",
-    docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
-  },
-      {
-    id: 10,
-    title: "4 in 1 Streaming Website",
-    subtitle: "4 in 1 Streaming Website",
-    desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
-    tech: ["Next.js", "Tailwind CSS", "Node.js"],
-    image: "/zeronime.png",
-    demoLink: "https://zeronime-anime-stream.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/ZeroNime"
-  },
-  
   {
-    id: 11,
-    title: "Japanese travel website",
-    subtitle: "Japanese travel website",
-    desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
-    tech: ["Laravel 12", "Tailwind CSS", "MySQL"],
-    image: "/japanese.png",
-    demoLink: "https://helmitour.com/",
-    docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
-  },
-
-  {
-    id: 12, 
-    title: "Waskita Angkasa Satya Security System",
-    subtitle: "Enterprise Security Management System",
-    desc: "A Next-Gen Integrated Security System featuring real-time attendance with GPS & photo verification, multi-level dashboards, broadcast command controls, and formal executive reporting.",
-    tech: ["Laravel 11", "MySQL", "Blade", "Tailwind CSS"],
-    image: "/Dashboardadminsecurity.png", // Sesuaikan dengan nama file screenshot kamu nanti
-    demoLink: "null", // Bisa kamu ganti jadi domain production jika nanti sudah di-deploy permanen
-    docLink: "https://github.com/rezaaplvv/si-security-waskita" // Sesuaikan dengan nama repository github kamu jika berbeda
+    id: 14,
+    title: "Dramatix",
+    subtitle: "Streaming Platform",
+    desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
+    tech: ["Next.js 15", "Tailwind", "Node.js"],
+    image: "/dramaku.png",
+    demoLink: "https://drama-tix.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/Dramatix"
   },
     {
-    id: 13,
+    id: 15,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
@@ -145,17 +158,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 14,
-    title: "Smart Perpus",
-    subtitle: "Digital Library",
-    desc: "Digital library system with gamification features for levels and rankings.",
-    tech: ["Flutter", "Firebase", "Gamification"],
-    image: "/library.jpg",
-    demoLink: null,
-    docLink: "https://github.com/rezaaplvv/smart-perpus-app"
-  },
-  {
-    id: 15,
+    id: 16,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
@@ -163,16 +166,6 @@ const ALL_PROJECTS = [
     image: "/emo.png",
     demoLink: "https://emotion-face.vercel.app/",
     docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
-  },
-  {
-    id: 16,
-    title: "Viauo",
-    subtitle: "Multimedia App",
-    desc: "Flutter streaming music/video online & offline player.",
-    tech: ["Flutter", "Dart", "Rest API"],
-    image: "/viaou.jpg",
-    demoLink: null,
-    docLink: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
   },
 
 ];  

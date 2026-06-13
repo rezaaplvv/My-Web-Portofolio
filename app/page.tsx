@@ -48,7 +48,7 @@ const PROJECTS = [
   subtitle: "SaaS Digital Marketplace & Creator Platform",
   desc: "A premium, high-performance marketplace platform for Canva presentation templates, featuring automated payment gateway integration, real-time sales metrics, and an advanced creator onboarding workflow with multi-tiered pricing mechanics.",
   tech: ["Laravel 11", "Tailwind CSS", "MySQL", "Duitku API", "JavaScript"],
-  image: "/pptcreate.png", // Sesuaikan dengan nama file mockup/screenshot kamu
+  image: "/pptcreate1.png", // Sesuaikan dengan nama file mockup/screenshot kamu
   demoLink: "https://pptcreate.com/",
   docLink: "https://github.com/rezaaplvv/ppt-create" // Sesuaikan dengan nama repositori GitHub aslimu
 },
@@ -59,53 +59,52 @@ const PROJECTS = [
     subtitle: "Japanese travel website",
     desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
     tech: ["Laravel 12", "Tailwind CSS", "MySQL"],
-    image: "/japanese.png",
+    image: "/japanese1.png",
     demoLink: "https://helmitour.com/",
     docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
   },
 
-      {
-    id: 3,
-    title: "4 in 1 Streaming Website",
-    subtitle: "4 in 1 Streaming Website",
-    desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
-    tech: ["Next.js", "Tailwind CSS", "Node.js"],
-    image: "/zeronime.png",
-    demoLink: "https://zeronime-anime-stream.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/ZeroNime"
-  },
-
-
     {
-    id: 4,
+    id: 3,
     title: "Elementary School Website",
     subtitle: "Elementary School Website",
     desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
     tech: ["Laravel 12", "MySQL", "Tailwind"],
-    image: "/sd.png",
+    image: "/sd1.png",
     demoLink: "https://sdncigowong01.sch.id/",
     docLink: "https://github.com/rezaaplvv/Laravel-Elementary-School"
   },
-
-  {
-    id: 5,
-    title: "Kost Management App",
-    subtitle: "Kost Management App",
-    desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
-    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
-    image: "/dashboardowner.png",
-    demoLink: "https://sewakamar.mitrabayarapp.com/",
-    docLink: "https://github.com/rezaaplvv/Laravel-Kost-Management"
+      {
+    id: 4, 
+    title: "Waskita Angkasa Satya Security System",
+    subtitle: "Enterprise Security Management System",
+    desc: "A Next-Gen Integrated Security System featuring real-time attendance with GPS & photo verification, multi-level dashboards, broadcast command controls, and formal executive reporting.",
+    tech: ["Laravel 11", "MySQL", "Blade", "Tailwind CSS"],
+    image: "/waskita.png",
+    demoLink: "https://web-production-00ffc.up.railway.app/",
+    docLink: "https://github.com/rezaaplvv/si-security-waskita"
   },
-  {
+
+
+    {
+    id: 5,
+    title: "Hajj & Umrah Travel Website",
+    subtitle: "Hajj & Umrah Travel Website",
+    desc: "A professional travel agency landing page, specializing in curated Hajj and Umrah tour packages with a modern, high-converting design.",
+    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
+    image: "/hajj1.png",
+    demoLink: "https://hajjumrah.freedev.app/",
+    docLink: "https://github.com/rezaaplvv/Laravel-Hajj-Umrah"
+  },
+        {
     id: 6,
-    title: "Cashier System POS",
-    subtitle: "Restaurant System",
-    desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
-    tech: ["Laravel 12", "MySQL", "Bootstrap"],
-    image: "/mesinkasirutama.png",
-    demoLink: "http://tipus.digitalku.co.id/login",
-    docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
+    title: "4 in 1 Streaming Website",
+    subtitle: "4 in 1 Streaming Website",
+    desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
+    tech: ["Next.js", "Tailwind CSS", "Node.js"],
+    image: "/desuwanime.png",
+    demoLink: "https://zeronime-anime-stream.vercel.app/",
+    docLink: "https://github.com/rezaaplvv/ZeroNime"
   },
 
   
