@@ -67,6 +67,37 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/ZeroNime"
   },
     {
+    id: 10,
+    title: "Village Profile Website",
+    subtitle: "Village Profile Website",
+    desc: "A comprehensive website for village profile management with interactive features.",
+    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
+    image: "/desa.png",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
+  },
+ 
+  {
+    id: 11,
+    title: "Cashier System POS",
+    subtitle: "Restaurant System",
+    desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
+    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
+    image: "/restopost.png",
+    demoLink: "http://tipus.digitalku.co.id/login",
+    docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
+  },
+    {
+    id: 12,
+    title: "Kost Management App",
+    subtitle: "Kost Management App",
+    desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
+    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
+    image: "/kost.png",
+    demoLink: "https://sewakamar.mitrabayarapp.com/",
+    docLink: "https://github.com/rezaaplvv/Kost-Management-App"
+  },
+    {
     id: 7,
     title: "Smart Perpus",
     subtitle: "Digital Library",
@@ -96,8 +127,9 @@ const ALL_PROJECTS = [
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
   },
-  {
-    id: 10,
+  
+ {
+    id: 13,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
     desc: "Download high quality media from all social media without watermark.",
@@ -107,34 +139,14 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
   {
-    id: 11,
-    title: "Cashier System POS",
-    subtitle: "Restaurant System",
-    desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
-    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
-    image: "/mesinkasirutama.png",
-    demoLink: "http://tipus.digitalku.co.id/login",
-    docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
-  },
-    {
-    id: 12,
-    title: "Kost Management App",
-    subtitle: "Kost Management App",
-    desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
-    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
-    image: "/dashboardowner.png",
-    demoLink: "https://sewakamar.mitrabayarapp.com/",
-    docLink: "https://github.com/rezaaplvv/Kost-Management-App"
-  },
-  {
-    id: 13,
-    title: "Village Profile Website",
-    subtitle: "Village Profile Website",
-    desc: "A comprehensive website for village profile management with interactive features.",
-    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
-    image: "/desaku.png",
-    demoLink: null,
-    docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
+    id: 16, 
+    title: "Zero Store",
+    subtitle: "Premium Account Hub",
+    desc: "A sleek, high-performance E-Commerce and Digital Catalog platform featuring dynamic brand border highlights, smart variant modals, and automated WhatsApp checkout routing.",
+    tech: ["Next.js", "TypeScript", "Tailwind", "Lucide Icons"],
+    image: "/ZeroStorePreview.png", // Sesuaikan dengan nama file screenshot desktop Anda nanti
+    demoLink: "https://zerostore-five.vercel.app/",
+    docLink: "#" // Anda bisa isi dengan link repositori GitHub Private Anda jika ingin ditampilkan, atau kosongkan
   },
   {
     id: 14,
@@ -158,7 +170,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 16,
+    id: 17,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
