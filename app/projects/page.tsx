@@ -11,7 +11,7 @@ const ALL_PROJECTS = [
   title: "PPT CREATE",
   subtitle: "SaaS Digital Marketplace & Creator Platform",
   desc: "A premium, high-performance marketplace platform for Canva presentation templates, featuring automated payment gateway integration, real-time sales metrics, and an advanced creator onboarding workflow with multi-tiered pricing mechanics.",
-  tech: ["Laravel 11", "Tailwind CSS", "MySQL", "Duitku API", "JavaScript"],
+  tech: ["Payment Gateway", "Laravel 13", "Tailwind CSS", "MySQL",  "JavaScript"],
   image: "/pptcreate1.png", // Sesuaikan dengan nama file mockup/screenshot kamu
   demoLink: "https://pptcreate.com/",
   docLink: "https://github.com/rezaaplvv/ppt-create" // Sesuaikan dengan nama repositori GitHub aslimu
@@ -21,7 +21,7 @@ const ALL_PROJECTS = [
     title: "Security System",
     subtitle: "Enterprise Security Management System",
     desc: "A Next-Gen Integrated Security System featuring real-time attendance with GPS & photo verification, multi-level dashboards, broadcast command controls, and formal executive reporting.",
-    tech: ["Laravel 11", "MySQL", "Blade", "Tailwind CSS"],
+    tech: ["Laravel 13", "MySQL", "Blade", "Tailwind CSS"],
     image: "/waskita.png",
     demoLink: "https://web-production-00ffc.up.railway.app/",
     docLink: "https://github.com/rezaaplvv/si-security-waskita"
@@ -31,7 +31,7 @@ const ALL_PROJECTS = [
     title: "Hajj & Umrah Travel Website",
     subtitle: "Hajj & Umrah Travel Website",
     desc: "A professional travel agency landing page, specializing in curated Hajj and Umrah tour packages with a modern, high-converting design.",
-    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
+    tech: ["Laravel 13", "MySQL", "Blade", "Tailwind"],
     image: "/hajj1.png",
     demoLink: "https://hajjumrah.freedev.app/",
     docLink: "https://github.com/rezaaplvv/Laravel-Hajj-Umrah"
@@ -41,7 +41,7 @@ const ALL_PROJECTS = [
     title: "Elementary School Website",
     subtitle: "Elementary School Website",
     desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
-    tech: ["Laravel 12", "MySQL", "Tailwind"],
+    tech: ["Laravel 13", "MySQL", "Tailwind"],
     image: "/sd1.png",
     demoLink: "https://sdncigowong01.sch.id/",
     docLink: "https://github.com/rezaaplvv/Laravel-Elementary-School"
@@ -51,7 +51,7 @@ const ALL_PROJECTS = [
     title: "Japanese travel website",
     subtitle: "Japanese travel website",
     desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
-    tech: ["Laravel 12", "Tailwind CSS", "MySQL"],
+    tech: ["Laravel 13", "Tailwind CSS", "MySQL"],
     image: "/japanese1.png",
     demoLink: "https://helmitour.com/",
     docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
@@ -67,79 +67,48 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/ZeroNime"
   },
     {
-    id: 10,
+    id: 7,
     title: "Village Profile Website",
     subtitle: "Village Profile Website",
     desc: "A comprehensive website for village profile management with interactive features.",
-    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
+    tech: ["Laravel 13", "MySQL", "Blade", "Tailwind"],
     image: "/desa.png",
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
   },
  
   {
-    id: 11,
+    id: 8,
     title: "Cashier System POS",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
-    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
+    tech: ["Laravel 13", "MySQL", "Bootstrap 5"],
     image: "/restopost.png",
     demoLink: "http://tipus.digitalku.co.id/login",
     docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
     {
-    id: 12,
+    id: 9,
     title: "Kost Management App",
     subtitle: "Kost Management App",
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
-    tech: ["Laravel 12", "MySQL", "Bootstrap 5"],
+    tech: ["Laravel 13", "MySQL", "Bootstrap 5"],
     image: "/kost.png",
     demoLink: "https://sewakamar.mitrabayarapp.com/",
     docLink: "https://github.com/rezaaplvv/Kost-Management-App"
   },
-    {
-    id: 7,
-    title: "Smart Perpus",
-    subtitle: "Digital Library",
-    desc: "Digital library system with gamification features for levels and rankings.",
-    tech: ["Flutter", "Firebase", "Gamification"],
-    image: "/library.jpg",
-    demoLink: null,
-    docLink: "https://github.com/rezaaplvv/smart-perpus-app"
-  },
   {
-    id: 8,
-    title: "Kiddoz",
-    subtitle: "Interactive Quiz Platform",
-    desc: "Gamified academic quiz application for K-12 students. Features real-time synchronization, dynamic badge unlocking, and analytics dashboard based on Flutter and Firebase.",
-    tech: ["Flutter", "Firebase", "Provider"],
-    image: "/kiddoz.jpg",
-    demoLink: null,
-    docLink: "https://github.com/rezaaplvv/Kiddoz"
-  },
-    {
-    id: 9,
-    title: "Viauo",
-    subtitle: "Multimedia App",
-    desc: "Flutter streaming music/video online & offline player.",
-    tech: ["Flutter", "Dart", "Rest API"],
-    image: "/viaou.jpg",
-    demoLink: null,
-    docLink: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
-  },
-  
- {
-    id: 13,
+    id: 10,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
     desc: "Download high quality media from all social media without watermark.",
     tech: ["React", "Vite", "Node.js"],
-    image: "/zeronout.png",
+    image: "/zeronout1.png",
     demoLink: "https://zero-nout-downloader.vercel.app/",
     docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
   {
-    id: 16, 
+    id: 11, 
     title: "Zero Store",
     subtitle: "Premium Account Hub",
     desc: "A sleek, high-performance E-Commerce and Digital Catalog platform featuring dynamic brand border highlights, smart variant modals, and automated WhatsApp checkout routing.",
@@ -149,22 +118,54 @@ const ALL_PROJECTS = [
     docLink: "#" // Anda bisa isi dengan link repositori GitHub Private Anda jika ingin ditampilkan, atau kosongkan
   },
   {
-    id: 14,
+    id: 12,
     title: "Dramatix",
     subtitle: "Streaming Platform",
     desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
     tech: ["Next.js 15", "Tailwind", "Node.js"],
-    image: "/dramaku.png",
+    image: "/dramaku1.png",
     demoLink: "https://drama-tix.vercel.app/",
     docLink: "https://github.com/rezaaplvv/Dramatix"
   },
     {
+    id: 13,
+    title: "Smart Perpus",
+    subtitle: "Digital Library",
+    desc: "Digital library system with gamification features for levels and rankings.",
+    tech: ["Flutter", "Firebase", "Gamification"],
+    image: "/library.png",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/smart-perpus-app"
+  },
+  {
+    id: 14,
+    title: "Kiddoz",
+    subtitle: "Interactive Quiz Platform",
+    desc: "Gamified academic quiz application for K-12 students. Features real-time synchronization, dynamic badge unlocking, and analytics dashboard based on Flutter and Firebase.",
+    tech: ["Flutter", "Firebase", "Provider"],
+    image: "/kiddoz.png",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/Kiddoz"
+  },
+    {
     id: 15,
+    title: "Viauo",
+    subtitle: "Multimedia App",
+    desc: "Flutter streaming music/video online & offline player.",
+    tech: ["Flutter", "Dart", "Rest API"],
+    image: "/viauo.png",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
+  },
+  
+ 
+    {
+    id: 16,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
-    tech: ["Laravel 12", "MySQL", "Blade", "Tailwind"],
-    image: "/Dashboardadminparfum.png",
+    tech: ["Laravel 13", "MySQL", "Blade", "Tailwind"],
+    image: "/parfum.png",
     demoLink: "http://tipus.digitalku.co.id",
     docLink: "https://github.com/rezaaplvv/Parfumsfa-Integrated-System"
   },
@@ -222,7 +223,7 @@ export default function ProjectsPage() {
                 All <span className="text-stroke-2 text-transparent">Projects</span>
             </h1>
             <p className="text-xl font-medium max-w-2xl mx-auto border-l-4 border-black pl-4 bg-white/50 py-2">
-                A collection of my technical experiments, freelance work, and open source contributions.
+                A collection of my freelance work, and open source contributions.
             </p>
         </div>
 
