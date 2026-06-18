@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -12,18 +13,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Reza Pahlepi | Informatics Engineering & Full-Stack Developer",
-  description: "Portfolio of Reza Pahlepi, an Informatics Engineering student at USU. Specialized in building high-performance web and mobile applications.",
-  keywords: ["Reza Pahlepi", "Informatics Engineering USU", "Full-Stack Developer Medan", "Web Developer Indonesia", "Portfolio"],
+  title: "Reza Pahlepi | Full-Stack Developer", // Diperbarui agar lebih profesional
+  description: 'Full-Stack Developer building modern, secure, and user-centric web solutions for businesses and startups. Based in Medan, Indonesia.',
+  keywords: ['Reza Pahlepi', 'Full-Stack Developer', 'Web Developer Medan', 'Next.js Developer', 'Laravel Developer'],
   authors: [{ name: "Reza Pahlepi" }],
   openGraph: {
     title: "Reza Pahlepi - Digital Portfolio",
-    description: "Informatics Engineering Student & Full-Stack Developer.",
-    url: "https://domain-kamu.com", // Ganti dengan link Vercel kamu nanti
+    description: "Full-Stack Developer building modern, secure, and user-centric web solutions.", // Diperbarui tanpa unsur kuliah
+    url: "https://www.rezapahlepi.me", // Diperbarui dengan domain asli kamu
     siteName: "Reza Pahlepi Portfolio",
     images: [
       {
-        url: "/ppgithub.jpg", // Gambar yang akan muncul saat link dibagikan
+        url: "/ppgithub.jpg", 
         width: 1200,
         height: 630,
         alt: "Reza Pahlepi Portfolio Preview",
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Reza Pahlepi | Full-Stack Developer",
-    description: "Informatics Engineering Student at USU & Freelance Developer.",
+    description: "Focused on performance, scalability, and clean design.", // Diperbarui sesuai opsi 3 kemarin
     images: ["/ppgithub.jpg"],
   },
 };
