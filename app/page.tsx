@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from "react";
 import { useState } from "react";
-import { motion, animate, AnimatePresence, useSpring, useMotionValue, useTransform } from "framer-motion";
+import { motion, animate, AnimatePresence, useSpring, useMotionValue, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
 import {
   Github,
@@ -166,20 +166,20 @@ const SERVICES = [
 // --- DATA FAQ ---
 const FAQS = [
   {
-    question: "Apa tech stack utama yang Anda gunakan?",
-    answer: "Saya fokus pada pengembangan Full-Stack menggunakan Next.js dan Tailwind CSS untuk Frontend, serta Node.js atau Laravel untuk Backend."
+    question: "What is your primary tech stack?",
+    answer: "I focus on Full-Stack development using Next.js and Tailwind CSS for the Frontend, and Node.js or Laravel for the Backend."
   },
   {
-    question: "Apakah Anda terbuka untuk kolaborasi proyek?",
-    answer: "Tentu saja! Saya selalu terbuka untuk berkolaborasi dalam proyek inovatif, baik itu riset teknologi terbaru maupun proyek open-source."
+    question: "Are you open to project collaborations?",
+    answer: "Absolutely! I am always open to collaborating on innovative projects, whether it's researching the latest technologies or contributing to open-source."
   },
   {
-    question: "Bagaimana cara Anda memastikan kualitas kode?",
-    answer: "Saya mengutamakan prinsip clean code dan arsitektur yang terstruktur agar aplikasi mudah dipelihara dalam jangka panjang."
+    question: "How do you ensure code quality?",
+    answer: "I prioritize clean code principles and structured architecture to ensure applications are easy to maintain and scale in the long run."
   },
   {
-    question: "Apa fokus utama Anda saat membangun sistem?",
-    answer: "Fungsionalitas dan User Experience. Saya memastikan setiap baris kode yang saya tulis memberikan solusi nyata bagi pengguna."
+    question: "What is your main focus when building a system?",
+    answer: "Functionality and User Experience. I make sure every line of code I write delivers real, effective solutions for users."
   }
 ];
 
@@ -380,8 +380,12 @@ const Marquee = ({ isDarkMode }: { isDarkMode: boolean }) => {
 };
 
 const StatCard = ({ label, value, icon, color, isRealtime = false, isDarkMode }: { label: string, value: number, icon: React.ReactNode, color: string, isRealtime?: boolean, isDarkMode: boolean }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const nodeRef = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(containerRef, { once: true });
+
   useEffect(() => {
+    if (!isInView) return;
     const node = nodeRef.current;
     if (!node) return;
     const controls = animate(0, value, {
@@ -391,10 +395,10 @@ const StatCard = ({ label, value, icon, color, isRealtime = false, isDarkMode }:
       }
     });
     return () => controls.stop();
-  }, [value]);
+  }, [value, isInView]);
 
   return (
-    <div className={`${isDarkMode ? 'bg-[#1a1a1a] border-white shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] text-white' : 'bg-white border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-black'} border-4 p-4 hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex flex-col items-center justify-center gap-2 group`}>
+    <div ref={containerRef} className={`${isDarkMode ? 'bg-[#1a1a1a] border-white shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] text-white' : 'bg-white border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] text-black'} border-4 p-4 hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex flex-col items-center justify-center gap-2 group`}>
       <div className={`p-3 rounded-full border-2 ${isDarkMode ? 'border-white text-black' : 'border-black'} ${color} mb-1 group-hover:scale-110 transition-transform`}>
         {icon}
       </div>
@@ -490,7 +494,43 @@ export default function Home() {
     transmission: ""
   });
 
+  const [formErrors, setFormErrors] = useState({
+    identity: "",
+    coordinates: "",
+    transmission: ""
+  });
+
   const handleTransmit = () => {
+    let hasError = false;
+    const errors = { identity: "", coordinates: "", transmission: "" };
+
+    if (!formData.identity.trim()) {
+      errors.identity = "Name cannot be empty";
+      hasError = true;
+    }
+
+    if (!formData.coordinates.trim()) {
+      errors.coordinates = "Email cannot be empty";
+      hasError = true;
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.coordinates.trim())) {
+        errors.coordinates = "Invalid email format";
+        hasError = true;
+      }
+    }
+
+    if (!formData.transmission.trim()) {
+      errors.transmission = "Message cannot be empty";
+      hasError = true;
+    }
+
+    setFormErrors(errors);
+
+    if (hasError) {
+      return;
+    }
+
     const phoneNumber = "6283133387676"; // Ganti dengan nomor WA asli
     const message = `*NEW PROJECT TRANSMISSION*%0A` +
       `---------------------------------%0A` +
@@ -522,8 +562,8 @@ export default function Home() {
         </Link>
         <div className="hidden md:flex items-center gap-6">
           <NavLink href="#hero" isDarkMode={isDarkMode}>About</NavLink>
-          <NavLink href="#projects" isDarkMode={isDarkMode}>Project</NavLink>
-          <NavLink href="#services" isDarkMode={isDarkMode}>Skill</NavLink>
+          <NavLink href="#projects" isDarkMode={isDarkMode}>Projects</NavLink>
+          <NavLink href="#services" isDarkMode={isDarkMode}>Skills</NavLink>
           <NavLink href="#faq" isDarkMode={isDarkMode}>FAQ</NavLink>
         </div>
         <div className="hidden md:block">
@@ -550,9 +590,9 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           className={`fixed top-20 left-0 right-0 ${isDarkMode ? 'bg-[#0a0a0a] border-white text-white' : 'bg-white border-black text-black'} border-b-4 z-40 p-6 flex flex-col gap-4 shadow-xl md:hidden`}
         >
-          <NavLink href="#hero" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Tentang</NavLink>
-          <NavLink href="#projects" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Proyek</NavLink>
-          <NavLink href="#services" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Jasa</NavLink>
+          <NavLink href="#hero" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>About</NavLink>
+          <NavLink href="#projects" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Projects</NavLink>
+          <NavLink href="#services" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Skills</NavLink>
           <NavLink href="#faq" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>FAQ</NavLink>
           <div className={`h-[2px] ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'} my-2`}></div>
           <Link
@@ -851,45 +891,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ================= CONNECT / SOCIAL WALL ================= */}
-        <section className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden relative`}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-16">
-              Let's <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Connect</span>
-            </h2>
-
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-              <Link href="https://github.com/rezaaplvv" target="_blank" className="group">
-                <div className={`w-32 h-32 md:w-40 md:h-40 bg-gray-900 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform -rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
-                  <Github size={48} className="text-white mb-2" />
-                  <span className="font-bold text-white uppercase">GitHub</span>
-                </div>
-              </Link>
-
-              <Link href="https://wa.me/6283133387676" target="_blank" className="group">
-                <div className={`w-32 h-32 md:w-40 md:h-40 bg-[#25D366] border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
-                  <MessageCircle size={48} className="text-white mb-2" />
-                  <span className="font-bold text-white uppercase">WhatsApp</span>
-                </div>
-              </Link>
-
-              <Link href="https://instagram.com" target="_blank" className="group">
-                <div className={`w-32 h-32 md:w-40 md:h-40 bg-pink-500 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform -rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
-                  <Instagram size={48} className="text-white mb-2" />
-                  <span className="font-bold text-white uppercase">Instagram</span>
-                </div>
-              </Link>
-
-              <Link href="mailto:rezapahlepi77654@gmail.com" className="group">
-                <div className={`w-32 h-32 md:w-40 md:h-40 bg-red-500 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
-                  <Mail size={48} className="text-white mb-2" />
-                  <span className="font-bold text-white uppercase">Email</span>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </section>
-
         {/* --- CONTACT SECTION (White Paper Style with Adaptive Shadow) --- */}
         <section id="contact" className="relative py-24 px-6 md:px-12 max-w-7xl mx-auto mb-20">
           <motion.div
@@ -952,9 +953,19 @@ export default function Home() {
                       type="text"
                       placeholder="Your Name..."
                       value={formData.identity}
-                      onChange={(e) => setFormData({ ...formData, identity: e.target.value })}
-                      className="w-full bg-white border-2 border-black p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400"
+                      onChange={(e) => {
+                        setFormData({ ...formData, identity: e.target.value });
+                        if (formErrors.identity) setFormErrors({ ...formErrors, identity: "" });
+                      }}
+                      className={`w-full bg-white border-2 p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 ${
+                        formErrors.identity ? "border-red-600 focus:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]" : "border-black"
+                      }`}
                     />
+                    {formErrors.identity && (
+                      <p className="text-red-600 font-bold text-xs mt-1 font-mono uppercase tracking-wider">
+                        * {formErrors.identity}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-black font-mono uppercase tracking-widest text-gray-500">// 02. COORDINATES</label>
@@ -962,9 +973,19 @@ export default function Home() {
                       type="email"
                       placeholder="Your Email..."
                       value={formData.coordinates}
-                      onChange={(e) => setFormData({ ...formData, coordinates: e.target.value })}
-                      className="w-full bg-white border-2 border-black p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400"
+                      onChange={(e) => {
+                        setFormData({ ...formData, coordinates: e.target.value });
+                        if (formErrors.coordinates) setFormErrors({ ...formErrors, coordinates: "" });
+                      }}
+                      className={`w-full bg-white border-2 p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 ${
+                        formErrors.coordinates ? "border-red-600 focus:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]" : "border-black"
+                      }`}
                     />
+                    {formErrors.coordinates && (
+                      <p className="text-red-600 font-bold text-xs mt-1 font-mono uppercase tracking-wider">
+                        * {formErrors.coordinates}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-1">
                     <label className="text-xs font-black font-mono uppercase tracking-widest text-gray-500">// 03. MESSAGE</label>
@@ -972,9 +993,19 @@ export default function Home() {
                       rows={4}
                       placeholder="Project Details..."
                       value={formData.transmission}
-                      onChange={(e) => setFormData({ ...formData, transmission: e.target.value })}
-                      className="w-full bg-white border-2 border-black p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 resize-none"
+                      onChange={(e) => {
+                        setFormData({ ...formData, transmission: e.target.value });
+                        if (formErrors.transmission) setFormErrors({ ...formErrors, transmission: "" });
+                      }}
+                      className={`w-full bg-white border-2 p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 resize-none ${
+                        formErrors.transmission ? "border-red-600 focus:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]" : "border-black"
+                      }`}
                     ></textarea>
+                    {formErrors.transmission && (
+                      <p className="text-red-600 font-bold text-xs mt-1 font-mono uppercase tracking-wider">
+                        * {formErrors.transmission}
+                      </p>
+                    )}
                   </div>
                   <button
                     type="button"
@@ -990,8 +1021,48 @@ export default function Home() {
           </motion.div>
         </section>
 
+        {/* ================= CONNECT / SOCIAL WALL ================= */}
+        <section className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden relative`}>
+          <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-16">
+              Let's <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Connect</span>
+            </h2>
+
+            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+              <Link href="https://github.com/rezaaplvv" target="_blank" className="group">
+                <div className={`w-32 h-32 md:w-40 md:h-40 bg-gray-900 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform -rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
+                  <Github size={48} className="text-white mb-2" />
+                  <span className="font-bold text-white uppercase">GitHub</span>
+                </div>
+              </Link>
+
+              <Link href="https://wa.me/6283133387676" target="_blank" className="group">
+                <div className={`w-32 h-32 md:w-40 md:h-40 bg-[#25D366] border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
+                  <MessageCircle size={48} className="text-white mb-2" />
+                  <span className="font-bold text-white uppercase">WhatsApp</span>
+                </div>
+              </Link>
+
+              <Link href="https://instagram.com" target="_blank" className="group">
+                <div className={`w-32 h-32 md:w-40 md:h-40 bg-pink-500 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform -rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
+                  <Instagram size={48} className="text-white mb-2" />
+                  <span className="font-bold text-white uppercase">Instagram</span>
+                </div>
+              </Link>
+
+              <Link href="mailto:rezapahlepi77654@gmail.com" className="group">
+                <div className={`w-32 h-32 md:w-40 md:h-40 bg-red-500 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
+                  <Mail size={48} className="text-white mb-2" />
+                  <span className="font-bold text-white uppercase">Email</span>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
 
 
+
+        {/* ================= FOOTER ================= */}
         {/* ================= FOOTER ================= */}
         <footer className="bg-black text-white py-12 md:py-20 border-t-8 border-[#FDE047]">
           <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
@@ -1004,8 +1075,30 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="flex flex-col items-center md:items-end gap-4">
-              <div className="mt-8 text-sm text-gray-500 font-mono">
+            <div className="flex flex-col items-center md:items-end gap-6">
+              {/* Navigation Links */}
+              <div className="flex flex-col items-center md:items-end gap-2">
+                <Link href="#hero" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
+                  Home
+                </Link>
+                <Link href="#hero" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
+                  About
+                </Link>
+                <Link href="#projects" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
+                  Projects
+                </Link>
+                <Link href="#services" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
+                  Skills
+                </Link>
+                <Link href="#faq" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
+                  FAQ
+                </Link>
+                <Link href="#contact" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
+                  Contact
+                </Link>
+              </div>
+
+              <div className="text-sm text-gray-500 font-mono uppercase tracking-wider">
                 © {new Date().getFullYear()} Reza Pahlepi. All Rights Reserved.
               </div>
             </div>

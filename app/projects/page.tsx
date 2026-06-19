@@ -191,10 +191,29 @@ const BrutalTag = ({ text }: { text: string }) => (
 
 export default function ProjectsPage() {
   const [activeId, setActiveId] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("All");
 
   const toggleActiveProject = (id: number) => {
     setActiveId(prev => prev === id ? null : id);
   };
+
+  const filteredProjects = ALL_PROJECTS.filter((project) => {
+    // Determine category based on tech list
+    const isMobile = project.tech.some(t => t.toLowerCase() === "flutter" || t.toLowerCase() === "dart");
+    const category = isMobile ? "Mobile" : "Website";
+    const matchesTab = activeTab === "All" || category === activeTab;
+
+    // Determine query match
+    const query = searchQuery.toLowerCase();
+    const matchesQuery =
+      project.title.toLowerCase().includes(query) ||
+      project.subtitle.toLowerCase().includes(query) ||
+      project.desc.toLowerCase().includes(query) ||
+      project.tech.some(t => t.toLowerCase().includes(query));
+
+    return matchesTab && matchesQuery;
+  });
 
   return (
     <div className="min-h-screen bg-[#FFFDF5] text-black font-sans selection:bg-black selection:text-white relative">
@@ -225,97 +244,131 @@ export default function ProjectsPage() {
             <p className="text-xl font-medium max-w-2xl mx-auto border-l-4 border-black pl-4 bg-white/50 py-2">
                 A collection of my freelance work, and open source contributions.
             </p>
+            {/* Search Bar */}
+            <div className="max-w-md mx-auto mt-8 relative z-20">
+              <input
+                type="text"
+                placeholder="Search projects by name or stack..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-white border-4 border-black p-4 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+              />
+            </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-            {ALL_PROJECTS.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                onClick={() => toggleActiveProject(project.id)}
-                className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col cursor-pointer"
-              >
-
-                <div className="h-10 border-b-4 border-black bg-white flex items-center justify-between px-4">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
-                  </div>
-                  <div className="text-xs font-bold font-mono uppercase tracking-widest">
-                    {project.title}.exe
-                  </div>
-                </div>
-
-                <div className="relative w-full aspect-[16/9] shrink-0 border-b-4 border-black overflow-hidden bg-gray-100">
-                  <Image 
-                      src={project.image} 
-                      alt={project.title}
-                      fill
-                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                  />
-<div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 z-10 bg-black/40 backdrop-blur-[2px] ${
-  activeId === project.id 
-    ? 'opacity-100 pointer-events-auto' 
-    : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
-}`}>
-                    
-{project.demoLink && (
-  <Link 
-    href={project.demoLink} 
-    target="_blank" 
-    onClick={(e) => {
-      e.stopPropagation();
-      if (window.innerWidth < 768 && activeId !== project.id) {
-        e.preventDefault();
-      }
-    }}
-    className="bg-white border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
-  >
-    <Zap size={16} className="fill-black"/> VIEW DEMO
-  </Link>
-)}
-
-<Link 
-  href={project.docLink} 
-  target="_blank" 
-  onClick={(e) => {
-    e.stopPropagation();
-
-    if (window.innerWidth < 768 && activeId !== project.id) {
-      e.preventDefault();
-    }
-  }}
-  className="bg-[#FDE047] border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
->
-  <Github size={16}/> FULL SHOWCASE
-</Link>
-                  </div>
-                </div>
-
-                <div className="p-6 flex-1 flex flex-col justify-between bg-white">
-                   <div>
-                     <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
-                       <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
-                         {project.title}
-                         <ArrowUpRight className="w-5 h-5"/>
-                       </h3>
-                     </Link>
-                     <p className="text-sm font-medium text-gray-800 leading-tight mb-4">
-                       {project.desc}
-                     </p>
-                   </div>
-                   <div className="flex flex-wrap gap-2 mt-auto">
-                     {project.tech.map((t, i) => (
-                       <BrutalTag key={i} text={t} />
-                     ))}
-                   </div>
-                </div>
-              </motion.div>
-            ))}
+        {/* Filter Tabs */}
+        <div className="flex gap-4 mb-8 justify-start relative z-20">
+          {["All", "Website", "Mobile"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-6 py-2.5 font-black uppercase tracking-wider border-4 border-black transition-all ${
+                activeTab === tab
+                  ? "bg-[#FDE047] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                  : "bg-white text-black hover:bg-gray-100 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[4px] active:shadow-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
         </div>
+
+        {filteredProjects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+              {filteredProjects.map((project, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  onClick={() => toggleActiveProject(project.id)}
+                  className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col cursor-pointer"
+                >
+
+                  <div className="h-10 border-b-4 border-black bg-white flex items-center justify-between px-4">
+                    <div className="flex gap-2">
+                      <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
+                    </div>
+                    <div className="text-xs font-bold font-mono uppercase tracking-widest">
+                      {project.title}.exe
+                    </div>
+                  </div>
+
+                  <div className="relative w-full aspect-[16/9] shrink-0 border-b-4 border-black overflow-hidden bg-gray-100">
+                    <Image 
+                        src={project.image} 
+                        alt={project.title}
+                        fill
+                        className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 z-10 bg-black/40 backdrop-blur-[2px] ${
+                      activeId === project.id 
+                        ? 'opacity-100 pointer-events-auto' 
+                        : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
+                    }`}>
+                      
+                    {project.demoLink && (
+                      <Link 
+                        href={project.demoLink} 
+                        target="_blank" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (window.innerWidth < 768 && activeId !== project.id) {
+                            e.preventDefault();
+                          }
+                        }}
+                        className="bg-white border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
+                      >
+                        <Zap size={16} className="fill-black"/> VIEW DEMO
+                      </Link>
+                    )}
+
+                    <Link 
+                      href={project.docLink} 
+                      target="_blank" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        if (window.innerWidth < 768 && activeId !== project.id) {
+                          e.preventDefault();
+                        }
+                      }}
+                      className="bg-[#FDE047] border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
+                    >
+                      <Github size={16}/> FULL SHOWCASE
+                    </Link>
+                    </div>
+                  </div>
+
+                  <div className="p-6 flex-1 flex flex-col justify-between bg-white">
+                     <div>
+                       <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
+                         <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
+                           {project.title}
+                           <ArrowUpRight className="w-5 h-5"/>
+                         </h3>
+                       </Link>
+                       <p className="text-sm font-medium text-gray-800 leading-tight mb-4">
+                         {project.desc}
+                       </p>
+                     </div>
+                     <div className="flex flex-wrap gap-2 mt-auto">
+                       {project.tech.map((t, i) => (
+                         <BrutalTag key={i} text={t} />
+                       ))}
+                     </div>
+                  </div>
+                </motion.div>
+              ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <h3 className="text-3xl font-black uppercase mb-2">No Projects Found</h3>
+            <p className="text-gray-600 font-bold uppercase tracking-wider font-mono">Try adjusting your filters or search query!</p>
+          </div>
+        )}
 
 
         <div className="mt-24 text-center">
