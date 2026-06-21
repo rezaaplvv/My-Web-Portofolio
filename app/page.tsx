@@ -44,6 +44,7 @@ import {
   Send,
 } from "lucide-react";
 import Link from "next/link";
+import TransitionLink from "./components/TransitionLink";
 
 import ReactOriginalIcon from "@devicon/react/react/original";
 import NextjsOriginalIcon from "@devicon/react/nextjs/original";
@@ -834,6 +835,8 @@ export default function Home() {
         }
       }
 
+
+
       // Pastikan semua ScrollTrigger diurutkan dan dikalkulasi ulang posisinya setelah render
       ScrollTrigger.sort();
       ScrollTrigger.refresh();
@@ -924,6 +927,8 @@ export default function Home() {
           backgroundSize: "40px 40px"
         }}
       ></div>
+
+
 
       {/* ================= NAVBAR ================= */}
       <nav className={`fixed top-0 left-0 right-0 h-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 z-50 px-6 md:px-12 flex items-center justify-between transition-colors duration-500`}>
@@ -1226,12 +1231,12 @@ export default function Home() {
                 <p className="text-sm font-bold text-gray-800 uppercase tracking-wide mb-6 max-w-[280px]">
                   Explore the full vault containing 17+ projects with filters and searches.
                 </p>
-                <Link
+                <TransitionLink
                   href="/projects"
                   className="bg-black text-white hover:bg-white hover:text-black border-2 border-black px-6 py-3 font-bold uppercase tracking-widest transition-colors flex items-center gap-2"
                 >
                   SEE MORE <ArrowUpRight size={20} />
-                </Link>
+                </TransitionLink>
               </div>
             </div>
           </div>

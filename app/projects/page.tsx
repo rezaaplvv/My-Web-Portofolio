@@ -4,20 +4,21 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import TransitionLink from "../components/TransitionLink";
 import { ArrowLeft, ArrowUpRight, Github, Zap } from "lucide-react";
 const ALL_PROJECTS = [
-{
-  id: 1,
-  title: "PPT CREATE",
-  subtitle: "SaaS Digital Marketplace & Creator Platform",
-  desc: "A premium, high-performance marketplace platform for Canva presentation templates, featuring automated payment gateway integration, real-time sales metrics, and an advanced creator onboarding workflow with multi-tiered pricing mechanics.",
-  tech: ["Payment Gateway", "Laravel 13", "Tailwind CSS", "MySQL",  "JavaScript"],
-  image: "/pptcreate1.png", // Sesuaikan dengan nama file mockup/screenshot kamu
-  demoLink: "https://pptcreate.com/",
-  docLink: "https://github.com/rezaaplvv/ppt-create" // Sesuaikan dengan nama repositori GitHub aslimu
-},
-    {
-    id: 2, 
+  {
+    id: 1,
+    title: "PPT CREATE",
+    subtitle: "SaaS Digital Marketplace & Creator Platform",
+    desc: "A premium, high-performance marketplace platform for Canva presentation templates, featuring automated payment gateway integration, real-time sales metrics, and an advanced creator onboarding workflow with multi-tiered pricing mechanics.",
+    tech: ["Payment Gateway", "Laravel 13", "Tailwind CSS", "MySQL", "JavaScript"],
+    image: "/pptcreate1.png", // Sesuaikan dengan nama file mockup/screenshot kamu
+    demoLink: "https://pptcreate.com/",
+    docLink: "https://github.com/rezaaplvv/ppt-create" // Sesuaikan dengan nama repositori GitHub aslimu
+  },
+  {
+    id: 2,
     title: "Security System",
     subtitle: "Enterprise Security Management System",
     desc: "A Next-Gen Integrated Security System featuring real-time attendance with GPS & photo verification, multi-level dashboards, broadcast command controls, and formal executive reporting.",
@@ -26,7 +27,7 @@ const ALL_PROJECTS = [
     demoLink: "https://web-production-00ffc.up.railway.app/",
     docLink: "https://github.com/rezaaplvv/si-security-waskita"
   },
-    {
+  {
     id: 3,
     title: "Hajj & Umrah Travel Website",
     subtitle: "Hajj & Umrah Travel Website",
@@ -36,7 +37,7 @@ const ALL_PROJECTS = [
     demoLink: "https://hajjumrah.freedev.app/",
     docLink: "https://github.com/rezaaplvv/Laravel-Hajj-Umrah"
   },
-      {
+  {
     id: 4,
     title: "Elementary School Website",
     subtitle: "Elementary School Website",
@@ -46,7 +47,7 @@ const ALL_PROJECTS = [
     demoLink: "https://sdncigowong01.sch.id/",
     docLink: "https://github.com/rezaaplvv/Laravel-Elementary-School"
   },
-    {
+  {
     id: 5,
     title: "Japanese travel website",
     subtitle: "Japanese travel website",
@@ -56,7 +57,7 @@ const ALL_PROJECTS = [
     demoLink: "https://helmitour.com/",
     docLink: "https://github.com/rezaaplvv/Laravel-Japanese-Travel"
   },
-        {
+  {
     id: 6,
     title: "4 in 1 Streaming Website",
     subtitle: "4 in 1 Streaming Website",
@@ -66,7 +67,7 @@ const ALL_PROJECTS = [
     demoLink: "https://zeronime-anime-stream.vercel.app/",
     docLink: "https://github.com/rezaaplvv/ZeroNime"
   },
-    {
+  {
     id: 7,
     title: "Village Profile Website",
     subtitle: "Village Profile Website",
@@ -76,7 +77,7 @@ const ALL_PROJECTS = [
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/Laravel-Village-Portal"
   },
- 
+
   {
     id: 8,
     title: "Cashier System POS",
@@ -87,7 +88,7 @@ const ALL_PROJECTS = [
     demoLink: "http://tipus.digitalku.co.id/login",
     docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
-    {
+  {
     id: 9,
     title: "Kost Management App",
     subtitle: "Kost Management App",
@@ -108,7 +109,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
   {
-    id: 11, 
+    id: 11,
     title: "Zero Store",
     subtitle: "Premium Account Hub",
     desc: "A sleek, high-performance E-Commerce and Digital Catalog platform featuring dynamic brand border highlights, smart variant modals, and automated WhatsApp checkout routing.",
@@ -127,7 +128,7 @@ const ALL_PROJECTS = [
     demoLink: "https://drama-tix.vercel.app/",
     docLink: "https://github.com/rezaaplvv/Dramatix"
   },
-    {
+  {
     id: 13,
     title: "Smart Perpus",
     subtitle: "Digital Library",
@@ -147,7 +148,7 @@ const ALL_PROJECTS = [
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/Kiddoz"
   },
-    {
+  {
     id: 15,
     title: "Viauo",
     subtitle: "Multimedia App",
@@ -157,9 +158,9 @@ const ALL_PROJECTS = [
     demoLink: null,
     docLink: "https://github.com/rezaaplvv/Viauo-VideoAudioPlayer"
   },
-  
- 
-    {
+
+
+  {
     id: 16,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
@@ -176,12 +177,12 @@ const ALL_PROJECTS = [
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
     tech: ["React", "TensorFlow", "AI"],
-    image: "/emo.png",
+    image: "/emo1.png",
     demoLink: "https://emotion-face.vercel.app/",
     docLink: "https://github.com/rezaaplvv/EmotionFace-AI"
   },
 
-];  
+];
 
 const BrutalTag = ({ text }: { text: string }) => (
   <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider border-2 border-black bg-white text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
@@ -217,43 +218,43 @@ export default function ProjectsPage() {
 
   return (
     <div className="min-h-screen bg-[#FFFDF5] text-black font-sans selection:bg-black selection:text-white relative">
-      
+
       <div className="fixed inset-0 z-0 opacity-10 pointer-events-none"
         style={{ backgroundImage: "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)", backgroundSize: "40px 40px" }}
       ></div>
 
       {/* NAVBAR SIMPLE */}
       <nav className="fixed top-0 left-0 right-0 h-20 bg-[#FFFDF5] border-b-4 border-black z-50 px-6 md:px-12 flex items-center justify-between">
-        <Link href="/" className="group">
-            <div className="bg-black text-white px-4 py-2 font-bold border-2 border-black group-hover:bg-[#FDE047] group-hover:text-black transition-colors flex items-center gap-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
-                <ArrowLeft size={20} />
-                BACK TO HOME
-            </div>
-        </Link>
+        <TransitionLink href="/" className="group">
+          <div className="bg-black text-white px-4 py-2 font-bold border-2 border-black group-hover:bg-[#FDE047] group-hover:text-black transition-colors flex items-center gap-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+            <ArrowLeft size={20} />
+            BACK TO HOME
+          </div>
+        </TransitionLink>
         <div className="text-xl font-black uppercase tracking-tighter hidden md:block">
-            Project <span className="text-stroke-2 text-transparent">Vault</span>
+          Project <span className="text-stroke-2 text-transparent">Vault</span>
         </div>
       </nav>
 
       <main className="relative z-10 pt-32 pb-20 px-6 md:px-12 max-w-7xl mx-auto">
-        
+
         <div className="mb-16 text-center">
-            <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-6">
-                All <span className="text-stroke-2 text-transparent">Projects</span>
-            </h1>
-            <p className="text-xl font-medium max-w-2xl mx-auto border-l-4 border-black pl-4 bg-white/50 py-2">
-                A collection of my freelance work, and open source contributions.
-            </p>
-            {/* Search Bar */}
-            <div className="max-w-md mx-auto mt-8 relative z-20">
-              <input
-                type="text"
-                placeholder="Search projects by name or stack..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white border-4 border-black p-4 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
-              />
-            </div>
+          <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-6">
+            All <span className="text-stroke-2 text-transparent">Projects</span>
+          </h1>
+          <p className="text-xl font-medium max-w-2xl mx-auto border-l-4 border-black pl-4 bg-white/50 py-2">
+            A collection of my freelance work, and open source contributions.
+          </p>
+          {/* Search Bar */}
+          <div className="max-w-md mx-auto mt-8 relative z-20">
+            <input
+              type="text"
+              placeholder="Search projects by name or stack..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-white border-4 border-black p-4 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+            />
+          </div>
         </div>
 
         {/* Filter Tabs */}
@@ -262,11 +263,10 @@ export default function ProjectsPage() {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2.5 font-black uppercase tracking-wider border-4 border-black transition-all ${
-                activeTab === tab
+              className={`px-6 py-2.5 font-black uppercase tracking-wider border-4 border-black transition-all ${activeTab === tab
                   ? "bg-[#FDE047] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                   : "bg-white text-black hover:bg-gray-100 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[4px] active:shadow-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-              }`}
+                }`}
             >
               {tab}
             </button>
@@ -275,44 +275,43 @@ export default function ProjectsPage() {
 
         {filteredProjects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-              {filteredProjects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => toggleActiveProject(project.id)}
-                  className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col cursor-pointer"
-                >
+            {filteredProjects.map((project, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                onClick={() => toggleActiveProject(project.id)}
+                className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col cursor-pointer"
+              >
 
-                  <div className="h-10 border-b-4 border-black bg-white flex items-center justify-between px-4">
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
-                    </div>
-                    <div className="text-xs font-bold font-mono uppercase tracking-widest">
-                      {project.title}.exe
-                    </div>
+                <div className="h-10 border-b-4 border-black bg-white flex items-center justify-between px-4">
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
                   </div>
+                  <div className="text-xs font-bold font-mono uppercase tracking-widest">
+                    {project.title}.exe
+                  </div>
+                </div>
 
-                  <div className="relative w-full aspect-[16/9] shrink-0 border-b-4 border-black overflow-hidden bg-gray-100">
-                    <Image 
-                        src={project.image} 
-                        alt={project.title}
-                        fill
-                        className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 z-10 bg-black/40 backdrop-blur-[2px] ${
-                      activeId === project.id 
-                        ? 'opacity-100 pointer-events-auto' 
-                        : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
+                <div className="relative w-full aspect-[16/9] shrink-0 border-b-4 border-black overflow-hidden bg-gray-100">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 z-10 bg-black/40 backdrop-blur-[2px] ${activeId === project.id
+                      ? 'opacity-100 pointer-events-auto'
+                      : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
                     }`}>
-                      
+
                     {project.demoLink && (
-                      <Link 
-                        href={project.demoLink} 
-                        target="_blank" 
+                      <Link
+                        href={project.demoLink}
+                        target="_blank"
                         onClick={(e) => {
                           e.stopPropagation();
                           if (window.innerWidth < 768 && activeId !== project.id) {
@@ -321,13 +320,13 @@ export default function ProjectsPage() {
                         }}
                         className="bg-white border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
                       >
-                        <Zap size={16} className="fill-black"/> VIEW DEMO
+                        <Zap size={16} className="fill-black" /> VIEW DEMO
                       </Link>
                     )}
 
-                    <Link 
-                      href={project.docLink} 
-                      target="_blank" 
+                    <Link
+                      href={project.docLink}
+                      target="_blank"
                       onClick={(e) => {
                         e.stopPropagation();
 
@@ -337,31 +336,31 @@ export default function ProjectsPage() {
                       }}
                       className="bg-[#FDE047] border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
                     >
-                      <Github size={16}/> FULL SHOWCASE
+                      <Github size={16} /> FULL SHOWCASE
                     </Link>
-                    </div>
                   </div>
+                </div>
 
-                  <div className="p-6 flex-1 flex flex-col justify-between bg-white">
-                     <div>
-                       <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
-                         <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
-                           {project.title}
-                           <ArrowUpRight className="w-5 h-5"/>
-                         </h3>
-                       </Link>
-                       <p className="text-sm font-medium text-gray-800 leading-tight mb-4">
-                         {project.desc}
-                       </p>
-                     </div>
-                     <div className="flex flex-wrap gap-2 mt-auto">
-                       {project.tech.map((t, i) => (
-                         <BrutalTag key={i} text={t} />
-                       ))}
-                     </div>
+                <div className="p-6 flex-1 flex flex-col justify-between bg-white">
+                  <div>
+                    <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
+                      <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
+                        {project.title}
+                        <ArrowUpRight className="w-5 h-5" />
+                      </h3>
+                    </Link>
+                    <p className="text-sm font-medium text-gray-800 leading-tight mb-4">
+                      {project.desc}
+                    </p>
                   </div>
-                </motion.div>
-              ))}
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {project.tech.map((t, i) => (
+                      <BrutalTag key={i} text={t} />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         ) : (
           <div className="text-center py-20 bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
@@ -372,17 +371,17 @@ export default function ProjectsPage() {
 
 
         <div className="mt-24 text-center">
-            <div className="inline-block bg-[#FDE047] border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                <h3 className="text-2xl font-black uppercase mb-4">Want to see more code?</h3>
-                <Link 
-                    href="https://github.com/rezaaplvv" 
-                    target="_blank"
-                    className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 font-bold uppercase border-4 border-transparent hover:bg-white hover:text-black hover:border-black transition-colors"
-                >
-                    <Github size={20}/>
-                    Visit My GitHub
-                </Link>
-            </div>
+          <div className="inline-block bg-[#FDE047] border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <h3 className="text-2xl font-black uppercase mb-4">Want to see more code?</h3>
+            <Link
+              href="https://github.com/rezaaplvv"
+              target="_blank"
+              className="inline-flex items-center gap-2 bg-black text-white px-6 py-3 font-bold uppercase border-4 border-transparent hover:bg-white hover:text-black hover:border-black transition-colors"
+            >
+              <Github size={20} />
+              Visit My GitHub
+            </Link>
+          </div>
         </div>
 
       </main>
