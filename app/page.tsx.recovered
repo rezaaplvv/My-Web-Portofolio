@@ -45,28 +45,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-import ReactOriginalIcon from "@devicon/react/react/original";
-import NextjsOriginalIcon from "@devicon/react/nextjs/original";
-import TypescriptOriginalIcon from "@devicon/react/typescript/original";
-import JavascriptOriginalIcon from "@devicon/react/javascript/original";
-import Html5OriginalIcon from "@devicon/react/html5/original";
-import Css3OriginalIcon from "@devicon/react/css3/original";
-import PythonOriginalIcon from "@devicon/react/python/original";
-import JavaOriginalIcon from "@devicon/react/java/original";
-import PhpOriginalIcon from "@devicon/react/php/original";
-import DartOriginalIcon from "@devicon/react/dart/original";
-
-import TailwindcssOriginalIcon from "@devicon/react/tailwindcss/original";
-import NodejsOriginalIcon from "@devicon/react/nodejs/original";
-import LaravelOriginalIcon from "@devicon/react/laravel/original";
-import GitOriginalIcon from "@devicon/react/git/original";
-import GithubOriginalIcon from "@devicon/react/github/original";
-import MysqlOriginalIcon from "@devicon/react/mysql/original";
-import FirebaseOriginalIcon from "@devicon/react/firebase/original";
-import FlutterOriginalIcon from "@devicon/react/flutter/original";
-import BootstrapOriginalIcon from "@devicon/react/bootstrap/original";
-import ViteOriginalIcon from "@devicon/react/vite/original";
-
 const PROJECTS = [
   {
     id: 1,
@@ -260,9 +238,11 @@ const useGithubStats = () => {
 // 1. COMPONENT: THEME PULL SWITCH (Tali Lampu)
 const ThemePullSwitch = ({ isDarkMode, toggleTheme }: { isDarkMode: boolean, toggleTheme: () => void }) => {
   const y = useMotionValue(0);
+  // FIX: Menaikkan stiffness agar pantulan lebih kuat dan damping agar lebih stabil
+  const ySpring = useSpring(y, { stiffness: 800, damping: 35 });
 
-  // Hubungkan scaleY (GPU-accelerated transform) langsung ke MotionValue y
-  const scaleY = useTransform(y, (latest) => (80 + latest) / 200);
+  // FIX: Menggunakan ySpring secara langsung untuk tinggi agar tidak ada celah/putus
+  const height = useTransform(ySpring, (latest) => 80 + latest);
 
   // Fungsi untuk memutar suara klik
   const playClickSound = () => {
@@ -275,38 +255,33 @@ const ThemePullSwitch = ({ isDarkMode, toggleTheme }: { isDarkMode: boolean, tog
     // Trigger jika ditarik cukup jauh
     if (info.offset.y > 80) {
       playClickSound(); // Memutar suara tepat saat saklar terpicu
-
-      // Berikan sedikit jeda (150ms) agar animasi pegas selesai terlebih dahulu sebelum memicu re-render tema halaman
-      setTimeout(() => {
-        toggleTheme();
-      }, 150);
+      toggleTheme();
     }
-    // Kembalikan paksa ke 0 agar tali memantul ke atas
+    // FIX: Kembalikan paksa ke 0 agar tali memantul ke atas
     y.set(0);
   };
 
   return (
-    <div className="absolute top-0 left-1/2 -translate-x-1/2 z-50 w-12 h-[320px] pointer-events-none flex flex-col items-center">
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
       {/* Base */}
       <div className={`w-6 h-6 rounded-full border-2 ${isDarkMode ? 'bg-gray-800 border-white' : 'bg-gray-200 border-black'} absolute -top-3 z-20`}></div>
 
-      {/* Tali: Menggunakan scaleY dengan origin-top agar memanjang tanpa memicu layout recalculation */}
+      {/* Tali: Sekarang tingginya otomatis mengikuti posisi bandul */}
       <motion.div
-        style={{ scaleY, x: "-50%" }}
-        className={`w-1 h-[200px] ${isDarkMode ? 'bg-white' : 'bg-black'} absolute top-0 left-1/2 z-10 origin-top pointer-events-none`}
+        style={{ height }}
+        className={`w-1 ${isDarkMode ? 'bg-white' : 'bg-black'} relative z-10 origin-top`}
       />
 
-      {/* Handle/Bandul: Digerakkan menggunakan y translate bawaan absolute, diatur top: 80px sebagai starting point */}
+      {/* Handle/Bandul */}
       <motion.div
         drag="y"
         dragConstraints={{ top: 0, bottom: 200 }}
         dragElastic={0.1}
-        dragSnapToOrigin={true}
-        dragTransition={{ bounceStiffness: 300, bounceDamping: 25 }} // Mengontrol kelembutan pegas bawaan Framer Motion
+        dragSnapToOrigin={true} // FIX: Memaksa bandul kembali ke titik awal saat dilepas
         onDrag={(_, info) => y.set(info.offset.y)}
         onDragEnd={handleDragEnd}
-        style={{ y, x: "-50%", top: 80 }}
-        className="absolute left-1/2 z-20 cursor-grab active:cursor-grabbing pointer-events-auto rope-trigger"
+        style={{ y: ySpring }}
+        className="cursor-grab active:cursor-grabbing relative z-20 -mt-1 rope-trigger" // -mt-1 untuk memastikan nempel
       >
         <div className={`w-10 h-10 rounded-full border-4 ${isDarkMode ? 'bg-yellow-400 border-white shadow-[0_0_20px_rgba(250,204,21,0.8)]' : 'bg-black border-black'} flex items-center justify-center transition-transform active:scale-90`}>
           {isDarkMode ? <Lightbulb size={20} className="text-black" /> : <Moon size={20} className="text-white" />}
@@ -349,12 +324,12 @@ const DraggableTech = ({ icon, label, className, delay, color }: { icon: React.R
     <motion.div
       drag
       dragConstraints={{ left: -100, right: 100, top: -100, bottom: 100 }}
-      whileHover={{ scale: 1.1, cursor: "grab" }}
-      whileDrag={{ scale: 1.2, cursor: "grabbing" }}
+      whileHover={{ scale: 1.1 }}
+      whileDrag={{ scale: 1.2 }}
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: "spring", delay: delay }}
-      className={`absolute z-20 flex flex-col items-center ${className}`}
+      className={`absolute z-20 flex flex-col items-center drag-trigger pointer-events-auto cursor-none ${className}`}
     >
       <div className={`p-3 border-2 border-black ${color} text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center`}>
         {icon}
@@ -382,109 +357,8 @@ const NavLink = ({ href, children, onClick, isDarkMode }: { href: string, childr
   </Link>
 );
 
-const Marquee = ({ isDarkMode }: { isDarkMode: boolean }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    let currentSpeed = 0;
-    let targetSpeed = 0;
-    let updateSpeed: () => void;
-
-    const ctx = gsap.context(() => {
-      const tracks = containerRef.current?.querySelectorAll(".marquee-track");
-      if (!tracks || tracks.length === 0) return;
-
-      // Animasi horizontal loop dasar (kecepatan dasar = 1)
-      const loopTween = gsap.to(tracks, {
-        xPercent: -100,
-        ease: "none",
-        duration: 35,
-        repeat: -1,
-      });
-      loopTween.timeScale(1);
-
-      // ScrollTrigger untuk menangkap kecepatan scroll
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top bottom",
-        end: "bottom top",
-        onUpdate: (self) => {
-          const velocity = self.getVelocity();
-          // targetSpeed proporsional dengan kecepatan scroll (arah diatur oleh tanda +/-)
-          targetSpeed = velocity * 0.003;
-        },
-      });
-
-      // Ticker update loop untuk meredam dan menghaluskan pergerakan setiap frame
-      updateSpeed = () => {
-        // Interpolasi halus (lerp) dari kecepatan saat ini ke target
-        currentSpeed += (targetSpeed - currentSpeed) * 0.08;
-
-        // Hitung kecepatan loop secara simetris untuk scroll ke bawah dan ke atas
-        let speed;
-        if (currentSpeed >= 0) {
-          speed = currentSpeed + 1;
-        } else if (currentSpeed >= -1) {
-          speed = 3 * currentSpeed + 1;
-        } else {
-          speed = currentSpeed - 1;
-        }
-        loopTween.timeScale(speed);
-
-        // Redam target speed ke 0 (secara eksponensial) saat tidak ada scroll baru
-        targetSpeed *= 0.92;
-      };
-
-      gsap.ticker.add(updateSpeed);
-    }, containerRef);
-
-    return () => {
-      ctx.revert();
-      if (updateSpeed) {
-        gsap.ticker.remove(updateSpeed);
-      }
-    };
-  }, []);
-
-  const phrases = Array(4).fill(
-    "FULL-STACK DEVELOPER  •  UI/UX DESIGNER  •  FREELANCER  •  READY TO WORK  •"
-  );
-
-  return (
-    <div
-      ref={containerRef}
-      className={`w-full ${isDarkMode ? "bg-[#FDE047] border-white" : "bg-[#FDE047] border-black"
-        } border-y-4 py-4 overflow-hidden flex relative z-20`}
-    >
-      <div className="flex whitespace-nowrap flex-row">
-        {/* Track 1 */}
-        <div className="marquee-track flex whitespace-nowrap flex-row shrink-0 gap-6 pr-6">
-          {phrases.map((phrase, i) => (
-            <span
-              key={`t1-${i}`}
-              className="text-2xl md:text-3xl font-black uppercase text-black"
-            >
-              {phrase}
-            </span>
-          ))}
-        </div>
-        {/* Track 2 */}
-        <div className="marquee-track flex whitespace-nowrap flex-row shrink-0 gap-6 pr-6">
-          {phrases.map((phrase, i) => (
-            <span
-              key={`t2-${i}`}
-              className="text-2xl md:text-3xl font-black uppercase text-black"
-            >
-              {phrase}
-            </span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
+"const Marquee = ({ isDarkMode }: { isDarkMode: boolean }) => {\n  const containerRef = useRef<HTMLDivElement>(null);\n\n  useEffect(() => {\n    gsap.registerPlugin(ScrollTrigger);\n\n    let currentSpeed = 0;\n    let targetSpeed = 0;\n    let updateSpeed: () => void;\n\n    const ctx = gsap.context(() => {\n      const tracks = containerRef.current?.querySelectorAll(\".marquee-track\");\n      if (!tracks || tracks.length === 0) return;\n\n      // Animasi horizontal loop dasar (paused/speed = 0 secara default)\n      const loopTween = gsap.to(tracks, {\n        xPercent: -100,\n        ease: \"none\",\n        duration: 35,\n        repeat: -1,\n      });\n      loopTween.timeScale(0);\n\n      // ScrollTrigger untuk menangkap kecepatan scroll\n      ScrollTrigger.create({\n        trigger: containerRef.current,\n        start: \"top bottom\",\n        end: \"bottom top\",\n        onUpdate: (self) => {\n          const velocity = self.getVelocity();\n          // targetSpeed proporsional dengan kecepatan scroll (arah diatur oleh tanda +/-)\n          targetSpeed = velocity * 0.003;\n        },\n      });\n\n      // Ticker update loop untuk meredam dan menghaluskan pergerakan setiap frame\n      updateSpeed = () => {\n        // Interpolasi halus (lerp) dari kecepatan saat ini ke target\n        currentSpeed += (targetSpeed - currentSpeed) * 0.08;\n        loopTween.timeScale(currentSpeed);\n        \n        // Redam target speed ke 0 (secara eksponensial) saat tidak ada scroll baru\n        targetSpeed *= 0.92;\n      };\n\n      gsap.ticker.add(updateSpeed);\n    }, containerRef);\n\n    return () => {\n      ctx.revert();\n      if (updateSpeed) {\n        gsap.ticker.remove(updateSpeed);\n      }\n    };\n  }, []);\n\n  const phrases = Array(4).fill(\n    \"FULL-STACK DEVELOPER  •  UI/UX DESIGNER  •  FREELANCER  •  BUILDING DIGITAL EXPERIENCES  •\"\n  );\n\n  return (\n    <div\n      ref={containerRef}\n      className={`w-full ${\n        isDarkMode ? \"bg-[#FDE047] border-white\" : \"bg-[#FDE
+<truncated 952 bytes>
 
 const StatCard = ({ label, value, icon, color, isRealtime = false, isDarkMode }: { label: string, value: number, icon: React.ReactNode, color: string, isRealtime?: boolean, isDarkMode: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -547,7 +421,7 @@ const FaqItem = ({ question, answer, isDarkMode }: { question: string, answer: s
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={`faq-card opacity-0 ${isDarkMode ? 'bg-[#1a1a1a] border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]' : 'bg-white border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'} border-4 overflow-hidden transition-all`}>
+    <div className={`${isDarkMode ? 'bg-[#1a1a1a] border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]' : 'bg-white border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'} border-4 overflow-hidden transition-all`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`w-full p-4 flex items-center justify-between text-left font-bold text-lg ${isDarkMode ? 'text-white hover:bg-gray-800' : 'text-black hover:bg-yellow-100'} transition-colors`}
@@ -575,282 +449,8 @@ const FaqItem = ({ question, answer, isDarkMode }: { question: string, answer: s
 };
 
 
-export default function Home() {
-  const containerRef = useRef(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
-  const connectSectionRef = useRef<HTMLDivElement>(null);
-  const planeRef = useRef<HTMLDivElement>(null);
-  const footerWrapperRef = useRef<HTMLElement>(null);
-  const footerNamePanelRef = useRef<HTMLDivElement>(null);
-
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { repos } = useGithubStats();
-
-  // STATE DARK MODE
-  const [isDarkMode, setIsDarkMode] = useState(false); useEffect(() => {
-    if (typeof window !== "undefined") {
-      gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-    }
-
-    const cleanupListeners: Array<{ el: HTMLElement; enter: () => void; leave: () => void }> = [];
-
-    const ctx = gsap.context(() => {
-      // 1. Text Masking Reveal for headers
-      const headers = document.querySelectorAll(".section-header-reveal");
-      headers.forEach((header) => {
-        const targets = header.querySelectorAll(".reveal-word");
-        if (targets.length > 0) {
-          gsap.fromTo(
-            targets,
-            { y: "100%" },
-            {
-              y: "0%",
-              stagger: 0.05,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: header,
-                start: "top 90%",
-                end: "top 60%",
-                scrub: 1,
-              },
-            }
-          );
-        }
-      });
-
-      // 2. Projects Section: Horizontal Scroll Showcase (Pinned)
-      const cardsContainer = cardsContainerRef.current;
-      const section = sectionRef.current;
-      if (cardsContainer && section) {
-        const getScrollAmount = () => {
-          return cardsContainer.scrollWidth - window.innerWidth;
-        };
-
-        gsap.to(cardsContainer, {
-          x: () => -getScrollAmount(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            pin: true,
-            scrub: 1,
-            start: "top 80px",
-            end: () => `+=${getScrollAmount()}`,
-            invalidateOnRefresh: true,
-          },
-        });
-      }
-
-      // 3. Core Expertise Section: Staggered Slide-up Entrance & Hover Effects
-      const servicesSection = document.querySelector("#services");
-      if (servicesSection) {
-        const cards = servicesSection.querySelectorAll(".service-card");
-        if (cards.length > 0) {
-          // Slide up & Fade in reveal (target wrapper)
-          gsap.fromTo(
-            servicesSection.querySelectorAll(".service-card-wrapper"),
-            {
-              opacity: 0,
-              y: 40,
-            },
-            {
-              opacity: 1,
-              y: 0,
-              stagger: 0.15,
-              ease: "power2.out",
-              duration: 0.8,
-              scrollTrigger: {
-                trigger: servicesSection,
-                start: "top 80%",
-                toggleActions: "play none none reverse",
-              }
-            }
-          );
-
-          // Pasang listener hover interaktif menggunakan GSAP
-          cards.forEach((card) => {
-            const htmlEl = card as HTMLElement;
-
-            const handleMouseEnter = () => {
-              const isDark = htmlEl.classList.contains("border-white");
-              const shadowColor = isDark ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 1)";
-              gsap.to(htmlEl, {
-                x: 8,
-                y: 8,
-                boxShadow: `0px 0px 0px 0px ${shadowColor}`,
-                duration: 0.2,
-                ease: "power2.out",
-                overwrite: "auto",
-              });
-            };
-
-            const handleMouseLeave = () => {
-              const isDark = htmlEl.classList.contains("border-white");
-              const shadowColor = isDark ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 1)";
-              gsap.to(htmlEl, {
-                x: 0,
-                y: 0,
-                boxShadow: `8px 8px 0px 0px ${shadowColor}`,
-                duration: 0.2,
-                ease: "power2.out",
-                overwrite: "auto",
-              });
-            };
-
-            htmlEl.addEventListener("mouseenter", handleMouseEnter);
-            htmlEl.addEventListener("mouseleave", handleMouseLeave);
-            cleanupListeners.push({ el: htmlEl, enter: handleMouseEnter, leave: handleMouseLeave });
-          });
-        }
-      }
-
-      // 4. FAQ Section: Staggered Pop-up Entrance
-      const faqSection = document.querySelector("#faq");
-      if (faqSection) {
-        const faqList = faqSection.querySelector(".faq-list");
-        const items = faqSection.querySelectorAll(".faq-card");
-        if (items.length > 0) {
-          gsap.fromTo(
-            items,
-            { opacity: 0, y: 40 },
-            {
-              opacity: 1,
-              y: 0,
-              stagger: 0.5,
-              duration: 2.0,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: faqList || faqSection,
-                start: "top 85%",
-                toggleActions: "play none none reverse",
-              }
-            }
-          );
-        }
-      }
-
-      // 5. Contact Section: Split Bounce-in Entrance
-      const contactSection = document.querySelector("#contact");
-      if (contactSection) {
-        const leftSide = contactSection.querySelector(".contact-left");
-        const rightSide = contactSection.querySelector(".contact-right");
-        if (leftSide && rightSide) {
-          gsap.fromTo(
-            leftSide,
-            { x: -100, opacity: 0 },
-            {
-              x: 0,
-              opacity: 1,
-              duration: 1,
-              ease: "back.out(1.2)",
-              scrollTrigger: {
-                trigger: contactSection,
-                start: "top 80%",
-                toggleActions: "play none none reverse",
-              }
-            }
-          );
-          gsap.fromTo(
-            rightSide,
-            { x: 100, opacity: 0 },
-            {
-              x: 0,
-              opacity: 1,
-              duration: 1,
-              ease: "back.out(1.2)",
-              scrollTrigger: {
-                trigger: contactSection,
-                start: "top 80%",
-                toggleActions: "play none none reverse",
-              }
-            }
-          );
-        }
-      }
-
-      // 6. Connect Section: Staggered Social Links Reveal & Motion Path
-      const connectSection = connectSectionRef.current;
-      if (connectSection) {
-        const btns = connectSection.querySelectorAll(".social-link-btn");
-        if (btns.length > 0) {
-          gsap.fromTo(
-            btns,
-            { y: 50, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              stagger: 0.1,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: connectSection,
-                start: "top 80%",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
-        }
-      }
-
-      const plane = planeRef.current;
-      const connectSec = connectSectionRef.current;
-      if (plane && connectSec) {
-        gsap.to(plane, {
-          ease: "none",
-          scrollTrigger: {
-            trigger: connectSec,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-          motionPath: {
-            path: "#connectMotionPath",
-            autoRotate: true,
-            align: "#connectMotionPath",
-            alignOrigin: [0.5, 0.5],
-          }
-        });
-      }
-
-      // 7. Footer Reveal: Staggered Character Mask Reveal
-      const footerNamePanel = footerNamePanelRef.current;
-      if (footerNamePanel) {
-        const chars = footerNamePanel.querySelectorAll(".footer-reveal-char");
-        if (chars.length > 0) {
-          gsap.fromTo(
-            chars,
-            { y: "100%" },
-            {
-              y: "0%",
-              stagger: 0.07,
-              duration: 1.0,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: footerNamePanel,
-                start: "top 85%",
-                toggleActions: "play none none reverse",
-              }
-            }
-          );
-        }
-      }
-
-      // Pastikan semua ScrollTrigger diurutkan dan dikalkulasi ulang posisinya setelah render
-      ScrollTrigger.sort();
-      ScrollTrigger.refresh();
-    });
-
-    return () => {
-      ctx.revert();
-      cleanupListeners.forEach(({ el, enter, leave }) => {
-        el.removeEventListener("mouseenter", enter);
-        el.removeEventListener("mouseleave", leave);
-      });
-    };
-  }, []);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+"export default function Home() {\n  const containerRef = useRef(null);\n  const sectionRef = useRef<HTMLDivElement>(null);\n  const cardsContainerRef = useRef<HTMLDivElement>(null);\n  const connectSectionRef = useRef<HTMLDivElement>(null);\n\n  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);\n  const { repos } = useGithubStats();\n\n  // STATE DARK MODE\n  const [isDarkMode, setIsDarkMode] = useState(false);\n\n  useEffect(() => {\n    if (typeof window !== \"undefined\") {\n      gsap.registerPlugin(ScrollTrigger);\n    }\n\n    const ctx = gsap.context(() => {\n      // 1. Text Masking Reveal for headers\n      const headers = document.querySelectorAll(\".section-header-reveal\");\n      headers.forEach((header) => {\n        const targets = header.querySelectorAll(\".reveal-word\");\n        if (targets.length > 0) {\n          gsap.fromTo(\n            targets,\n            { y: \"100%\" },\n            {\n              y: \"0%\",\n              stagger: 0.05,\n              ease: \"power2.out\",\n              scrollTrigger: {\n                trigger: header,\n                start: \"top 90%\",\n                end: \"top 60%\",\n                scrub: 1,\n              },\n            }\n          );\n        }\n      });\n\n      // 2. Projects Section: Horizontal Scroll Showcase (Pinned)\n      const cardsContainer = cardsContainerRef.current;\n      const section = sectionRef.current;\n      if (cardsContainer && section) {\n        const getScrollAmount = () => {\n          return cardsContainer.scrollWidth - window.innerWidth;\n        };\n\n        gsap.to(cardsContainer, {\n          x: () => -getScrollAmount(),\n          ease: \"none\",\n          scrollTrigger: {\n            trigger: section,\n            pin: true,\n            scrub: 1,\n            start: \"top top\",\n            end: () => `+=${getScrollAmount()}`,\n            invalidateOnRefresh: true,\n          },\n        });\n      }\n\n      // 3. Connect Section: Staggered Social Links Reveal\n      const connect
+<truncated 747 bytes>
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
     e.preventDefault();
@@ -1014,7 +614,7 @@ export default function Home() {
                 transition={{ delay: 0.5 }}
                 className={`text-2xl md:text-3xl font-bold ${isDarkMode ? 'bg-white text-black' : 'bg-black text-white'} inline-block px-2 py-1 rotate-1 mt-2`}
               >
-                Full-Stack Developer.
+                Full-Stack Web Developer.
               </motion.div>
 
               <motion.p
@@ -1117,14 +717,9 @@ export default function Home() {
 
 
         <section className={`py-12 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden`}>
-          <div className="section-header-reveal max-w-7xl mx-auto px-6 md:px-12 mb-8 text-center overflow-hidden flex justify-center">
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter flex flex-wrap gap-x-3 justify-center">
-              <span className="inline-block overflow-hidden py-1">
-                <span className="reveal-word inline-block translate-y-full">My</span>
-              </span>
-              <span className="inline-block overflow-hidden py-1">
-                <span className={`reveal-word inline-block translate-y-full text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Arsenal</span>
-              </span>
+          <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8 text-center">
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">
+              My <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Arsenal</span>
             </h2>
           </div>
           <TechStickerMarquee items={TECH_ROW_1} direction="left" speed={30} isDarkMode={isDarkMode} />
@@ -1132,138 +727,121 @@ export default function Home() {
         </section>
 
         {/* ================= PROJECT VAULT ================= */}
-        <div id="projects" className="pt-20 max-w-7xl mx-auto w-full px-6 md:px-12 mb-8">
-          <div className="section-header-reveal border-b-4 border-current pb-4 flex justify-between items-end overflow-hidden">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter flex flex-wrap gap-x-3">
-              <span className="inline-block overflow-hidden py-1">
-                <span className="reveal-word inline-block translate-y-full">My</span>
-              </span>
-              <span className="inline-block overflow-hidden py-1">
-                <span className={`reveal-word inline-block translate-y-full text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Projects</span>
-              </span>
+        <section id="projects" className="pt-20 max-w-7xl mx-auto px-6 md:px-12">
+          <div className={`mb-12 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} pb-4 flex justify-between items-end`}>
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">
+              My <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Projects</span>
             </h2>
             <div className={`hidden md:block text-xs font-mono font-bold border-2 ${isDarkMode ? 'border-white bg-black text-white' : 'border-black bg-white'} px-2 py-1`}>
-              See All Projects (GitHub){' '}
+              See All Projects (GitHub)
               <a href="https://github.com/rezaaplvv" target="_blank" className="ml-2 underline decoration-4 decoration-current underline-offset-4 font-normal">
                 here
               </a>
             </div>
           </div>
-        </div>
 
-        {/* Pinned horizontal scroll container */}
-        <section ref={sectionRef} className="relative min-h-[calc(100vh-80px)] overflow-hidden flex items-center bg-transparent">
-          <div className="overflow-hidden w-full">
-            <div ref={cardsContainerRef} className="flex flex-nowrap gap-8 pl-6 md:pl-12 pr-6 md:pr-12 py-6 shrink-0">
-              {PROJECTS.map((project, index) => (
-                <div
-                  key={index}
-                  className={`w-[85vw] md:w-[480px] shrink-0 group relative bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'
-                    } hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col`}
-                >
-                  {/* Header Card */}
-                  <div className={`h-10 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} bg-white flex items-center justify-between px-4`}>
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
-                      <div className="w-3 h-3 rounded-full bg-green-500 border border-black"></div>
-                    </div>
-                    <div className="text-xs font-bold font-mono uppercase tracking-widest text-black">
-                      {project.title}.exe
-                    </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            {PROJECTS.map((project, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className={`group relative h-full bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col`}
+              >
+                {/* Header Card */}
+                <div className={`h-10 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} bg-white flex items-center justify-between px-4`}>
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500 border border-black"></div>
                   </div>
-
-                  {/* Image & Overlay */}
-                  <div className={`relative w-full aspect-[16/9] shrink-0 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} overflow-hidden bg-gray-100`}>
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                    />
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-black/40 backdrop-blur-[2px]">
-                      {project.demoLink && (
-                        <Link href={project.demoLink} target="_blank" className={`bg-white border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2`}>
-                          <Zap size={16} className="fill-black" /> VIEW DEMO
-                        </Link>
-                      )}
-                      <Link href={project.docLink} target="_blank" className={`bg-[#FDE047] border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2`}>
-                        <Github size={16} /> FULL SHOWCASE
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 flex-1 flex flex-col justify-between bg-white text-black">
-                    <div>
-                      <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
-                        <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
-                          {project.title}
-                          <ArrowUpRight className="w-6 h-6 transform group-hover:rotate-45 transition-transform" />
-                        </h3>
-                      </Link>
-                      <p className="text-sm font-medium text-gray-800 leading-tight mb-4 border-l-2 border-black pl-2">
-                        {project.desc}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-auto">
-                      {project.tech.map((t, i) => (
-                        <BrutalTag key={i} text={t} isDarkMode={false} />
-                      ))}
-                    </div>
+                  <div className="text-xs font-bold font-mono uppercase tracking-widest text-black">
+                    {project.title}.exe
                   </div>
                 </div>
-              ))}
 
-              {/* Final CTA Card to See All Projects */}
-              <div className={`w-[85vw] md:w-[400px] shrink-0 group relative bg-[#FDE047] border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'
-                } hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col justify-center items-center p-8 text-center`}
-                style={{ minHeight: "400px" }}>
-                <h3 className="text-3xl font-black uppercase mb-4 text-black">
-                  Want to see more?
-                </h3>
-                <p className="text-sm font-bold text-gray-800 uppercase tracking-wide mb-6 max-w-[280px]">
-                  Explore the full vault containing 17+ projects with filters and searches.
-                </p>
-                <Link
-                  href="/projects"
-                  className="bg-black text-white hover:bg-white hover:text-black border-2 border-black px-6 py-3 font-bold uppercase tracking-widest transition-colors flex items-center gap-2"
-                >
-                  SEE MORE <ArrowUpRight size={20} />
-                </Link>
-              </div>
-            </div>
+                {/* Image & Overlay (UPDATED) */}
+                <div className={`relative w-full aspect-[16/9] shrink-0 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} overflow-hidden bg-gray-100`}>
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                  />
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-black/40 backdrop-blur-[2px]">
+                    {/* Tombol View Demo (Hanya jika ada link) */}
+                    {project.demoLink && (
+                      <Link href={project.demoLink} target="_blank" className={`bg-white border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2`}>
+                        <Zap size={16} className="fill-black" /> VIEW DEMO
+                      </Link>
+                    )}
+
+                    {/* Tombol Full Showcase (Selalu ada) */}
+                    <Link href={project.docLink} target="_blank" className={`bg-[#FDE047] border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2`}>
+                      <Github size={16} /> FULL SHOWCASE
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 flex-1 flex flex-col justify-between bg-white text-black">
+                  <div>
+                    {/* Link Judul mengarah ke Showcase jika demo tidak ada, atau demo jika ada */}
+                    <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
+                      <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
+                        {project.title}
+                        <ArrowUpRight className="w-6 h-6 transform group-hover:rotate-45 transition-transform" />
+                      </h3>
+                    </Link>
+                    <p className="text-sm font-medium text-gray-800 leading-tight mb-4 border-l-2 border-black pl-2">
+                      {project.desc}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {project.tech.map((t, i) => (
+                      <BrutalTag key={i} text={t} isDarkMode={false} />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* --- NEW BUTTON: SEE MORE PROJECTS --- */}
+          <div className="mt-12 flex justify-center">
+            <Link
+              href="/projects"
+              className={`group relative px-8 py-4 bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} font-black text-xl uppercase tracking-widest hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all flex items-center gap-3 text-black`}
+            >
+              See All Projects
+              <ArrowUpRight className="w-6 h-6 group-hover:rotate-45 transition-transform" />
+            </Link>
           </div>
         </section>
 
         {/* ================= SERVICES ================= */}
         <section id="services" className={`pt-32 pb-20 max-w-7xl mx-auto px-6 md:px-12 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'}`}>
-          <div className="section-header-reveal mb-12 border-b-4 pb-4 flex justify-end text-right overflow-hidden">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter flex flex-wrap gap-x-3 justify-end">
-              <span className="inline-block overflow-hidden py-1">
-                <span className="reveal-word inline-block translate-y-full">Core</span>
-              </span>
-              <span className="inline-block overflow-hidden py-1">
-                <span className={`reveal-word inline-block translate-y-full text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Expertise</span>
-              </span>
+          <div className={`mb-12 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} pb-4 text-right`}>
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter">
+              Core <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Expertise</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
             {SERVICES.map((service, index) => (
-              <div key={index} className="service-card-wrapper opacity-0">
-                <div className={`service-card bg-white border-4 ${isDarkMode ? 'border-white text-black shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} p-6 h-full`}>
-                  <div className={`w-16 h-16 ${service.color} border-2 border-black flex items-center justify-center mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}>
-                    {service.icon}
-                  </div>
-                  <h3 className="text-2xl font-black uppercase mb-2 text-black">{service.title}</h3>
-                  <div className="text-sm font-bold bg-black text-white inline-block px-2 py-1 mb-3">
-                    {service.price}
-                  </div>
-                  <p className="font-medium text-gray-700 leading-tight">
-                    {service.desc}
-                  </p>
+              <div key={index} className={`bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} p-6 hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none transition-all`}>
+                <div className={`w-16 h-16 ${service.color} border-2 border-black flex items-center justify-center mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}>
+                  {service.icon}
                 </div>
+                <h3 className="text-2xl font-black uppercase mb-2 text-black">{service.title}</h3>
+                <div className="text-sm font-bold bg-black text-white inline-block px-2 py-1 mb-3">
+                  {service.price}
+                </div>
+                <p className="font-medium text-gray-700 leading-tight">
+                  {service.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -1272,17 +850,12 @@ export default function Home() {
         {/* ================= FAQ SECTION ================= */}
         <section id="faq" className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#F3F4F6] border-black'} border-b-4`}>
           <div className="max-w-4xl mx-auto px-6 md:px-12">
-            <div className="section-header-reveal text-center mb-12 overflow-hidden flex justify-center">
-              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter flex flex-wrap gap-x-3 justify-center">
-                <span className="inline-block overflow-hidden py-1">
-                  <span className="reveal-word inline-block translate-y-full">Common</span>
-                </span>
-                <span className="inline-block overflow-hidden py-1">
-                  <span className={`reveal-word inline-block translate-y-full px-2 ${isDarkMode ? 'bg-white text-black' : 'bg-black text-white'}`}>Questions</span>
-                </span>
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
+                Common <span className={`px-2 ${isDarkMode ? 'bg-white text-black' : 'bg-black text-white'}`}>Questions</span>
               </h2>
             </div>
-            <div className="faq-list flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
               {FAQS.map((faq, index) => (
                 <FaqItem key={index} question={faq.question} answer={faq.answer} isDarkMode={isDarkMode} />
               ))}
@@ -1292,7 +865,11 @@ export default function Home() {
 
         {/* --- CONTACT SECTION (White Paper Style with Adaptive Shadow) --- */}
         <section id="contact" className="relative py-24 px-6 md:px-12 max-w-7xl mx-auto mb-20">
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
             className="relative bg-white text-black border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)] p-8 md:p-12 overflow-hidden transition-shadow duration-300"
           >
             {/* BADGE: START A PROJECT */}
@@ -1310,7 +887,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row gap-12 md:gap-20 mt-10 md:mt-8 relative z-0">
 
               {/* KIRI: INFORMASI */}
-              <div className="contact-left opacity-0 flex-1 space-y-8">
+              <div className="flex-1 space-y-8">
                 <div>
                   <h2 className="text-6xl md:text-8xl font-black uppercase leading-[0.9] text-black mb-6">
                     LET'S <br />
@@ -1340,7 +917,7 @@ export default function Home() {
               </div>
 
               {/* KANAN: FORM INPUT */}
-              <div className="contact-right opacity-0 flex-1 bg-gray-50 border-2 border-black p-6 md:p-8 relative mt-4 md:mt-0 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">
+              <div className="flex-1 bg-gray-50 border-2 border-black p-6 md:p-8 relative mt-4 md:mt-0 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">
                 <form className="space-y-5">
                   <div className="space-y-1">
                     <label className="text-xs font-black font-mono uppercase tracking-widest text-gray-500">// 01. IDENTITY</label>
@@ -1352,8 +929,9 @@ export default function Home() {
                         setFormData({ ...formData, identity: e.target.value });
                         if (formErrors.identity) setFormErrors({ ...formErrors, identity: "" });
                       }}
-                      className={`w-full bg-white border-2 p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 ${formErrors.identity ? "border-red-600 focus:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]" : "border-black"
-                        }`}
+                      className={`w-full bg-white border-2 p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 ${
+                        formErrors.identity ? "border-red-600 focus:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]" : "border-black"
+                      }`}
                     />
                     {formErrors.identity && (
                       <p className="text-red-600 font-bold text-xs mt-1 font-mono uppercase tracking-wider">
@@ -1371,8 +949,9 @@ export default function Home() {
                         setFormData({ ...formData, coordinates: e.target.value });
                         if (formErrors.coordinates) setFormErrors({ ...formErrors, coordinates: "" });
                       }}
-                      className={`w-full bg-white border-2 p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 ${formErrors.coordinates ? "border-red-600 focus:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]" : "border-black"
-                        }`}
+                      className={`w-full bg-white border-2 p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 ${
+                        formErrors.coordinates ? "border-red-600 focus:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]" : "border-black"
+                      }`}
                     />
                     {formErrors.coordinates && (
                       <p className="text-red-600 font-bold text-xs mt-1 font-mono uppercase tracking-wider">
@@ -1390,8 +969,9 @@ export default function Home() {
                         setFormData({ ...formData, transmission: e.target.value });
                         if (formErrors.transmission) setFormErrors({ ...formErrors, transmission: "" });
                       }}
-                      className={`w-full bg-white border-2 p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 resize-none ${formErrors.transmission ? "border-red-600 focus:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]" : "border-black"
-                        }`}
+                      className={`w-full bg-white border-2 p-3 font-bold text-black outline-none focus:bg-[#FDE047] focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all placeholder:font-normal placeholder:text-gray-400 resize-none ${
+                        formErrors.transmission ? "border-red-600 focus:shadow-[4px_4px_0px_0px_rgba(220,38,38,1)]" : "border-black"
+                      }`}
                     ></textarea>
                     {formErrors.transmission && (
                       <p className="text-red-600 font-bold text-xs mt-1 font-mono uppercase tracking-wider">
@@ -1410,71 +990,39 @@ export default function Home() {
                 </form>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* ================= CONNECT / SOCIAL WALL ================= */}
-        <section ref={connectSectionRef} className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden relative`}>
-
-          {/* SVG Motion Path & Plane (travels behind cards but above background) */}
-          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1000 500" preserveAspectRatio="none">
-              <path
-                id="connectMotionPath"
-                d="M -50 150 C 200 450, 300 50, 500 250 C 700 450, 800 50, 1050 150"
-                fill="none"
-                stroke={isDarkMode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}
-                strokeWidth="4"
-                strokeDasharray="8 8"
-              />
-            </svg>
-            <div
-              ref={planeRef}
-              className="absolute pointer-events-none w-[50px] h-[50px] md:w-[90px] md:h-[90px]"
-              style={{ transformOrigin: "center center" }}
-            >
-              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                <path d="M10 16L60 32L10 48L28 32Z" fill="#FDE047" stroke="black" strokeWidth="4" strokeLinejoin="miter" />
-                <path d="M28 32L60 32" stroke="black" strokeWidth="4" />
-              </svg>
-            </div>
-          </div>
-
-          <div className="max-w-7xl mx-auto px-6 md:px-12 text-center relative z-10">
-            <div className="section-header-reveal flex justify-center text-center mb-16 overflow-hidden">
-              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter flex flex-wrap gap-x-3 justify-center">
-                <span className="inline-block overflow-hidden py-1">
-                  <span className="reveal-word inline-block translate-y-full">Let's</span>
-                </span>
-                <span className="inline-block overflow-hidden py-1">
-                  <span className={`reveal-word inline-block translate-y-full text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Connect</span>
-                </span>
-              </h2>
-            </div>
+        <section className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden relative`}>
+          <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-16">
+              Let's <span className={`text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Connect</span>
+            </h2>
 
             <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-              <Link href="https://github.com/rezaaplvv" target="_blank" className="social-link-btn group opacity-0">
+              <Link href="https://github.com/rezaaplvv" target="_blank" className="group">
                 <div className={`w-32 h-32 md:w-40 md:h-40 bg-gray-900 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform -rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
                   <Github size={48} className="text-white mb-2" />
                   <span className="font-bold text-white uppercase">GitHub</span>
                 </div>
               </Link>
 
-              <Link href="https://wa.me/6283133387676" target="_blank" className="social-link-btn group opacity-0">
+              <Link href="https://wa.me/6283133387676" target="_blank" className="group">
                 <div className={`w-32 h-32 md:w-40 md:h-40 bg-[#25D366] border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
                   <MessageCircle size={48} className="text-white mb-2" />
                   <span className="font-bold text-white uppercase">WhatsApp</span>
                 </div>
               </Link>
 
-              <Link href="https://instagram.com" target="_blank" className="social-link-btn group opacity-0">
+              <Link href="https://instagram.com" target="_blank" className="group">
                 <div className={`w-32 h-32 md:w-40 md:h-40 bg-pink-500 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform -rotate-2 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
                   <Instagram size={48} className="text-white mb-2" />
                   <span className="font-bold text-white uppercase">Instagram</span>
                 </div>
               </Link>
 
-              <Link href="mailto:rezapahlepi77654@gmail.com" className="social-link-btn group opacity-0">
+              <Link href="mailto:rezapahlepi77654@gmail.com" className="group">
                 <div className={`w-32 h-32 md:w-40 md:h-40 bg-red-500 border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'} flex flex-col items-center justify-center transform rotate-3 hover:rotate-0 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-all duration-300`}>
                   <Mail size={48} className="text-white mb-2" />
                   <span className="font-bold text-white uppercase">Email</span>
@@ -1487,69 +1035,46 @@ export default function Home() {
 
 
         {/* ================= FOOTER ================= */}
-        <footer ref={footerWrapperRef} className="relative z-20 bg-black text-[#FDE047] border-t-8 border-[#FDE047] py-20 overflow-hidden">
-
-          {/* Upper content: Social Links & Navigation */}
-          <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left mb-16 border-b-2 border-dashed border-[#FDE047]/30 pb-12">
+        {/* ================= FOOTER ================= */}
+        <footer className="bg-black text-white py-12 md:py-20 border-t-8 border-[#FDE047]">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
             <div>
-              <p className="text-sm font-black uppercase tracking-widest text-[#FDE047] mb-2">// MEDAN, INDONESIA</p>
-              <p className="font-medium text-lg max-w-md text-gray-400">
-                Building high-performance, secure, and user-centric web applications.
+              <h2 className="text-5xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4">
+                Reza <br /><span className="text-[#FDE047]">Pahlepi.</span>
+              </h2>
+              <p className="text-gray-400 font-medium text-lg max-w-md">
+                Based in Medan, Indonesia.
               </p>
             </div>
 
             <div className="flex flex-col items-center md:items-end gap-6">
               {/* Navigation Links */}
-              <div className="flex flex-nowrap justify-center gap-x-3 sm:gap-x-4 md:gap-x-6 text-xs sm:text-sm text-white">
-
-                <Link href="#hero" className="font-bold uppercase tracking-wider hover:text-[#FDE047] transition-all">
+              <div className="flex flex-col items-center md:items-end gap-2">
+                <Link href="#hero" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
+                  Home
+                </Link>
+                <Link href="#hero" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
                   About
                 </Link>
-                <Link href="#projects" className="font-bold uppercase tracking-wider hover:text-[#FDE047] transition-all">
+                <Link href="#projects" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
                   Projects
                 </Link>
-                <Link href="#services" className="font-bold uppercase tracking-wider hover:text-[#FDE047] transition-all">
+                <Link href="#services" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
                   Skills
                 </Link>
-                <Link href="#faq" className="font-bold uppercase tracking-wider hover:text-[#FDE047] transition-all">
+                <Link href="#faq" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
                   FAQ
                 </Link>
-                <Link href="#contact" className="font-bold uppercase tracking-wider hover:text-[#FDE047] transition-all">
+                <Link href="#contact" className="font-bold text-sm uppercase tracking-wider text-gray-400 hover:text-[#FDE047] transition-all hover:underline decoration-2 underline-offset-4">
                   Contact
                 </Link>
               </div>
+
               <div className="text-sm text-gray-500 font-mono uppercase tracking-wider">
                 © {new Date().getFullYear()} Reza Pahlepi. All Rights Reserved.
               </div>
             </div>
           </div>
-
-          {/* Lower content: Giant staggered reveal name */}
-          <div ref={footerNamePanelRef} className="w-full text-center overflow-hidden py-4 select-none">
-            <h2 className="text-[#FDE047] font-black uppercase tracking-tighter leading-none text-6xl md:text-8xl lg:text-[12vw] select-none flex justify-center flex-wrap gap-x-6">
-              {/* Word 1: REZA */}
-              <span className="flex">
-                {["R", "E", "Z", "A"].map((char, index) => (
-                  <span key={index} className="inline-block overflow-hidden py-2">
-                    <span className="footer-reveal-char inline-block">
-                      {char}
-                    </span>
-                  </span>
-                ))}
-              </span>
-              {/* Word 2: PAHLEPI. */}
-              <span className="flex">
-                {["P", "A", "H", "L", "E", "P", "I"].map((char, index) => (
-                  <span key={index} className="inline-block overflow-hidden py-2">
-                    <span className="footer-reveal-char inline-block">
-                      {char}
-                    </span>
-                  </span>
-                ))}
-              </span>
-            </h2>
-          </div>
-
         </footer>
 
       </main>
