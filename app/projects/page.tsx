@@ -110,14 +110,15 @@ const ALL_PROJECTS = [
   },
   {
     id: 11,
-    title: "Zero Store",
-    subtitle: "Premium Account Hub",
-    desc: "A sleek, high-performance E-Commerce and Digital Catalog platform featuring dynamic brand border highlights, smart variant modals, and automated WhatsApp checkout routing.",
+    title: "Geprek Bara Nusantara",
+    subtitle: "Restaurant Website",
+    desc: "Website for geprek bara nusantara, a restaurant that sells geprek.",
     tech: ["Next.js", "TypeScript", "Tailwind", "Lucide Icons"],
-    image: "/ZeroStorePreview.png", // Sesuaikan dengan nama file screenshot desktop Anda nanti
-    demoLink: "https://zerostore-five.vercel.app/",
+    image: "/geprek.png", // Sesuaikan dengan nama file screenshot desktop Anda nanti
+    demoLink: "https://geprek-bara.vercel.app/",
     docLink: "#" // Anda bisa isi dengan link repositori GitHub Private Anda jika ingin ditampilkan, atau kosongkan
   },
+
   {
     id: 12,
     title: "Dramatix",
@@ -173,6 +174,36 @@ const ALL_PROJECTS = [
 
   {
     id: 17,
+    title: "Nutrismart AI",
+    subtitle: "Health AI App",
+    desc: "Nutrismart AI is an AI-powered website that calculates your calorie needs, recommends appropriate foods, and provides recipes. Its implementation uses the KNN algorithm.",
+    tech: ["Laravel", "Tailwind CSS", "MySQL"],
+    image: "/nutrismart.png",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/NutrismartAI"
+  },
+  {
+    id: 18,
+    title: "TR Adventure",
+    subtitle: "Indonesian Culture Website",
+    desc: "TR Adventure is a website that features Indonesian culture.",
+    tech: ["Laravel", "Tailwind CSS", "MySQL"],
+    image: "/tradventure.png",
+    demoLink: null,
+    docLink: "https://github.com/rezaaplvv/TR-Adventure"
+  },
+  {
+    id: 19,
+    title: "Zero Store",
+    subtitle: "Premium Account Hub",
+    desc: "A sleek, high-performance E-Commerce and Digital Catalog platform featuring dynamic brand border highlights, smart variant modals, and automated WhatsApp checkout routing.",
+    tech: ["Next.js", "TypeScript", "Tailwind", "Lucide Icons"],
+    image: "/ZeroStorePreview.png", // Sesuaikan dengan nama file screenshot desktop Anda nanti
+    demoLink: "https://zerostore-five.vercel.app/",
+    docLink: "#" // Anda bisa isi dengan link repositori GitHub Private Anda jika ingin ditampilkan, atau kosongkan
+  },
+  {
+    id: 20,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
@@ -264,8 +295,8 @@ export default function ProjectsPage() {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={`px-6 py-2.5 font-black uppercase tracking-wider border-4 border-black transition-all ${activeTab === tab
-                  ? "bg-[#FDE047] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                  : "bg-white text-black hover:bg-gray-100 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[4px] active:shadow-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                ? "bg-[#FDE047] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                : "bg-white text-black hover:bg-gray-100 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[4px] active:shadow-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                 }`}
             >
               {tab}
@@ -304,8 +335,8 @@ export default function ProjectsPage() {
                     className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 z-10 bg-black/40 backdrop-blur-[2px] ${activeId === project.id
-                      ? 'opacity-100 pointer-events-auto'
-                      : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
+                    ? 'opacity-100 pointer-events-auto'
+                    : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
                     }`}>
 
                     {project.demoLink && (

@@ -1229,7 +1229,7 @@ export default function Home() {
                   Want to see more?
                 </h3>
                 <p className="text-sm font-bold text-gray-800 uppercase tracking-wide mb-6 max-w-[280px]">
-                  Explore the full vault containing 17+ projects with filters and searches.
+                  Explore the full projects.
                 </p>
                 <TransitionLink
                   href="/projects"
