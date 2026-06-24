@@ -79,9 +79,18 @@ const PROJECTS = [
     demoLink: "https://pptcreate.com/",
     docLink: "https://github.com/rezaaplvv/ppt-create" // Sesuaikan dengan nama repositori GitHub aslimu
   },
-
   {
     id: 2,
+    title: "Geprek Bara Nusantara",
+    subtitle: "Restaurant Website",
+    desc: "Interactive website for geprek bara nusantara, a restaurant that sells geprek.",
+    tech: ["HTML", "CSS", "JavaScript", "GSAP"],
+    image: "/geprek.png",
+    demoLink: "https://geprek-bara.vercel.app/",
+    docLink: "#"
+  },
+  {
+    id: 3,
     title: "Japanese travel website",
     subtitle: "Japanese travel website",
     desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
@@ -92,7 +101,7 @@ const PROJECTS = [
   },
 
   {
-    id: 3,
+    id: 4,
     title: "Elementary School Website",
     subtitle: "Elementary School Website",
     desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
@@ -102,7 +111,7 @@ const PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Elementary-School"
   },
   {
-    id: 4,
+    id: 5,
     title: "Waskita Angkasa Satya Security System",
     subtitle: "Enterprise Security Management System",
     desc: "A Next-Gen Integrated Security System featuring real-time attendance with GPS & photo verification, multi-level dashboards, broadcast command controls, and formal executive reporting.",
@@ -114,7 +123,7 @@ const PROJECTS = [
 
 
   {
-    id: 5,
+    id: 6,
     title: "Hajj & Umrah Travel Website",
     subtitle: "Hajj & Umrah Travel Website",
     desc: "A professional travel agency landing page, specializing in curated Hajj and Umrah tour packages with a modern, high-converting design.",
@@ -123,16 +132,7 @@ const PROJECTS = [
     demoLink: "https://hajjumrah.freedev.app/",
     docLink: "https://github.com/rezaaplvv/Laravel-Hajj-Umrah"
   },
-  {
-    id: 6,
-    title: "Geprek Bara Nusantara",
-    subtitle: "Restaurant Website",
-    desc: "Website for geprek bara nusantara, a restaurant that sells geprek.",
-    tech: ["Next.js", "TypeScript", "Tailwind", "Lucide Icons"],
-    image: "/geprek.png", // Sesuaikan dengan nama file screenshot desktop Anda nanti
-    demoLink: "https://geprek-bara.vercel.app/",
-    docLink: "#" // Anda bisa isi dengan link repositori GitHub Private Anda jika ingin ditampilkan, atau kosongkan
-  },
+
 
 
 
