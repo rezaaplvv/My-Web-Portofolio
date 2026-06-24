@@ -125,13 +125,13 @@ const PROJECTS = [
   },
   {
     id: 6,
-    title: "4 in 1 Streaming Website",
-    subtitle: "4 in 1 Streaming Website",
-    desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
-    tech: ["Next.js", "Tailwind CSS", "Node.js"],
-    image: "/desuwanime.png",
-    demoLink: "https://zeronime-anime-stream.vercel.app/",
-    docLink: "https://github.com/rezaaplvv/ZeroNime"
+    title: "Geprek Bara Nusantara",
+    subtitle: "Restaurant Website",
+    desc: "Website for geprek bara nusantara, a restaurant that sells geprek.",
+    tech: ["Next.js", "TypeScript", "Tailwind", "Lucide Icons"],
+    image: "/geprek.png", // Sesuaikan dengan nama file screenshot desktop Anda nanti
+    demoLink: "https://geprek-bara.vercel.app/",
+    docLink: "#" // Anda bisa isi dengan link repositori GitHub Private Anda jika ingin ditampilkan, atau kosongkan
   },
 
 
