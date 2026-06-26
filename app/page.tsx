@@ -578,8 +578,6 @@ const FaqItem = ({ question, answer, isDarkMode }: { question: string, answer: s
 
 export default function Home() {
   const containerRef = useRef(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
   const connectSectionRef = useRef<HTMLDivElement>(null);
   const planeRef = useRef<HTMLDivElement>(null);
   const footerWrapperRef = useRef<HTMLElement>(null);
@@ -620,27 +618,7 @@ export default function Home() {
         }
       });
 
-      // 2. Projects Section: Horizontal Scroll Showcase (Pinned)
-      const cardsContainer = cardsContainerRef.current;
-      const section = sectionRef.current;
-      if (cardsContainer && section) {
-        const getScrollAmount = () => {
-          return cardsContainer.scrollWidth - window.innerWidth;
-        };
-
-        gsap.to(cardsContainer, {
-          x: () => -getScrollAmount(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            pin: true,
-            scrub: 1,
-            start: "top 80px",
-            end: () => `+=${getScrollAmount()}`,
-            invalidateOnRefresh: true,
-          },
-        });
-      }
+      // 2. Projects Section: Stacking Cards Layout (Framer Motion is used for scroll behavior instead of GSAP horizontal scroll)
 
       // 3. Core Expertise Section: Staggered Slide-up Entrance & Hover Effects
       const servicesSection = document.querySelector("#services");
@@ -1156,89 +1134,98 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Pinned horizontal scroll container */}
-        <section ref={sectionRef} className="relative min-h-[calc(100vh-80px)] overflow-hidden flex items-center bg-transparent">
-          <div className="overflow-hidden w-full">
-            <div ref={cardsContainerRef} className="flex flex-nowrap gap-8 pl-6 md:pl-12 pr-6 md:pr-12 py-6 shrink-0">
-              {PROJECTS.map((project, index) => (
-                <div
-                  key={index}
-                  className={`w-[85vw] md:w-[480px] shrink-0 group relative bg-white border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'
-                    } hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col`}
-                >
-                  {/* Header Card */}
-                  <div className={`h-10 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} bg-white flex items-center justify-between px-4`}>
-                    <div className="flex gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
-                      <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
-                      <div className="w-3 h-3 rounded-full bg-green-500 border border-black"></div>
-                    </div>
-                    <div className="text-xs font-bold font-mono uppercase tracking-widest text-black">
-                      {project.title}.exe
-                    </div>
+        {/* Simple Grid Projects container */}
+        <section id="projects-grid" className="max-w-7xl mx-auto w-full px-6 md:px-12 pb-20 relative z-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            {PROJECTS.map((project) => (
+              <div
+                key={project.id}
+                className={`w-full group relative border-4 ${
+                  isDarkMode 
+                    ? 'border-white bg-[#1a1a1a] text-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' 
+                    : 'border-black bg-white text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'
+                } hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col`}
+              >
+                {/* Header Card */}
+                <div className={`h-10 border-b-4 ${isDarkMode ? 'border-white bg-zinc-900' : 'border-black bg-white'} flex items-center justify-between px-4 z-20`}>
+                  <div className="flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-red-500 border border-black"></div>
+                    <div className="w-3 h-3 rounded-full bg-yellow-400 border border-black"></div>
+                    <div className="w-3 h-3 rounded-full bg-green-500 border border-black"></div>
                   </div>
-
-                  {/* Image & Overlay */}
-                  <div className={`relative w-full aspect-[16/9] shrink-0 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} overflow-hidden bg-gray-100`}>
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                    />
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity z-10 bg-black/40 backdrop-blur-[2px]">
-                      {project.demoLink && (
-                        <Link href={project.demoLink} target="_blank" className={`bg-white border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2`}>
-                          <Zap size={16} className="fill-black" /> VIEW DEMO
-                        </Link>
-                      )}
-                      <Link href={project.docLink} target="_blank" className={`bg-[#FDE047] border-2 ${isDarkMode ? 'border-white' : 'border-black'} px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2`}>
-                        <Github size={16} /> FULL SHOWCASE
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 flex-1 flex flex-col justify-between bg-white text-black">
-                    <div>
-                      <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
-                        <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
-                          {project.title}
-                          <ArrowUpRight className="w-6 h-6 transform group-hover:rotate-45 transition-transform" />
-                        </h3>
-                      </Link>
-                      <p className="text-sm font-medium text-gray-800 leading-tight mb-4 border-l-2 border-black pl-2">
-                        {project.desc}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-auto">
-                      {project.tech.map((t, i) => (
-                        <BrutalTag key={i} text={t} isDarkMode={false} />
-                      ))}
-                    </div>
+                  <div className={`text-xs font-bold font-mono uppercase tracking-widest ${isDarkMode ? 'text-white text-opacity-80' : 'text-black'}`}>
+                    {project.title}.exe
                   </div>
                 </div>
-              ))}
 
-              {/* Final CTA Card to See All Projects */}
-              <div className={`w-[85vw] md:w-[400px] shrink-0 group relative bg-[#FDE047] border-4 ${isDarkMode ? 'border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'
-                } hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col justify-center items-center p-8 text-center`}
-                style={{ minHeight: "400px" }}>
-                <h3 className="text-3xl font-black uppercase mb-4 text-black">
-                  Want to see more?
-                </h3>
-                <p className="text-sm font-bold text-gray-800 uppercase tracking-wide mb-6 max-w-[280px]">
-                  Explore the full projects.
-                </p>
-                <TransitionLink
-                  href="/projects"
-                  className="bg-black text-white hover:bg-white hover:text-black border-2 border-black px-6 py-3 font-bold uppercase tracking-widest transition-colors flex items-center gap-2"
-                >
-                  SEE MORE <ArrowUpRight size={20} />
-                </TransitionLink>
+                {/* Image & Overlay */}
+                <div className={`relative w-full aspect-[16/9] border-b-4 ${isDarkMode ? 'border-white' : 'border-black'} overflow-hidden bg-gray-150`}>
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Content */}
+                <div className={`p-6 flex-1 flex flex-col justify-between ${isDarkMode ? 'bg-[#1a1a1a] text-white' : 'bg-white text-black'}`}>
+                  <div className="mb-4">
+                    <Link href={project.demoLink || project.docLink} target="_blank" className={`hover:underline ${isDarkMode ? 'decoration-white' : 'decoration-black'} underline-offset-4`}>
+                      <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
+                        {project.title}
+                        <ArrowUpRight className="w-6 h-6 transform group-hover:rotate-45 transition-transform" />
+                      </h3>
+                    </Link>
+                    <p className={`text-xs font-semibold tracking-wider uppercase ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                      {project.subtitle}
+                    </p>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap gap-3 my-3">
+                      {project.demoLink && (
+                        <Link 
+                          href={project.demoLink} 
+                          target="_blank" 
+                          className={`border-2 ${isDarkMode ? 'bg-[#34D399] border-white text-black shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]' : 'bg-[#34D399] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]'} px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5`}
+                        >
+                          <Zap size={12} className="fill-black text-black" /> VIEW DEMO
+                        </Link>
+                      )}
+                      {project.docLink && project.docLink !== "#" && (
+                        <Link 
+                          href={project.docLink} 
+                          target="_blank" 
+                          className={`border-2 ${isDarkMode ? 'bg-[#FDE047] border-white text-black shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]' : 'bg-[#FDE047] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]'} px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5`}
+                        >
+                          <Github size={12} /> FULL SHOWCASE
+                        </Link>
+                      )}
+                    </div>
+
+                    <p className={`text-sm font-medium leading-tight border-l-2 ${isDarkMode ? 'border-white text-gray-300' : 'border-black text-gray-800'} pl-2`}>
+                      {project.desc}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {project.tech.map((t, i) => (
+                      <BrutalTag key={i} text={t} isDarkMode={isDarkMode} />
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
+            {/* Final CTA Card to See All Projects removed from grid */}
+          </div>
+
+          {/* Centered See More Button */}
+          <div className="flex justify-center mt-16">
+            <TransitionLink
+              href="/projects"
+              className={`border-4 ${isDarkMode ? 'border-white bg-[#FDE047] text-black shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[6px] hover:translate-y-[6px]' : 'border-black bg-[#FDE047] text-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[6px] hover:translate-y-[6px]'} px-8 py-3 font-black uppercase tracking-widest transition-all flex items-center gap-2 text-sm md:text-base`}
+            >
+              SEE MORE <ArrowUpRight size={20} />
+            </TransitionLink>
           </div>
         </section>
 

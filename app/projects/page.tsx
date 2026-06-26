@@ -289,14 +289,14 @@ export default function ProjectsPage() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex gap-4 mb-8 justify-start relative z-20">
+        <div className="flex gap-3 mb-8 justify-start relative z-20">
           {["All", "Website", "Mobile"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-6 py-2.5 font-black uppercase tracking-wider border-4 border-black transition-all ${activeTab === tab
-                ? "bg-[#FDE047] text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                : "bg-white text-black hover:bg-gray-100 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[4px] active:shadow-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              className={`px-4 py-1.5 md:px-6 md:py-2.5 text-xs md:text-sm font-black uppercase tracking-wider border-2 md:border-4 border-black transition-all ${activeTab === tab
+                ? "bg-[#FDE047] text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                : "bg-white text-black hover:bg-gray-100 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[4px] active:shadow-none shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                 }`}
             >
               {tab}
@@ -313,8 +313,7 @@ export default function ProjectsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                onClick={() => toggleActiveProject(project.id)}
-                className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col cursor-pointer"
+                className="group relative h-full bg-white border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col"
               >
 
                 <div className="h-10 border-b-4 border-black bg-white flex items-center justify-between px-4">
@@ -334,42 +333,6 @@ export default function ProjectsPage() {
                     fill
                     className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 transition-opacity duration-300 z-10 bg-black/40 backdrop-blur-[2px] ${activeId === project.id
-                    ? 'opacity-100 pointer-events-auto'
-                    : 'opacity-0 pointer-events-none md:group-hover:opacity-100 md:group-hover:pointer-events-auto'
-                    }`}>
-
-                    {project.demoLink && (
-                      <Link
-                        href={project.demoLink}
-                        target="_blank"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (window.innerWidth < 768 && activeId !== project.id) {
-                            e.preventDefault();
-                          }
-                        }}
-                        className="bg-white border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
-                      >
-                        <Zap size={16} className="fill-black" /> VIEW DEMO
-                      </Link>
-                    )}
-
-                    <Link
-                      href={project.docLink}
-                      target="_blank"
-                      onClick={(e) => {
-                        e.stopPropagation();
-
-                        if (window.innerWidth < 768 && activeId !== project.id) {
-                          e.preventDefault();
-                        }
-                      }}
-                      className="bg-[#FDE047] border-2 border-black px-6 py-2 font-bold shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black hover:scale-105 transition-transform flex items-center gap-2"
-                    >
-                      <Github size={16} /> FULL SHOWCASE
-                    </Link>
-                  </div>
                 </div>
 
                 <div className="p-6 flex-1 flex flex-col justify-between bg-white">
@@ -380,7 +343,33 @@ export default function ProjectsPage() {
                         <ArrowUpRight className="w-5 h-5" />
                       </h3>
                     </Link>
-                    <p className="text-sm font-medium text-gray-800 leading-tight mb-4">
+                    <p className="text-xs font-semibold tracking-wider uppercase text-gray-500 mb-2">
+                      {project.subtitle}
+                    </p>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap gap-3 my-3">
+                      {project.demoLink && (
+                        <Link 
+                          href={project.demoLink} 
+                          target="_blank" 
+                          className="border-2 bg-[#34D399] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5"
+                        >
+                          <Zap size={12} className="fill-black text-black" /> VIEW DEMO
+                        </Link>
+                      )}
+                      {project.docLink && project.docLink !== "#" && (
+                        <Link 
+                          href={project.docLink} 
+                          target="_blank" 
+                          className="border-2 bg-[#FDE047] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5"
+                        >
+                          <Github size={12} /> FULL SHOWCASE
+                        </Link>
+                      )}
+                    </div>
+
+                    <p className="text-sm font-medium text-gray-800 leading-tight mb-4 border-l-2 border-black pl-2">
                       {project.desc}
                     </p>
                   </div>
