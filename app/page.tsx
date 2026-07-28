@@ -42,6 +42,7 @@ import {
   Moon,
   MapPin,
   Send,
+  Play,
 } from "lucide-react";
 import Link from "next/link";
 import TransitionLink from "./components/TransitionLink";
@@ -79,16 +80,18 @@ const PROJECTS = [
     demoLink: "https://pptcreate.com/",
     docLink: "https://github.com/rezaaplvv/ppt-create" // Sesuaikan dengan nama repositori GitHub aslimu
   },
+
   {
     id: 2,
-    title: "Geprek Bara Nusantara",
-    subtitle: "Restaurant Website",
-    desc: "Interactive website for geprek bara nusantara, a restaurant that sells geprek.",
-    tech: ["HTML", "CSS", "JavaScript", "GSAP"],
-    image: "/geprek.png",
-    demoLink: "https://geprek-bara.vercel.app/",
-    docLink: "#"
+    title: "SAKU SISWA",
+    subtitle: "Platform Manajemen Tabungan & Keuangan Siswa",
+    desc: "Sistem manajemen tabungan sekolah berbasis digital yang dilengkapi dengan pencatatan transaksi real-time, kalkulasi saldo otomatis, akses multi-role (Admin, Siswa, & Orang Tua), serta laporan keuangan interaktif.",
+    tech: ["Laravel 13", "Livewire", "Tailwind CSS", "MySQL", "JavaScript"],
+    image: "/sakusiswa1.png",
+    playstoreLink: "https://play.google.com/store/apps/details?id=id.sch.sdncigowong01.tabungan.twa&pcampaignid=web_share"
   },
+
+
   {
     id: 3,
     title: "Japanese travel website",
@@ -112,25 +115,24 @@ const PROJECTS = [
   },
   {
     id: 5,
-    title: "Waskita Angkasa Satya Security System",
-    subtitle: "Enterprise Security Management System",
-    desc: "A Next-Gen Integrated Security System featuring real-time attendance with GPS & photo verification, multi-level dashboards, broadcast command controls, and formal executive reporting.",
-    tech: ["Laravel 13", "MySQL", "Blade", "Tailwind CSS"],
-    image: "/waskita.png",
-    demoLink: "https://web-production-00ffc.up.railway.app/",
-    docLink: "https://github.com/rezaaplvv/si-security-waskita"
+    title: "SAMUDRA RENT CAR",
+    subtitle: "Premium Car Rental & Tour Travel Platform",
+    desc: "A high-performance, responsive car rental and VIP tour transportation platform tailored for North Sumatra.",
+    tech: ["HTML5", "Vanilla CSS3", "JavaScript (ES6+)", "GSAP", "WhatsApp API"],
+    image: "/samudra.png",
+    demoLink: "https://samudrarental.my.id",
+    docLink: ""
   },
-
 
   {
     id: 6,
-    title: "Hajj & Umrah Travel Website",
-    subtitle: "Hajj & Umrah Travel Website",
-    desc: "A professional travel agency landing page, specializing in curated Hajj and Umrah tour packages with a modern, high-converting design.",
-    tech: ["Laravel 13", "MySQL", "Blade", "Tailwind"],
-    image: "/hajj1.png",
-    demoLink: "https://hajjumrah.freedev.app/",
-    docLink: "https://github.com/rezaaplvv/Laravel-Hajj-Umrah"
+    title: "Geprek Bara Nusantara",
+    subtitle: "Restaurant Website",
+    desc: "Interactive website for geprek bara nusantara, a restaurant that sells geprek.",
+    tech: ["HTML", "CSS", "JavaScript", "GSAP"],
+    image: "/geprek.png",
+    demoLink: "https://geprek-bara.vercel.app/",
+    docLink: "#"
   },
 
 
@@ -164,7 +166,7 @@ const TECH_ROW_2 = [
   { name: "Vite", icon: <Zap size={20} />, color: "bg-purple-200" },
 ];
 
-// --- DATA SERVICES ---
+
 const SERVICES = [
   {
     title: "Web Engineering",
@@ -1140,11 +1142,10 @@ export default function Home() {
             {PROJECTS.map((project) => (
               <div
                 key={project.id}
-                className={`w-full group relative border-4 ${
-                  isDarkMode 
-                    ? 'border-white bg-[#1a1a1a] text-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' 
-                    : 'border-black bg-white text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'
-                } hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col`}
+                className={`w-full group relative border-4 ${isDarkMode
+                  ? 'border-white bg-[#1a1a1a] text-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]'
+                  : 'border-black bg-white text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'
+                  } hover:shadow-none hover:translate-x-[8px] hover:translate-y-[8px] transition-all duration-200 overflow-hidden flex flex-col`}
               >
                 {/* Header Card */}
                 <div className={`h-10 border-b-4 ${isDarkMode ? 'border-white bg-zinc-900' : 'border-black bg-white'} flex items-center justify-between px-4 z-20`}>
@@ -1171,7 +1172,7 @@ export default function Home() {
                 {/* Content */}
                 <div className={`p-6 flex-1 flex flex-col justify-between ${isDarkMode ? 'bg-[#1a1a1a] text-white' : 'bg-white text-black'}`}>
                   <div className="mb-4">
-                    <Link href={project.demoLink || project.docLink} target="_blank" className={`hover:underline ${isDarkMode ? 'decoration-white' : 'decoration-black'} underline-offset-4`}>
+                    <Link href={project.demoLink || project.docLink || project.playstoreLink || "#"} target="_blank" className={`hover:underline ${isDarkMode ? 'decoration-white' : 'decoration-black'} underline-offset-4`}>
                       <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
                         {project.title}
                         <ArrowUpRight className="w-6 h-6 transform group-hover:rotate-45 transition-transform" />
@@ -1184,21 +1185,30 @@ export default function Home() {
                     {/* Action Buttons */}
                     <div className="flex flex-wrap gap-3 my-3">
                       {project.demoLink && (
-                        <Link 
-                          href={project.demoLink} 
-                          target="_blank" 
+                        <Link
+                          href={project.demoLink}
+                          target="_blank"
                           className={`border-2 ${isDarkMode ? 'bg-[#34D399] border-white text-black shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]' : 'bg-[#34D399] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]'} px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5`}
                         >
                           <Zap size={12} className="fill-black text-black" /> VIEW DEMO
                         </Link>
                       )}
                       {project.docLink && project.docLink !== "#" && (
-                        <Link 
-                          href={project.docLink} 
-                          target="_blank" 
+                        <Link
+                          href={project.docLink}
+                          target="_blank"
                           className={`border-2 ${isDarkMode ? 'bg-[#FDE047] border-white text-black shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]' : 'bg-[#FDE047] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]'} px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5`}
                         >
                           <Github size={12} /> FULL SHOWCASE
+                        </Link>
+                      )}
+                      {project.playstoreLink && (
+                        <Link
+                          href={project.playstoreLink}
+                          target="_blank"
+                          className={`border-2 ${isDarkMode ? 'bg-[#60A5FA] border-white text-black shadow-[3px_3px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]' : 'bg-[#60A5FA] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]'} px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5`}
+                        >
+                          <Play size={12} className="fill-black text-black" /> PLAY STORE
                         </Link>
                       )}
                     </div>

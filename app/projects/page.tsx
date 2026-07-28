@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import TransitionLink from "../components/TransitionLink";
-import { ArrowLeft, ArrowUpRight, Github, Zap } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Github, Zap, Play } from "lucide-react";
 const ALL_PROJECTS = [
   {
     id: 1,
@@ -59,6 +59,16 @@ const ALL_PROJECTS = [
   },
   {
     id: 6,
+    title: "SAMUDRA RENT CAR",
+    subtitle: "Premium Car Rental & Tour Travel Platform",
+    desc: "A high-performance, responsive car rental and VIP tour transportation platform tailored for North Sumatra.",
+    tech: ["HTML5", "Vanilla CSS3", "JavaScript (ES6+)", "GSAP", "WhatsApp API"],
+    image: "/samudra.png",
+    demoLink: "https://samudrarental.my.id",
+    docLink: ""
+  },
+  {
+    id: 7,
     title: "4 in 1 Streaming Website",
     subtitle: "4 in 1 Streaming Website",
     desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
@@ -68,7 +78,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/ZeroNime"
   },
   {
-    id: 7,
+    id: 8,
     title: "Village Profile Website",
     subtitle: "Village Profile Website",
     desc: "A comprehensive website for village profile management with interactive features.",
@@ -79,7 +89,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 8,
+    id: 9,
     title: "Cashier System POS",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
@@ -89,7 +99,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
   {
-    id: 9,
+    id: 10,
     title: "Kost Management App",
     subtitle: "Kost Management App",
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
@@ -99,7 +109,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Kost-Management-App"
   },
   {
-    id: 10,
+    id: 11,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
     desc: "Download high quality media from all social media without watermark.",
@@ -109,7 +119,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
   {
-    id: 11,
+    id: 12,
     title: "Geprek Bara Nusantara",
     subtitle: "Restaurant Website",
     desc: "Website for geprek bara nusantara, a restaurant that sells geprek.",
@@ -120,7 +130,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 12,
+    id: 13,
     title: "Dramatix",
     subtitle: "Streaming Platform",
     desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
@@ -130,7 +140,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Dramatix"
   },
   {
-    id: 13,
+    id: 14,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
@@ -140,7 +150,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/smart-perpus-app"
   },
   {
-    id: 14,
+    id: 15,
     title: "Kiddoz",
     subtitle: "Interactive Quiz Platform",
     desc: "Gamified academic quiz application for K-12 students. Features real-time synchronization, dynamic badge unlocking, and analytics dashboard based on Flutter and Firebase.",
@@ -150,7 +160,16 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Kiddoz"
   },
   {
-    id: 15,
+    id: 16,
+    title: "SAKU SISWA",
+    subtitle: "Platform Manajemen Tabungan & Keuangan Siswa",
+    desc: "Sistem manajemen tabungan sekolah berbasis digital yang dilengkapi dengan pencatatan transaksi real-time, kalkulasi saldo otomatis, akses multi-role (Admin, Siswa, & Orang Tua), serta laporan keuangan interaktif.",
+    tech: ["Laravel 13", "Livewire", "Tailwind CSS", "MySQL", "JavaScript"],
+    image: "/sakusiswa1.png",
+    playstoreLink: "https://play.google.com/store/apps/details?id=id.sch.sdncigowong01.tabungan.twa&pcampaignid=web_share"
+  },
+  {
+    id: 17,
     title: "Viauo",
     subtitle: "Multimedia App",
     desc: "Flutter streaming music/video online & offline player.",
@@ -162,7 +181,7 @@ const ALL_PROJECTS = [
 
 
   {
-    id: 16,
+    id: 18,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
@@ -173,7 +192,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 17,
+    id: 19,
     title: "Nutrismart AI",
     subtitle: "Health AI App",
     desc: "Nutrismart AI is an AI-powered website that calculates your calorie needs, recommends appropriate foods, and provides recipes. Its implementation uses the KNN algorithm.",
@@ -183,7 +202,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/NutrismartAI"
   },
   {
-    id: 18,
+    id: 20,
     title: "TR Adventure",
     subtitle: "Indonesian Culture Website",
     desc: "TR Adventure is a website that features Indonesian culture.",
@@ -193,7 +212,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/TR-Adventure"
   },
   {
-    id: 19,
+    id: 21,
     title: "Zero Store",
     subtitle: "Premium Account Hub",
     desc: "A sleek, high-performance E-Commerce and Digital Catalog platform featuring dynamic brand border highlights, smart variant modals, and automated WhatsApp checkout routing.",
@@ -203,7 +222,7 @@ const ALL_PROJECTS = [
     docLink: "#" // Anda bisa isi dengan link repositori GitHub Private Anda jika ingin ditampilkan, atau kosongkan
   },
   {
-    id: 20,
+    id: 22,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
@@ -337,7 +356,7 @@ export default function ProjectsPage() {
 
                 <div className="p-6 flex-1 flex flex-col justify-between bg-white">
                   <div>
-                    <Link href={project.demoLink || project.docLink} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
+                    <Link href={project.demoLink || project.docLink || project.playstoreLink || "#"} target="_blank" className="hover:underline decoration-4 decoration-black underline-offset-4">
                       <h3 className="text-2xl font-black uppercase mb-2 leading-none flex items-center gap-2">
                         {project.title}
                         <ArrowUpRight className="w-5 h-5" />
@@ -350,21 +369,30 @@ export default function ProjectsPage() {
                     {/* Action Buttons */}
                     <div className="flex flex-wrap gap-3 my-3">
                       {project.demoLink && (
-                        <Link 
-                          href={project.demoLink} 
-                          target="_blank" 
+                        <Link
+                          href={project.demoLink}
+                          target="_blank"
                           className="border-2 bg-[#34D399] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5"
                         >
                           <Zap size={12} className="fill-black text-black" /> VIEW DEMO
                         </Link>
                       )}
                       {project.docLink && project.docLink !== "#" && (
-                        <Link 
-                          href={project.docLink} 
-                          target="_blank" 
+                        <Link
+                          href={project.docLink}
+                          target="_blank"
                           className="border-2 bg-[#FDE047] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5"
                         >
                           <Github size={12} /> FULL SHOWCASE
+                        </Link>
+                      )}
+                      {project.playstoreLink && (
+                        <Link
+                          href={project.playstoreLink}
+                          target="_blank"
+                          className="border-2 bg-[#60A5FA] border-black text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] px-3 py-1.5 font-bold text-xs transition-all flex items-center gap-1.5"
+                        >
+                          <Play size={12} className="fill-black text-black" /> PLAY STORE
                         </Link>
                       )}
                     </div>
