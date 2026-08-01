@@ -43,6 +43,7 @@ import {
   MapPin,
   Send,
   Play,
+  Download,
 } from "lucide-react";
 import Link from "next/link";
 import TransitionLink from "./components/TransitionLink";
@@ -94,7 +95,7 @@ const PROJECTS = [
 
   {
     id: 3,
-    title: "Japanese travel website",
+    title: "Helmitour",
     subtitle: "Japanese travel website",
     desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
     tech: ["Laravel 13", "Tailwind CSS", "MySQL"],
@@ -105,8 +106,8 @@ const PROJECTS = [
 
   {
     id: 4,
-    title: "Elementary School Website",
-    subtitle: "Elementary School Website",
+    title: "SDN Cigowong 01 Website",
+    subtitle: "SDN Cigowong 01 Website",
     desc: "A comprehensive primary school web portal designed to bridge communication between the institution and parents, featuring academic news and event management.",
     tech: ["Laravel 13", "MySQL", "Tailwind"],
     image: "/sd1.png",
@@ -130,7 +131,7 @@ const PROJECTS = [
     subtitle: "Restaurant Website",
     desc: "Interactive website for geprek bara nusantara, a restaurant that sells geprek.",
     tech: ["HTML", "CSS", "JavaScript", "GSAP"],
-    image: "/geprek.png",
+    image: "/geprek1.png",
     demoLink: "https://geprek-bara.vercel.app/",
     docLink: "#"
   },
@@ -166,30 +167,6 @@ const TECH_ROW_2 = [
   { name: "Vite", icon: <Zap size={20} />, color: "bg-purple-200" },
 ];
 
-
-const SERVICES = [
-  {
-    title: "Web Engineering",
-    price: "Full-Stack",
-    desc: "Developing scalable web applications using Next.js and modern JavaScript ecosystems.",
-    icon: <Layout size={28} />,
-    color: "bg-blue-400"
-  },
-  {
-    title: "Mobile Development",
-    price: "Cross-Platform",
-    desc: "Creating high-performance mobile apps for Android and iOS using Flutter and Dart.",
-    icon: <Smartphone size={28} />,
-    color: "bg-green-400"
-  },
-  {
-    title: "Technical Consulting",
-    price: "Solutions",
-    desc: "Providing architectural advice, code reviews, and strategic technical planning for projects.",
-    icon: <Package size={28} />,
-    color: "bg-yellow-400"
-  }
-];
 
 // --- DATA FAQ ---
 const FAQS = [
@@ -622,68 +599,6 @@ export default function Home() {
 
       // 2. Projects Section: Stacking Cards Layout (Framer Motion is used for scroll behavior instead of GSAP horizontal scroll)
 
-      // 3. Core Expertise Section: Staggered Slide-up Entrance & Hover Effects
-      const servicesSection = document.querySelector("#services");
-      if (servicesSection) {
-        const cards = servicesSection.querySelectorAll(".service-card");
-        if (cards.length > 0) {
-          // Slide up & Fade in reveal (target wrapper)
-          gsap.fromTo(
-            servicesSection.querySelectorAll(".service-card-wrapper"),
-            {
-              opacity: 0,
-              y: 40,
-            },
-            {
-              opacity: 1,
-              y: 0,
-              stagger: 0.15,
-              ease: "power2.out",
-              duration: 0.8,
-              scrollTrigger: {
-                trigger: servicesSection,
-                start: "top 80%",
-                toggleActions: "play none none reverse",
-              }
-            }
-          );
-
-          // Pasang listener hover interaktif menggunakan GSAP
-          cards.forEach((card) => {
-            const htmlEl = card as HTMLElement;
-
-            const handleMouseEnter = () => {
-              const isDark = htmlEl.classList.contains("border-white");
-              const shadowColor = isDark ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 1)";
-              gsap.to(htmlEl, {
-                x: 8,
-                y: 8,
-                boxShadow: `0px 0px 0px 0px ${shadowColor}`,
-                duration: 0.2,
-                ease: "power2.out",
-                overwrite: "auto",
-              });
-            };
-
-            const handleMouseLeave = () => {
-              const isDark = htmlEl.classList.contains("border-white");
-              const shadowColor = isDark ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 1)";
-              gsap.to(htmlEl, {
-                x: 0,
-                y: 0,
-                boxShadow: `8px 8px 0px 0px ${shadowColor}`,
-                duration: 0.2,
-                ease: "power2.out",
-                overwrite: "auto",
-              });
-            };
-
-            htmlEl.addEventListener("mouseenter", handleMouseEnter);
-            htmlEl.addEventListener("mouseleave", handleMouseLeave);
-            cleanupListeners.push({ el: htmlEl, enter: handleMouseEnter, leave: handleMouseLeave });
-          });
-        }
-      }
 
       // 4. FAQ Section: Staggered Pop-up Entrance
       const faqSection = document.querySelector("#faq");
@@ -920,8 +835,8 @@ export default function Home() {
         <div className="hidden md:flex items-center gap-6">
           <NavLink href="#hero" isDarkMode={isDarkMode}>About</NavLink>
           <NavLink href="#projects" isDarkMode={isDarkMode}>Projects</NavLink>
-          <NavLink href="#services" isDarkMode={isDarkMode}>Skills</NavLink>
           <NavLink href="#faq" isDarkMode={isDarkMode}>FAQ</NavLink>
+          <NavLink href="#contact" isDarkMode={isDarkMode}>Contact</NavLink>
         </div>
         <div className="hidden md:block">
           <Link
@@ -949,8 +864,8 @@ export default function Home() {
         >
           <NavLink href="#hero" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>About</NavLink>
           <NavLink href="#projects" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Projects</NavLink>
-          <NavLink href="#services" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Skills</NavLink>
           <NavLink href="#faq" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>FAQ</NavLink>
+          <NavLink href="#contact" onClick={() => setIsMobileMenuOpen(false)} isDarkMode={isDarkMode}>Contact</NavLink>
           <div className={`h-[2px] ${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'} my-2`}></div>
           <Link
             href="https://wa.me/6283133387676"
@@ -1027,9 +942,16 @@ export default function Home() {
               >
                 VIEW PROJECTS
               </Link>
-              <div className={`flex items-center gap-2 font-mono text-sm font-bold bg-white border-2 ${isDarkMode ? 'border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] text-black' : 'border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'} px-3 py-1`}>
+              <a
+                href="/CV Reza Pahlepi.pdf"
+                download="CV Reza Pahlepi.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center gap-2 font-mono text-sm font-bold bg-white border-2 ${isDarkMode ? 'border-white shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] text-black' : 'border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'} px-3 py-1 hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer`}
+              >
+                <Download size={16} />
                 DOWNLOAD CV
-              </div>
+              </a>
             </motion.div>
           </div>
 
@@ -1239,37 +1161,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ================= SERVICES ================= */}
-        <section id="services" className={`pt-32 pb-20 max-w-7xl mx-auto px-6 md:px-12 border-b-4 ${isDarkMode ? 'border-white' : 'border-black'}`}>
-          <div className="section-header-reveal mb-12 border-b-4 pb-4 flex justify-end text-right overflow-hidden">
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter flex flex-wrap gap-x-3 justify-end">
-              <span className="inline-block overflow-hidden py-1">
-                <span className="reveal-word inline-block translate-y-full">Core</span>
-              </span>
-              <span className="inline-block overflow-hidden py-1">
-                <span className={`reveal-word inline-block translate-y-full text-transparent ${isDarkMode ? 'text-stroke-2-dark' : 'text-stroke-2'}`}>Expertise</span>
-              </span>
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-            {SERVICES.map((service, index) => (
-              <div key={index} className="service-card-wrapper opacity-0">
-                <div className={`service-card bg-white border-4 ${isDarkMode ? 'border-white text-black shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]' : 'border-black text-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'} p-6 h-full`}>
-                  <div className={`w-16 h-16 ${service.color} border-2 border-black flex items-center justify-center mb-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}>
-                    {service.icon}
-                  </div>
-                  <h3 className="text-2xl font-black uppercase mb-2 text-black">{service.title}</h3>
-                  <div className="text-sm font-bold bg-black text-white inline-block px-2 py-1 mb-3">
-                    {service.price}
-                  </div>
-                  <p className="font-medium text-gray-700 leading-tight">
-                    {service.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+
 
         {/* ================= FAQ SECTION ================= */}
         <section id="faq" className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#F3F4F6] border-black'} border-b-4`}>
@@ -1416,7 +1308,7 @@ export default function Home() {
         </section>
 
         {/* ================= CONNECT / SOCIAL WALL ================= */}
-        <section ref={connectSectionRef} className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden relative`}>
+        <section id="contact" ref={connectSectionRef} className={`py-20 ${isDarkMode ? 'bg-[#0a0a0a] border-white' : 'bg-[#FFFDF5] border-black'} border-b-4 overflow-hidden relative`}>
 
           {/* SVG Motion Path & Plane (travels behind cards but above background) */}
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
@@ -1509,9 +1401,6 @@ export default function Home() {
                 </Link>
                 <Link href="#projects" className="font-bold uppercase tracking-wider hover:text-[#FDE047] transition-all">
                   Projects
-                </Link>
-                <Link href="#services" className="font-bold uppercase tracking-wider hover:text-[#FDE047] transition-all">
-                  Skills
                 </Link>
                 <Link href="#faq" className="font-bold uppercase tracking-wider hover:text-[#FDE047] transition-all">
                   FAQ

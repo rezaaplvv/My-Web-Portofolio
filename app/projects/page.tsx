@@ -19,8 +19,8 @@ const ALL_PROJECTS = [
   },
   {
     id: 2,
-    title: "Security System",
-    subtitle: "Enterprise Security Management System",
+    title: "WISOS",
+    subtitle: "Security Operation System",
     desc: "A Next-Gen Integrated Security System featuring real-time attendance with GPS & photo verification, multi-level dashboards, broadcast command controls, and formal executive reporting.",
     tech: ["Laravel 13", "MySQL", "Blade", "Tailwind CSS"],
     image: "/waskita.png",
@@ -49,7 +49,7 @@ const ALL_PROJECTS = [
   },
   {
     id: 5,
-    title: "Japanese travel website",
+    title: "Helmitour",
     subtitle: "Japanese travel website",
     desc: "A professional travel agency landing page for HelmiTour, specializing in curated Japan tour packages with a modern, high-converting design",
     tech: ["Laravel 13", "Tailwind CSS", "MySQL"],
@@ -67,8 +67,20 @@ const ALL_PROJECTS = [
     demoLink: "https://samudrarental.my.id",
     docLink: ""
   },
+
   {
     id: 7,
+    title: "SKM Langkat Website",
+    subtitle: "SKM Langkat Website",
+    desc: "SKM Kabupaten Langkat Website is an integrated digital platform for managing the Public Satisfaction Survey, covering survey submission, data analytics, and interactive reporting dashboards to support continuous improvement of public service quality.",
+    tech: ["Laravel 13", "MySQL", "Tailwind"],
+    image: "/skm.png", // Placeholder path, ensure this file exists or use a relevant screenshot
+    demoLink: "https://skm.langkatkab.go.id/", // Assuming no public demo link, but can be added
+    docLink: null // Placeholder for GitHub repo link
+  },
+
+  {
+    id: 8,
     title: "4 in 1 Streaming Website",
     subtitle: "4 in 1 Streaming Website",
     desc: "A versatile streaming platform offering Anime, Donghua, Chinese Drama, and Comic in one seamless experience.",
@@ -78,7 +90,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/ZeroNime"
   },
   {
-    id: 8,
+    id: 9,
     title: "Village Profile Website",
     subtitle: "Village Profile Website",
     desc: "A comprehensive website for village profile management with interactive features.",
@@ -89,7 +101,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 9,
+    id: 10,
     title: "Cashier System POS",
     subtitle: "Restaurant System",
     desc: "Cashier system: Real-time P&L, QRIS, Thermal Printing.",
@@ -99,7 +111,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Laravel-Point-Of-Sales-Pro"
   },
   {
-    id: 10,
+    id: 11,
     title: "Kost Management App",
     subtitle: "Kost Management App",
     desc: "Professional Fullstack Boarding Management System with Automated Billing and Analytics.",
@@ -109,7 +121,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Kost-Management-App"
   },
   {
-    id: 11,
+    id: 12,
     title: "Social Media Downloader",
     subtitle: "Tools Web App",
     desc: "Download high quality media from all social media without watermark.",
@@ -119,18 +131,18 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Social-Media-Downloader"
   },
   {
-    id: 12,
+    id: 13,
     title: "Geprek Bara Nusantara",
     subtitle: "Restaurant Website",
     desc: "Website for geprek bara nusantara, a restaurant that sells geprek.",
     tech: ["Next.js", "TypeScript", "Tailwind", "Lucide Icons"],
-    image: "/geprek.png", // Sesuaikan dengan nama file screenshot desktop Anda nanti
+    image: "/geprek1.png", // Sesuaikan dengan nama file screenshot desktop Anda nanti
     demoLink: "https://geprek-bara.vercel.app/",
     docLink: "#" // Anda bisa isi dengan link repositori GitHub Private Anda jika ingin ditampilkan, atau kosongkan
   },
 
   {
-    id: 13,
+    id: 14,
     title: "Dramatix",
     subtitle: "Streaming Platform",
     desc: "High-performance movie streaming platform. Scalable architecture based on Next.js 15.",
@@ -140,7 +152,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Dramatix"
   },
   {
-    id: 14,
+    id: 15,
     title: "Smart Perpus",
     subtitle: "Digital Library",
     desc: "Digital library system with gamification features for levels and rankings.",
@@ -150,7 +162,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/smart-perpus-app"
   },
   {
-    id: 15,
+    id: 16,
     title: "Kiddoz",
     subtitle: "Interactive Quiz Platform",
     desc: "Gamified academic quiz application for K-12 students. Features real-time synchronization, dynamic badge unlocking, and analytics dashboard based on Flutter and Firebase.",
@@ -160,16 +172,16 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/Kiddoz"
   },
   {
-    id: 16,
+    id: 17,
     title: "SAKU SISWA",
     subtitle: "Platform Manajemen Tabungan & Keuangan Siswa",
     desc: "Sistem manajemen tabungan sekolah berbasis digital yang dilengkapi dengan pencatatan transaksi real-time, kalkulasi saldo otomatis, akses multi-role (Admin, Siswa, & Orang Tua), serta laporan keuangan interaktif.",
-    tech: ["Laravel 13", "Livewire", "Tailwind CSS", "MySQL", "JavaScript"],
+    tech: ["Android (TWA)", "Laravel 13", "Livewire", "Tailwind CSS", "MySQL"],
     image: "/sakusiswa1.png",
     playstoreLink: "https://play.google.com/store/apps/details?id=id.sch.sdncigowong01.tabungan.twa&pcampaignid=web_share"
   },
   {
-    id: 17,
+    id: 18,
     title: "Viauo",
     subtitle: "Multimedia App",
     desc: "Flutter streaming music/video online & offline player.",
@@ -181,7 +193,7 @@ const ALL_PROJECTS = [
 
 
   {
-    id: 18,
+    id: 19,
     title: "Fragrance Distribution",
     subtitle: "SFA System",
     desc: "A Full-Stack Integrated Sales Force Automation (SFA) and Inventory Management System designed for retail operations.",
@@ -192,7 +204,7 @@ const ALL_PROJECTS = [
   },
 
   {
-    id: 19,
+    id: 20,
     title: "Nutrismart AI",
     subtitle: "Health AI App",
     desc: "Nutrismart AI is an AI-powered website that calculates your calorie needs, recommends appropriate foods, and provides recipes. Its implementation uses the KNN algorithm.",
@@ -202,7 +214,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/NutrismartAI"
   },
   {
-    id: 20,
+    id: 21,
     title: "TR Adventure",
     subtitle: "Indonesian Culture Website",
     desc: "TR Adventure is a website that features Indonesian culture.",
@@ -212,7 +224,7 @@ const ALL_PROJECTS = [
     docLink: "https://github.com/rezaaplvv/TR-Adventure"
   },
   {
-    id: 21,
+    id: 22,
     title: "Zero Store",
     subtitle: "Premium Account Hub",
     desc: "A sleek, high-performance E-Commerce and Digital Catalog platform featuring dynamic brand border highlights, smart variant modals, and automated WhatsApp checkout routing.",
@@ -222,7 +234,7 @@ const ALL_PROJECTS = [
     docLink: "#" // Anda bisa isi dengan link repositori GitHub Private Anda jika ingin ditampilkan, atau kosongkan
   },
   {
-    id: 22,
+    id: 23,
     title: "EmotionFace AI",
     subtitle: "AI Detection",
     desc: "Detects user facial expressions and changes UI accordingly in real-time.",
@@ -250,8 +262,8 @@ export default function ProjectsPage() {
   };
 
   const filteredProjects = ALL_PROJECTS.filter((project) => {
-    // Determine category based on tech list
-    const isMobile = project.tech.some(t => t.toLowerCase() === "flutter" || t.toLowerCase() === "dart");
+    // Determine category based on tech list & playstore link
+    const isMobile = !!project.playstoreLink || project.tech.some(t => ["flutter", "dart", "android", "twa", "mobile", "ios"].some(k => t.toLowerCase().includes(k)));
     const category = isMobile ? "Mobile" : "Website";
     const matchesTab = activeTab === "All" || category === activeTab;
 
